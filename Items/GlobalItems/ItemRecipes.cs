@@ -1,0 +1,104 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Terraria;
+using Terraria.ModLoader;
+using Terraria.ID;
+using Terraria.IO;
+using Terraria.Localization;
+using Microsoft.Xna.Framework;
+using Creaturia.Currencies;
+using Creaturia.NPCs.Creatures;
+
+namespace Creaturia.Items.GlobalItems
+{
+	internal class ItemRecipes : ModSystem
+	{
+
+
+		
+			public override void AddRecipes()
+			{
+			Recipe recipe = Recipe.Create(ItemID.MagicPowerPotion, 3);
+
+			recipe.AddIngredient(ItemID.BottledWater, 3);
+			recipe.AddIngredient(ItemID.Moonglow, 2);
+			recipe.AddIngredient(ModContent.ItemType<RainbowScale2>(), 2);
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
+
+			 recipe = Recipe.Create(ItemID.ManaRegenerationPotion, 3);
+
+			recipe.AddIngredient(ItemID.BottledWater, 3);
+			recipe.AddIngredient(ItemID.Daybloom, 2);
+			recipe.AddIngredient(ModContent.ItemType<RainbowScale2>(), 2);
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.RagePotion, 5);
+
+			recipe.AddIngredient(ItemID.BottledWater, 4);
+			recipe.AddIngredient(ItemID.Deathweed, 2);
+			recipe.AddIngredient(ModContent.ItemType<LumpsuckerHeart>(), 1);
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.HallowedKey);
+
+			recipe.AddIngredient(ModContent.ItemType<RainbowScale2>(), 10);
+			recipe.AddIngredient(ItemID.SoulofLight, 5);
+			recipe.AddIngredient(ItemID.JungleKey, 1);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.CrimsonKey);
+
+			recipe.AddIngredient(ModContent.ItemType<LumpsuckerHeart>(), 1);
+			recipe.AddIngredient(ItemID.SoulofNight, 5);
+			recipe.AddIngredient(ItemID.JungleKey, 1);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.BunnyStew);
+
+			recipe.AddIngredient(ModContent.ItemType<JackrabbitItem>(), 1);
+			recipe.AddTile(TileID.CookingPots);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.RoastedBird);
+
+			recipe.AddIngredient(ModContent.ItemType<HummingBird1Item>(), 1);
+			recipe.AddTile(TileID.CookingPots);
+			recipe.Register();
+
+			/*	recipe = Recipe.Create(ItemID.CorruptionKey);
+
+				recipe.AddIngredient(ModContent.ItemType<>(), 10);
+				recipe.AddIngredient(ItemID.SoulofLight, 5);
+				recipe.AddIngredient(ItemID.JungleKey, 1);
+				recipe.AddTile(TileID.MythrilAnvil);
+				recipe.Register(); */
+
+			/*
+			 * 
+			recipe = Recipe.Create(ItemID.SoulofLight, 1);
+			
+			recipe.AddIngredient(ModContent.ItemType<RainbowScale2>(), 2);
+			recipe.AddTile(TileID.CrystalBall);
+			recipe.AddTile(TileID.LunarCraftingStation);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.SoulofNight, 1);
+
+			recipe.AddIngredient(ModContent.ItemType<RainbowScale2>(), 2);
+			recipe.AddTile(TileID.CrystalBall);
+			recipe.AddTile(TileID.LunarCraftingStation);
+			recipe.Register(); */
+		}
+
+			
+				
+	}
+}
