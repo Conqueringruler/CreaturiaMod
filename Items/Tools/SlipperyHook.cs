@@ -20,6 +20,7 @@ using System;
 using Terraria.GameContent.ItemDropRules;
 
 using System.Collections.Generic;
+using Terraria.Graphics.Shaders;
 
 namespace Creaturia.Items.Tools
 {
@@ -27,9 +28,9 @@ namespace Creaturia.Items.Tools
 	{ // REMINDER: Need to change the Slippery Hook sprites!
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Slippery Hook");
-			Tooltip.SetDefault("50% chance to dodge attacks while being dragged by the hook'\n" +
-				"'There's slime everywhere!'");
+			// DisplayName.SetDefault("Slippery Hook");
+			/* Tooltip.SetDefault("50% chance to dodge attacks while being dragged by the hook'\n" +
+				"'There's slime everywhere!'"); */
 
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1; // Reminder that I need to do this with every other item
 		}
@@ -91,15 +92,16 @@ namespace Creaturia.Items.Tools
                 {
 					var dust = Dust.NewDustDirect(Projectile.Center, Projectile.width + Main.rand.Next(-5, 5), Projectile.height + Main.rand.Next(-5, 5), DustID.Water, Projectile.velocity.X, Projectile.velocity.Y, 100, Color.DarkGray, 1);
 					dust.velocity.Y /= 20;
-					dust.color = new Color(180, 180, 180);
+					//dust.color = new Color(180, 180, 180);
 					dust.noGravity = true;
-				}
+                    dust.shader = GameShaders.Armor.GetSecondaryShader(55, Main.LocalPlayer);
+                }
 				
 			}
 		}
         public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Slippery Hook");
+			// DisplayName.SetDefault("Slippery Hook");
 		}
 
 		public override void SetDefaults()

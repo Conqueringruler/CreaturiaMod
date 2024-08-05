@@ -21,7 +21,7 @@ namespace Creaturia.Projectiles
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.SandBallFalling;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gravity Gloop");
+			// DisplayName.SetDefault("Gravity Gloop");
 		}
 		private int sparkletimer;
 		private int ExplodeTimer;

@@ -27,7 +27,7 @@ namespace Creaturia.NPCs.Creatures
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.FlyingFish;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Fae");
+			// DisplayName.SetDefault("Fae"); // Testing porting source code
 			Main.npcCatchable[NPC.type] = true;
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.FlyingFish];
 		}

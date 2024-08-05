@@ -17,7 +17,7 @@ namespace Creaturia.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("The Ninja's Shuriken");
+			// DisplayName.SetDefault("The Ninja's Shuriken");
 		}
 		private int ExplodeTimer;
 		public override void SetDefaults()

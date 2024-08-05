@@ -13,9 +13,9 @@ namespace Creaturia.Items.Consumables.Fishing
 	{
 		public override void SetStaticDefaults()
         {
-			DisplayName.SetDefault("Ichorous Steak");
-			Tooltip.SetDefault("'!'\n" +
-												  "Use in the Crimson"); 
+			// DisplayName.SetDefault("Ichorous Steak");
+			/* Tooltip.SetDefault("'!'\n" +
+												  "Use in the Crimson"); */ 
         }
 
 		public override void SetDefaults()
@@ -25,7 +25,7 @@ namespace Creaturia.Items.Consumables.Fishing
 			Item.maxStack = 9;
 			Item.consumable = true;
 			Item.value = Item.sellPrice(0, 15, 0, 0);
-			Item.bait = -1;
+			Item.bait = 1;
 			
 		}
        

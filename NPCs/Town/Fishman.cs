@@ -90,7 +90,7 @@ namespace Creaturia.NPCs.Town
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.5f;
-            NPC.stepSpeed = 10f;
+            NPC.stepSpeed = 5f;
 
         }
         int eatinganimationtimer;
@@ -171,7 +171,7 @@ namespace Creaturia.NPCs.Town
                 {
                     NPC.frame.Y = 0 * frameHeight;
 
-                    CreaturiaPlayer.playeatinganimation = false;
+                    CreaturiaPlayer.playeatinganimation = false; // Doesn't work in pause but idc
                      endanimation = true;
                     AnimationType = NPCID.SkeletonMerchant;
                 }
@@ -336,7 +336,7 @@ namespace Creaturia.NPCs.Town
                 "Flotsom",
                 "Walleye",
                 "Shellton",
-                "Scaly Pete",
+               // "Scaly Pete",
                 "Triton",
                 "Fishstick",
                 "Buckets",
@@ -359,7 +359,7 @@ namespace Creaturia.NPCs.Town
             {
                 return "Me hearty " + Main.npc[pirate].GivenName + " and I go way back, although he've always been a bit 'loaded to the gunwales', ivv you knows what I mean.";
             }
-            if (Main.moonPhase == 5 && Main.rand.NextBool(4))
+            if (Main.hardMode && Main.rand.NextBool(4))
             {
                 return "Yous seems like the adventurin' type, so maybees you'll be interested in my *Snort* magicals bait. Theys only work in powerful places, so I hear.";
             }
@@ -379,6 +379,7 @@ namespace Creaturia.NPCs.Town
                     return "Fresh fish. Easy choose.";
                 case 6:
                     return "Summs of those fish from the evil ain't the friendliest, so bees careful fishin' thurr.";
+                    
                 default:
                     return "*Snort* whats havve ye pulled meself up for?";
             }
@@ -391,7 +392,7 @@ namespace Creaturia.NPCs.Town
 
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
             {
@@ -403,7 +404,7 @@ namespace Creaturia.NPCs.Town
             }
         }
         int checkwhichbait;
-        public override void SetupShop(Chest shop, ref int nextSlot)
+        public override void ModifyActiveShop(string shopName, Item[] items)
         {
             shop.item[nextSlot].SetDefaults(ModContent.ItemType<ElectricEel>());
             shop.item[nextSlot].shopCustomPrice = 1;

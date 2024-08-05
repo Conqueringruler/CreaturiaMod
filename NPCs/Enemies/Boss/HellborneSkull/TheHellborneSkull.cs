@@ -26,7 +26,7 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("The Hellborne Skull");
+			// DisplayName.SetDefault("The Hellborne Skull");
 			Main.npcFrameCount[NPC.type] = 6;
 
 		}
@@ -101,34 +101,43 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MoltenBone>(), 50, 0, 7));
 
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
 		{
 			target.AddBuff(BuffID.ShadowFlame, 350);
 
 		}
-		public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit)
+		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
 		{
 			if (Main.rand.NextFloat() < .1000f)
 				NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 30 * NPC.direction, (int)NPC.Center.Y + 14, ModContent.NPCType<HellborneSkullMinion>(), ai0: NPC.direction);
 			
 		}
-		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit)
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
 		{
 			if (Main.rand.NextFloat() < .1000f)
 				NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 30 * NPC.direction, (int)NPC.Center.Y + 14, ModContent.NPCType<HellborneSkullMinion>(), ai0: NPC.direction);
 			
 		}
-		public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
 		{
-			NPC.damage = 100;
-			NPC.lifeMax = 80000;
-			NPC.defense = 45;
+			//NPC.damage = 100;
+			NPC.lifeMax = (int)(80000 * balance);
+			//NPC.defense = 45;
 		}
+		bool ChatMessageSaidYet = false;
 		
 		public override void AI()
 		{
 			Lighting.AddLight(NPC.Center, Color.BlueViolet.ToVector3() * 10f);
+			if (ChatMessageSaidYet == false)
+            {
+				if (Main.netMode != NetmodeID.MultiplayerClient)
+				{
+					Main.NewText("As you can probably tell, this is an old boss from my 1.3 mod. It's only here as an unobtainable placeholder while the rework stays in stasis. ", Color.BlueViolet);
+				}
+				ChatMessageSaidYet = true;
 
+            }
 			Player player = Main.player[NPC.target];
 			if (NPC.target < 0 || NPC.target == 255 || player.dead || !player.active)
 			{
@@ -209,18 +218,22 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 				Vector2 direction = (target.Center - NPC.Center).SafeNormalize(Vector2.UnitX);
 				Vector2 directionangle = (target.Center - NPC.Left).SafeNormalize(Vector2.UnitX);
 				Vector2 directionangle2 = (target.Center - NPC.Right).SafeNormalize(Vector2.UnitX);
+
 				Timer2++;
 				if (Timer2 > 400)
 				{
-					int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 16, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 17, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 18, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 15, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 14, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 13, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 12, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 11, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 10, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 16, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 17, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 18, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 15, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 14, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 13, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 12, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 11, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 10, ModContent.ProjectileType<HellborneSkullProj>(), 15, 0, Main.myPlayer);
+					}
 
 					Timer2 = 0;
 				}
@@ -245,7 +258,7 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 						dust = Dust.NewDust(NPC.position - new Vector2(8f, 8f), NPC.width + 4, NPC.height + 4, DustID.SparksMech, 3f, 3f, 0, Color.DeepSkyBlue);
 						dust = Dust.NewDust(NPC.position - new Vector2(3f, 6f), NPC.width + 14, NPC.height + 5, DustID.SparksMech, 1f, 5f, 0, Color.DeepSkyBlue);
 
-
+						NPC.netUpdate = true;
 						NPC.velocity.X *= 5;
 						NPC.velocity.Y *= 5;
 						DashTimer = 0;
@@ -256,20 +269,23 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 				Timer3++;
 				if (Timer3 > 300)
 				{
-
-					int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 46, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle * 45, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle2 * 45, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
-
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 46, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle * 45, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle2 * 45, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
+					}
 					Timer3 = 0;
 				}
 				Timer4++;
 				if (Timer4 > 120)
 				{
-
-					int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 46, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle * 45, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle2 * 44, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 46, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle * 45, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle2 * 44, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
+					}
 					SoundEngine.PlaySound(SoundID.Item15);
 
 					Timer4 = 0;
@@ -277,9 +293,12 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 				Timer++;
 				if (Timer > 130)
 				{
-					int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 46, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle * 45, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle2 * 45, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, direction * 46, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle * 45, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Bottom, directionangle2 * 45, ProjectileID.CultistBossFireBallClone, 25, 0, Main.myPlayer);
+					}
 
 					Timer = 0;
 				}
@@ -293,8 +312,11 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 					}
 					else
 					{
-						NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 30 * NPC.direction, (int)NPC.Center.Y + 14, ModContent.NPCType<HellborneGuardian>(), ai0: NPC.direction);
-						NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 30 * NPC.direction, (int)NPC.Center.Y + 14, ModContent.NPCType<HellborneGuardian>(), ai0: NPC.direction);
+						if (Main.netMode != NetmodeID.MultiplayerClient)
+						{
+							NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 30 * NPC.direction, (int)NPC.Center.Y + 14, ModContent.NPCType<HellborneGuardian>(), ai0: NPC.direction);
+							NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + 30 * NPC.direction, (int)NPC.Center.Y + 14, ModContent.NPCType<HellborneGuardian>(), ai0: NPC.direction);
+						}
 					}
 
 
@@ -393,7 +415,7 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.DD2BetsyFireball;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hellborne Skull Fireball");
+			// DisplayName.SetDefault("Hellborne Skull Fireball");
 		}
 
 		public override void SetDefaults()
@@ -423,7 +445,7 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 			return new Color(10, 30, 255);
 		}
 
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo info)
 		{
 			target.AddBuff(BuffID.ShadowFlame, 180, true);
 		}
@@ -435,7 +457,7 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Flaming Skull");
+			// DisplayName.SetDefault("Flaming Skull");
 
 		}
 

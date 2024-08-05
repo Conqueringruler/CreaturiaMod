@@ -12,8 +12,8 @@ namespace Creaturia.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault(""); 
-			Tooltip.SetDefault("Lore on this item: basically I just needed an item with a blank sprite for rendering the Spectral Watchman's life values");
+			// DisplayName.SetDefault(""); 
+			// Tooltip.SetDefault("Lore on this item: basically I just needed an item with a blank sprite for rendering the Spectral Watchman's life values");
 		}
 
 		public override void SetDefaults()

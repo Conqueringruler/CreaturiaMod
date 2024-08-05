@@ -22,7 +22,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("");
+			// DisplayName.SetDefault("");
 			Main.npcFrameCount[NPC.type] = 4;
 
 

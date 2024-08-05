@@ -19,7 +19,7 @@ namespace Creaturia.Items.Weapon
 
 	// 
 
-
+	/*
 
 	public class LumpEye : ModProjectile
 	{
@@ -49,7 +49,7 @@ namespace Creaturia.Items.Weapon
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Flagrant Eye");
+			// DisplayName.SetDefault("Flagrant Eye");
 
 			// These lines facilitate the trail drawing
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;
@@ -163,11 +163,7 @@ namespace Creaturia.Items.Weapon
 							StateTimer = 0f;
 							Projectile.netUpdate = true;
 							Projectile.velocity *= 0.2f;
-							// This is where Drippler Crippler spawns its projectile
-							/*
-							if (Main.myPlayer == Projectile.owner)
-								Projectile.NewProjectile(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Projectile.velocity, 928, Projectile.damage, Projectile.knockBack, Main.myPlayer);
-							*/
+							
 							break;
 						}
 						if (shouldSwitchToRetracting)
@@ -308,27 +304,15 @@ namespace Creaturia.Items.Weapon
 			Projectile.ownerHitCheck = shouldOwnerHitCheck; // This prevents attempting to damage enemies without line of sight to the player. The custom Colliding code for spinning makes this necessary.
 
 			// This rotation code is unique to this flail, since the sprite isn't rotationally symmetric and has tip.
-			bool freeRotation = CurrentAIState == AIState.Ricochet || CurrentAIState == AIState.Dropping;
-			if (freeRotation)
-			{
-				if (Projectile.velocity.Length() > 1f)
-					Projectile.rotation = Projectile.velocity.ToRotation() + Projectile.velocity.X * 0.1f; // skid
-				else
-					Projectile.rotation += Projectile.velocity.X * 0.1f; // roll
-			}
-			else
-			{
-				Vector2 vectorTowardsPlayer = Projectile.DirectionTo(mountedCenter).SafeNormalize(Vector2.Zero);
-				Projectile.rotation = vectorTowardsPlayer.ToRotation() + MathHelper.PiOver2;
-			}
+			
 
 			// If you have a ball shaped flail, you can use this simplified rotation code instead
-			/*
+			
 			if (Projectile.velocity.Length() > 1f)
 				Projectile.rotation = Projectile.velocity.ToRotation() + Projectile.velocity.X * 0.1f; // skid
 			else
 				Projectile.rotation += Projectile.velocity.X * 0.1f; // roll
-			*/
+			
 
 			Projectile.timeLeft = 2; // Makes sure the flail doesn't die (good when the flail is resting on the ground)
 			player.heldProj = Projectile.whoAmI;
@@ -452,7 +436,7 @@ namespace Creaturia.Items.Weapon
 			return base.Colliding(projHitbox, targetHitbox);
 		}
 
-		public override void ModifyDamageScaling(ref float damageScale)
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			// Flails do 20% more damage while spinning
 			if (CurrentAIState == AIState.Spinning)
@@ -466,7 +450,7 @@ namespace Creaturia.Items.Weapon
 			}
 		}
 
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			// Flails do a few custom things, you'll want to keep these to have the same feel as vanilla flails.
 
@@ -575,5 +559,5 @@ namespace Creaturia.Items.Weapon
 			}
 			return true;
 		}
-	}
+	} */
 }

@@ -26,7 +26,7 @@ namespace Creaturia.NPCs.Misc
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Gravity Flower");
+			// DisplayName.SetDefault("Gravity Flower");
 
 		}
 
@@ -41,7 +41,7 @@ namespace Creaturia.NPCs.Misc
 			//NPC.DeathSound = SoundID.Item;
 			NPC.noGravity = true;
 			NPC.noTileCollide = false;
-			
+			NPC.rarity = 2;
 			NPC.knockBackResist = 1f;
 			NPC.ShowNameOnHover = false;
 			NPC.lavaImmune = false;
@@ -192,7 +192,7 @@ namespace Creaturia.NPCs.Misc
 				new FlavorTextBestiaryInfoElement("This ancient plant grows anti-gravity juice. Awesome!")
 			});
 		}
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 
 			if (NPC.life <= 0)

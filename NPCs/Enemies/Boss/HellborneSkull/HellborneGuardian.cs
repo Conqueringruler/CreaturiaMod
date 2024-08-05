@@ -13,7 +13,7 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hellborne Guardian");
+			// DisplayName.SetDefault("Hellborne Guardian");
 
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{

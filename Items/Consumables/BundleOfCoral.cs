@@ -21,9 +21,9 @@ namespace Creaturia.Items.Consumables
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bundle of Coral");
-			Tooltip.SetDefault("Lots of seashells and thingamabobs are stuck inside! \n" +
-						"{$CommonItemTooltip.RightClickToOpen}"); // References a language key that says "Right Click To Open" in the language of the game
+			// DisplayName.SetDefault("Bundle of Coral");
+			/* Tooltip.SetDefault("Lots of seashells and thingamabobs are stuck inside! \n" +
+						"{$CommonItemTooltip.RightClickToOpen}"); */ // References a language key that says "Right Click To Open" in the language of the game
 
 		
 

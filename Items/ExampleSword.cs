@@ -9,7 +9,7 @@ namespace Creaturia.Items
 		public override void SetStaticDefaults() 
 		{
 			// I might as well leave 
-			Tooltip.SetDefault("Every mod needs to start with the Example Sword.");
+			// Tooltip.SetDefault("Every mod needs to start with the Example Sword.");
 		}
 
 		public override void SetDefaults() 

@@ -15,7 +15,7 @@ namespace Creaturia.Projectiles.EnemyMelee
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Vile Spit");
+			// DisplayName.SetDefault("Vile Spit");
 		}
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.EyeballFlyingFish;
 		public override void SetDefaults()

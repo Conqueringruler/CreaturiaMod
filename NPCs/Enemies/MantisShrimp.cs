@@ -17,7 +17,7 @@ namespace Creaturia.NPCs.Creatures
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Mantis Shrimp"); //canceled this NPC since Calamity already has a fucking mantis shrimp. and theirs is mid. im so malding rn
+			// DisplayName.SetDefault("Mantis Shrimp"); //canceled this NPC since Calamity already has a fucking mantis shrimp. and theirs is mid. im so malding rn
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Hide = true
@@ -52,7 +52,7 @@ namespace Creaturia.NPCs.Creatures
 
 		
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (NPC.life <= 0)
 			{

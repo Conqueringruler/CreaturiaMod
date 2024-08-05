@@ -8,8 +8,8 @@ namespace Creaturia.Items.Weapon
 	{
 		public override void SetStaticDefaults()
 		{
-			 DisplayName.SetDefault("Flagrant Eye"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-			Tooltip.SetDefault("'It's the Eye of the luuumpfiish'");
+			 // DisplayName.SetDefault("Flagrant Eye"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
+			// Tooltip.SetDefault("'It's the Eye of the luuumpfiish'");
 		}
 
 		public override void SetDefaults()

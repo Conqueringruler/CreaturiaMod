@@ -11,9 +11,9 @@ namespace Creaturia.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hellborne Skull & Golem are weak to this weapon!"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-			Tooltip.SetDefault("I wonder if\n" +
-									"this tooltip will be there too");
+			// DisplayName.SetDefault("Hellborne Skull & Golem are weak to this weapon!"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
+			/* Tooltip.SetDefault("I wonder if\n" +
+									"this tooltip will be there too"); */
 		}
 
 		public override void SetDefaults()

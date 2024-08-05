@@ -20,6 +20,7 @@ using Creaturia.NPCs.Creatures;
 using Creaturia.Projectiles;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader.Utilities;
+using System.IO;
 
 namespace Creaturia.NPCs.Town
 {
@@ -47,7 +48,7 @@ namespace Creaturia.NPCs.Town
             NPCID.Sets.AttackTime[NPC.type] = 15;
             NPCID.Sets.AttackAverageChance[NPC.type] = 8;
             // NPCID.Sets.HatOffsetY[NPC.type] = 4;
-            DisplayName.SetDefault("Spectral Mirrorman");
+            // DisplayName.SetDefault("Spectral Mirrorman");
            // NPCID.Sets.SpawnsWithCustomName[Type] = false; // So it chooses a name like a townnpc since it isnt actually one. I want to try this with a hostile NPC and see what happens
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
 
@@ -85,6 +86,17 @@ namespace Creaturia.NPCs.Town
         int NPCwidth;
         int NPCheight;
         NPC guideNPC;
+        bool DespawnBecauseDuplicate = false;
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(DespawnBecauseDuplicate);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            DespawnBecauseDuplicate = reader.ReadBoolean();
+        }
         public override void AI()
         {
             
@@ -130,18 +142,35 @@ namespace Creaturia.NPCs.Town
                 }, NPC.position + new Vector2(0, -15));
                 } */
 
-            if (NPC.CountNPCS(ModContent.NPCType<SpectralWatchman>()) > 100)
+            if (NPC.CountNPCS(ModContent.NPCType<SpectralWatchman>()) > 1)
             {
-
-                Dust dust;
-                for (int i = 0; i < 10; i++)
+                if (Main.rand.NextBool(5))
                 {
-                    dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-15, 15)), NPC.width, NPC.height, DustID.Electric, Main.rand.Next(-8, 8), Main.rand.Next(-8, 8), 0, new Color(255, 0, 133), 1f);
-                    dust.noGravity = true; dust.shader = GameShaders.Armor.GetSecondaryShader(41, Main.LocalPlayer);
-                    dust.fadeIn = 1.0116279f;
+                    
+                    
+                   
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        
+                        NPC.netUpdate = true;
+                        DespawnBecauseDuplicate = true;
+                    }
                 }
-
-                NPC.active = false;
+                if (DespawnBecauseDuplicate)
+                {
+                    Dust dust;
+                    for (int i = 0; i < 10; i++)
+                    {
+                        dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-10, 10), Main.rand.Next(-15, 15)), NPC.width, NPC.height, DustID.Electric, Main.rand.Next(-8, 8), Main.rand.Next(-8, 8), 0, new Color(255, 0, 133), 1f);
+                        dust.noGravity = true; dust.shader = GameShaders.Armor.GetSecondaryShader(41, Main.LocalPlayer);
+                        dust.fadeIn = 1.0116279f;
+                    }
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        NPC.active = false;
+                        NPC.netUpdate = true;
+                    }
+                }
             }
 
             //CoolEffectTimer++;
@@ -171,22 +200,27 @@ namespace Creaturia.NPCs.Town
                 "Spectral Mirrorman",
             };
         }
-
+        int ChatsHad;
         public override string GetChat()
         {
+            ChatsHad += 1;
             int guide = NPC.FindFirstNPC(NPCID.Guide);
             int wizard = NPC.FindFirstNPC(NPCID.Wizard);
-            if (guide >= 0 && Main.rand.NextBool(7))
+            if (guide > 0 && Main.rand.NextBool(7))
             {
                 return "Judgyyng by myyy, for lack of a better word, 'freedom', I find it safe to assume you've learned the truth about '" + Main.npc[NPC.FindFirstNPC(NPCID.Guide)].GivenName + "', haven't you?";
             }
-            if (wizard >= 0 && Main.rand.NextBool(7))
+            if (wizard > 0 && Main.rand.NextBool(7))
             {
                 return "Ahh, " + Main.npc[NPC.FindFirstNPC(NPCID.Wizard)].GivenName + ". I've seen him try his best to understand the powers of this place, but I'm afraid it's something he could never truly understand.";
             }
             if (Main.moonPhase == 5 && Main.rand.NextBool(4))
             {
                 return "Some say that during a full moon, if you stare hard enough, you may see a great figure squirming about upon its surface. What do you think about that?";
+            }
+            if (ChatsHad > 2 && Main.rand.NextBool(5))
+            {
+                return "My dream is nearly within my grasp.";
             }
             switch (Main.rand.Next(7))
             {
@@ -200,13 +234,16 @@ namespace Creaturia.NPCs.Town
                     return "Ahh, I can tell. You were the one that set us free, weren't you?";
                 case 4:
                     return "Ahh, I can tell. You are the one who set us free, aren't you?";
+                // case 5:
+                //    return "Something of mine has been lost - something you might call a sundial.";
                 case 5:
-                    return "Something of mine has been lost - something you might call a sundial.";
+                   return "If only you knew how useful you are.";
                 case 6:
                     return "Is my... appearance, unsettling to you? My apologies, I simply trieed to appear as something you might find... comforting.";
                 default:
                     return "";
             }
+            
         }
 
        
@@ -219,7 +256,7 @@ namespace Creaturia.NPCs.Town
             button2 = "Gaze into mirror...";
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
             {

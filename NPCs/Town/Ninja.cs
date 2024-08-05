@@ -85,9 +85,9 @@ namespace Creaturia.NPCs.Town
             AnimationType = NPCID.Guide;
         }
         public override bool CanGoToStatue(bool toKingStatue) => true;
-        public override bool CanTownNPCSpawn(int numTownNPCs, int money)
+      /*  public override bool CanTownNPCSpawn(int numTownNPCs, int money)
         {
-            for (int k = 0; k < 255; k++) // I wish I knew what the fuck this does
+            for (int k = 0; k < 255; k++)
             {
                 Player player = Main.player[k];
                 if (!player.active)
@@ -103,7 +103,7 @@ namespace Creaturia.NPCs.Town
                 
             }
             return false;
-        }
+        } */
 
         public override List<string> SetNPCNameList()
         {
@@ -114,6 +114,7 @@ namespace Creaturia.NPCs.Town
                 "Hihona",
                 "Miyamoto",
                 "Isayama",
+                "Hiroyuki",
                 "Iwata",
                 "Yamauchi",
                 "Kaneda",
@@ -121,36 +122,88 @@ namespace Creaturia.NPCs.Town
                 "Takuya Yamashiro"
             };
         }
-        
+
         public override string GetChat()
         {
             Player player = Main.LocalPlayer;
             int angler = NPC.FindFirstNPC(NPCID.Angler);
-            if (angler >= 0 && Main.rand.NextBool(6))
+            int merchant = NPC.FindFirstNPC(NPCID.Merchant);
+            if (angler >= 0 && Main.rand.NextBool(8))
             {
-                return "Keep " + Main.npc[angler].GivenName + " away from me. Where I come from kids like that would have been straightened out. ";
+                return "" + Main.npc[angler].GivenName + " is a disappointment to his lineage. Where I come from kids like that would have been straightened out. ";
             }
+            if (merchant >= 0 && Main.rand.NextBool(8))
+            {
+                return "The greed of " + Main.npc[merchant].GivenName + " disgusts me.";
+            }
+          
             if (Main.LocalPlayer.HasItem(ItemID.Tabi) && Main.rand.NextBool(3))
             {
-                return "I'd be happy to turn that Tabi into a Black Belt. What most people don't know is that they're actually the same thing, just folded differently.";
+                return "I'd be happy to turn that Tabi into a Black Belt. What most people don't know is that they're actually the same thing, just folded differently. The technique to fold them is secret though.";
             }
-                if (Main.LocalPlayer.HasItem(ItemID.BlackBelt) && Main.rand.NextBool(3))
+            if (Main.LocalPlayer.HasItem(ItemID.BlackBelt) && Main.rand.NextBool(3))
+            {
+                return "I'd be happy to turn that Black Belt into a Tabi. What most people don't know is that they're actually the same thing, just folded differently. The technique to fold them is secret though.";
+            }
+            if (BirthdayParty.PartyIsUp && Main.rand.NextBool(3))
+            {
+                return "What? You expect me to take off my helmet for the party? That will not happen.";
+            }
+            if (player.ZoneHallow && Main.rand.NextBool(4))
+            {
+                if (Main.rand.NextBool(2))
                 {
-                    return "I'd be happy to turn that Black Belt into a Tabi. What most people don't know is that they're actually the same thing, just folded differently.";
+                    return "How am I supposed to be stealthy in a place where everything glows?";
                 }
-                if (BirthdayParty.PartyIsUp && Main.rand.NextBool(3))
-            {
-                return "What? You expect me to take off my helmet for the party? Not happening.";
+                else
+                {
+                    return "Please take me out of this place. ";
+                }
+
             }
-               if (player.ZoneHallow && Main.rand.NextBool(4))
-            {
-                return "How am I supposed to be stealthy in a place where everything glows and has magical powers?";
-            }
-            if (player.ZoneSnow && Main.rand.NextBool(4))
+            if (player.ZoneSnow && Main.rand.NextBool(6))
             {
                 return "The snow here reminds me of a prefecture I lived in for a while. It's very soothing. ";
             }
-            switch (Main.rand.Next(8))
+            if (Main.rand.NextBool(6))
+            {
+
+
+
+            
+            Point point = NPC.Center.ToTileCoordinates();
+            Rectangle value = new Rectangle(point.X, point.Y, 1, 1);
+            value.Inflate(25, 25);
+            int num = 40;
+            Rectangle value2 = new Rectangle(0, 0, Main.maxTilesX, Main.maxTilesY);
+            value2.Inflate(-num, -num);
+            value = Rectangle.Intersect(value, value2);
+            int num2 = -1;
+            float num3 = -1f;
+            for (int i = value.Left; i <= value.Right; i++)
+            {
+                for (int j = value.Top; j <= value.Bottom; j++)
+                {
+
+                    Tile tile = Main.tile[i, j];
+                    //if (tile == null || !tile.HasTile || TileID.BlueDynastyShingles != tile.TileType || TileID.RedDynastyShingles != tile.TileType)
+                    // {
+
+                    // }
+
+                    if (tile.TileType == TileID.BlueDynastyShingles || tile.TileType == TileID.RedDynastyShingles)
+                    {
+
+                        return "The shingles here are truly beautiful. Reminds me of my old home. ";
+
+                    }
+                    // return "The shingles here are truly beautiful. Reminds me of my home. ";
+                }
+
+            }
+        }
+
+            switch (Main.rand.Next(9))
             {
                 case 0:
                     return "Thank you from freeing me from that beast. I'll ignore that you stole some of my extra clothes.";
@@ -159,15 +212,18 @@ namespace Creaturia.NPCs.Town
                 case 2:
                     return "That angler kid is a little brat, back in my day we'd be beaten with katanas for treating superiors like that.";
                 case 3:
-                    return "一部のねえ、私はねえ、私はあなたが私たちが金属のたわごとを鉱山20サドルに金属化するのが好きではありません。 You didn't understand a word I said, did you?.";
+                   //  return "一部のねえ、私はねえ、私はあなたが私たちが金属のたわごとを鉱山20サドルに金属化するのが好きではありません。 You didn't understand a word I said, did you?.";
+                 return "正表示, 願部私, 金属鉱山。You didn't understand a word I said, did you?.";
                 case 4:
                     return "It's nice to see another determined warrior out here, even though I've fallen far. Sigh.";
                 case 5:
-                    return "...Queen Slime... ahaha hey there";
+                    return "...Queen Slime... oh hey " + Main.LocalPlayer.name + ", I didn't see you there, haha... ha...";
                 case 6:
                     return "I hate slimes.";
                 case 7:
-                    return "You can see I don't sell all the products my homeland produces, so if there's something you need, it may often arrive from a merchant - a traveling merchant.";
+                    return "You can see I don't sell all the products my homeland produces, so if there's something you need, it may often arrive from a merchant - perhaps a traveling merchant.";
+                case 8:
+                    return "";
                 default:
                     return "I hate slimes.";
             }
@@ -191,7 +247,7 @@ namespace Creaturia.NPCs.Town
         }
         Item BlackBeltItemItem = new Item(ItemID.BlackBelt, 1, 0);
         Item TabiItemItem = new Item(ItemID.Tabi, 1, 0);
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
             {
@@ -207,9 +263,9 @@ namespace Creaturia.NPCs.Town
                     
                     SoundEngine.PlaySound(SoundID.Coins);
                     Main.LocalPlayer.inventory[TabiItem].TurnToAir();
-                    Main.LocalPlayer.QuickSpawnClonedItem(NPC.GetSource_GiftOrReward(), BlackBeltItemItem, 1);
+                    Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(), BlackBeltItemItem, 1);
 
-
+                    
 
                 }
                 else if (Main.LocalPlayer.HasItem(ItemID.BlackBelt))
@@ -224,7 +280,7 @@ namespace Creaturia.NPCs.Town
                     Main.LocalPlayer.inventory[BlackBeltItem].TurnToAir();
                     
                     
-                    Main.LocalPlayer.QuickSpawnClonedItem(NPC.GetSource_GiftOrReward(), TabiItemItem, 1);
+                    Main.LocalPlayer.QuickSpawnItem(NPC.GetSource_GiftOrReward(), TabiItemItem, 1);
                    
                     
                     
@@ -234,7 +290,7 @@ namespace Creaturia.NPCs.Town
 
         
 
-        public override void SetupShop(Chest shop, ref int nextSlot)
+        public override void ModifyActiveShop(string shopName, Item[] items)
         {
             shop.item[nextSlot].SetDefaults(ItemID.RedDynastyShingles);
             nextSlot++;
@@ -267,20 +323,7 @@ namespace Creaturia.NPCs.Town
             
 
 
-            if (NPC.downedBoss1)
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<ExampleSword>());
-                nextSlot++;
-                shop.item[nextSlot].shopCustomPrice = 180;
-                nextSlot++;
-            }
-            else
-            {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<ExampleSword>());
-                nextSlot++;
-                shop.item[nextSlot].shopCustomPrice = 90;
-                nextSlot++;
-            }
+          
         
             if (Main.hardMode)
             {
@@ -301,7 +344,7 @@ namespace Creaturia.NPCs.Town
             }
        
         }
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
             for (int i = 0; i < 10; i++)
             {
@@ -380,7 +423,7 @@ namespace Creaturia.NPCs.Town
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
 
 				// Sets your NPC's flavor text in the bestiary.
-				new FlavorTextBestiaryInfoElement("The Ninja, now freed from captivity, has opted to join in on ADD COOL DESCRIPTION."),
+				new FlavorTextBestiaryInfoElement("The Ninja, now freed from captivity, has chosen to stay in the land of Terraria."),
 
             });
         }

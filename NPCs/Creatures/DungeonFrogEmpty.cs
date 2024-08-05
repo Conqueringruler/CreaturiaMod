@@ -8,6 +8,7 @@ using static Terraria.ModLoader.ModContent;
 using static Terraria.ModLoader.PlayerDrawLayer;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Creaturia.NPCs.Creatures
 {
@@ -15,16 +16,17 @@ namespace Creaturia.NPCs.Creatures
 	{
 
 
-		public override string Texture => "Terraria/Images/NPC_" + NPCID.Frog;
+		
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dungeon Frog");
+			// DisplayName.SetDefault("Ectoad");
 			Main.npcCatchable[NPC.type] = false;
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Frog];
 			NPCID.Sets.CountsAsCritter[Type] = true;
-			NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[NPC.type] = true;
+			//NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[NPC.type] = false;
 			//Main.npcCatchable[Type] = false;
+			
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
@@ -34,9 +36,9 @@ namespace Creaturia.NPCs.Creatures
 		}
 		public override void SetDefaults()
 		{
-
-			NPC.width = 8;
-			NPC.height = 28;
+            AIType = NPCID.Frog;
+            NPC.width = 8;
+			NPC.height = 8;
 			NPC.damage = 10;
 			NPC.defense = 0;
 			NPC.lifeMax = 5;
@@ -46,7 +48,7 @@ namespace Creaturia.NPCs.Creatures
 			//NPC.catchItem = (short)ItemType<JackrabbitItem>();
 			NPC.lavaImmune = false;
 			NPC.aiStyle = 7;
-			NPC.friendly = true;
+			NPC.dontTakeDamageFromHostiles = true;
 			//NPC.dontTakeDamageFromHostiles = true;
 			AnimationType = NPCID.Frog;
 			NPC.ShowNameOnHover = true;
@@ -58,26 +60,33 @@ namespace Creaturia.NPCs.Creatures
 			base.AI();
 			Lighting.AddLight(NPC.Center, Color.BlueViolet.ToVector3() * 0.6f);
 		}
-		
 
 
-		public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+			return false;
+        }
+        public override bool CanHitNPC(NPC target)/* tModPorter Suggestion: Return true instead of null */
+        {
+			return false;
+        }
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 
 
 
 			if (NPC.downedPlantBoss == true)
             {
-				return SpawnCondition.Dungeon.Chance * 0.05f;
+				return SpawnCondition.Dungeon.Chance * 0.02f;
 			}
 			else return SpawnCondition.Dungeon.Chance * 0f;
 		}
 		
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (NPC.life <= 0)
 			{
-				for (int i = 0; i < 10; i++)
+				for (int i = 0; i < 20; i++)
                 {
 					Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.BlueTorch, NPC.velocity.X, NPC.velocity.Y, 30);
 				}

@@ -16,7 +16,7 @@ namespace Creaturia.Projectiles.EnemyMelee
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Queen Slime");
+			// DisplayName.SetDefault("Queen Slime");
 			Projectile.width = 560;
 			Projectile.height = 540;
 		}

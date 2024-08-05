@@ -40,12 +40,12 @@ namespace Creaturia.NPCs.Enemies.Boss
 		{
 			if (NPC.downedHalloweenKing)
             {
-				DisplayName.SetDefault("Golem Fist");
+				// DisplayName.SetDefault("Golem Fist");
 			}
 			
 			if (NPC.downedHalloweenKing == false)
             {
-				DisplayName.SetDefault("Fist of Fright");
+				// DisplayName.SetDefault("Fist of Fright");
 			}
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
@@ -423,16 +423,16 @@ namespace Creaturia.NPCs.Enemies.Boss
 
 
 		}
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
-			target.AddBuff(BuffID.OnFire3, 1600);
-			target.AddBuff(BuffID.OnFire, 1600);
+			
+			target.AddBuff(BuffID.OnFire, 600);
 
 			if (Main.expertMode || Main.masterMode)
             {
 				if (Main.rand.NextBool(3))
 				{ 
-					target.AddBuff(BuffID.Slow, 300);
+					target.AddBuff(BuffID.Slow, 100);
 				}
 
 			}

@@ -32,8 +32,15 @@ namespace Creaturia.Items.GlobalItems
         //{
         //  item.material = true;
         //  }
-        
-        
+        public override void UpdateEquip(Item item, Player player)
+        {
+            if (item.type == ItemID.VikingHelmet)
+            {
+                player.npcTypeNoAggro[NPCID.UndeadViking] = true; // in globalNPCs I add the check for them being at full health, if not they attack again
+                player.npcTypeNoAggro[NPCID.ArmoredViking] = true;
+            }
+        }
+
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             //TooltipLine line;
@@ -46,7 +53,12 @@ namespace Creaturia.Items.GlobalItems
             {
                 tooltips.Add(new TooltipLine(Mod, "Tooltip#0", "Enemies hit while the player is hooked will be poisoned for 5 seconds"));
             }
-           
+
+            if (item.type == ItemID.VikingHelmet)
+            {
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#0", "When worn Undead Vikings and Armored Vikings no longer target you"));
+            }
+
             if (item.type == ItemID.GolemFist)
 
             {
@@ -131,7 +143,7 @@ namespace Creaturia.Items.GlobalItems
                 item.type == ItemID.JackOLanternLauncher || item.type == ItemID.ScytheWhip || item.type == ItemID.StakeLauncher || item.type == ItemID.Razorpine || item.type == ItemID.BlizzardStaff
                 || item.type == ItemID.NorthPole || item.type == ItemID.SnowmanCannon)
             {
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#1", $"[i:{ModContent.ItemType<HellborneIcon>()}] [c/8b82e7:Hellborne Skull & Golem are weak to this weapon.]"));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#1", $"[i:{ModContent.ItemType<HellborneIcon>()}] [c/8b82e7:Golem is weak to this weapon.]"));
             }
         }
 

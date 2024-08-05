@@ -16,7 +16,7 @@ namespace Creaturia.Projectiles.EnemyMelee
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Empress of Light");
+			// DisplayName.SetDefault("Empress of Light");
 
 		}
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.EyeballFlyingFish;

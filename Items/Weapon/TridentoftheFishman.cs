@@ -28,11 +28,11 @@ namespace Creaturia.Items.Weapon
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Trident of the Fishman"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-			Tooltip.SetDefault("Chance of summoning ghostly tridents on hitting an enemy\n" +
+			// DisplayName.SetDefault("Trident of the Fishman"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
+			/* Tooltip.SetDefault("Chance of summoning ghostly tridents on hitting an enemy\n" +
 							" Right-click to activate his blessing. \n" +
 							   "Stats increased while wet \n" +
-							   "'with goodly trident'");
+							   "'with goodly trident'"); */
 			ItemID.Sets.Spears[Item.type] = true;
 			
 		}
@@ -85,7 +85,7 @@ namespace Creaturia.Items.Weapon
 			if (rightclickready == true && rightclickplayedsound == false)
             {
 				SoundEngine.PlaySound(SoundID.Item9, player.position);
-				CombatText.NewText(Main.LocalPlayer.Hitbox, Color.LightBlue, "Fishman's Blessing is ready!");
+				CombatText.NewText(player.Hitbox, Color.LightBlue, "Fishman's Blessing is ready!");
 				var dust = Dust.NewDustDirect(player.position + new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5)), player.width, player.height, DustID.WaterCandle, player.velocity.X * Main.rand.Next(-2, 2), player.velocity.Y * Main.rand.Next(-2, 2), 60, Color.Gold, Main.rand.NextFloat(0.3f, 1.5f));
 
 				for (int i = 0; i < 10; i++)
@@ -147,7 +147,7 @@ namespace Creaturia.Items.Weapon
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Trident of the Fishman");
+			// DisplayName.SetDefault("Trident of the Fishman");
 		}
 		private int DustTimer;
 		public override void SetDefaults()
@@ -227,7 +227,7 @@ namespace Creaturia.Items.Weapon
 
 
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if (Main.rand.NextBool(12))
 			{
@@ -265,7 +265,7 @@ namespace Creaturia.Items.Weapon
 		{
 			public override void SetStaticDefaults()
 			{
-				DisplayName.SetDefault("Trident of the Fishman");
+				// DisplayName.SetDefault("Trident of the Fishman");
 			}
 			private int FadeTimer;
 			private int dusttimer;

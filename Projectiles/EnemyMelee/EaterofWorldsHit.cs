@@ -15,7 +15,7 @@ namespace Creaturia.Projectiles.EnemyMelee
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Eater of Worlds");
+			// DisplayName.SetDefault("Eater of Worlds");
 		}
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.EyeballFlyingFish;
 		public override void SetDefaults()

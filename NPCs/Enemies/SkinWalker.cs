@@ -27,7 +27,7 @@ namespace Creaturia.NPCs.Enemies
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Skinwalker");
+			// DisplayName.SetDefault("Skinwalker");
 			Main.npcFrameCount[NPC.type] = 10;
 			NPCID.Sets.BossBestiaryPriority.Remove(Type);
 			//	NPCID.Sets.TrailCacheLength[NPC.type] = 5; // 
@@ -75,7 +75,7 @@ namespace Creaturia.NPCs.Enemies
 			NPC.immortal = true;
 			NPC.aiStyle = 3;
 			NPC.timeLeft = 200;
-			NPC.rarity = 1;
+			NPC.rarity = 5;
 			//NPC.stepSpeed = 200f;
 			AnimationType = NPCID.SolarDrakomire;
 			AIType = NPCID.DesertBeast;
@@ -165,7 +165,7 @@ namespace Creaturia.NPCs.Enemies
 			
 			}
 		
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
 			target.AddBuff(BuffID.Obstructed, 400, true);
 			
@@ -181,7 +181,7 @@ namespace Creaturia.NPCs.Enemies
 		}
 
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
         {
 			if (NPC.life <= 0)
 			{

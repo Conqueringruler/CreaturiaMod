@@ -31,7 +31,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 		
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Rainbow Fish");
+			// DisplayName.SetDefault("Rainbow Fish");
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.TrailCacheLength[NPC.type] = 5; // 
 			NPCID.Sets.TrailingMode[NPC.type] = 0; // The recording mode which idk what that means
@@ -67,8 +67,8 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			NPC.lifeMax = difficultyhealth;
 			NPC.knockBackResist = 0.1f;
 			NPC.HitSound = SoundID.NPCHit44;
-			
-			
+
+			NPC.friendly = false;
 			NPC.DeathSound = SoundID.NPCDeath7;
 			NPC.lavaImmune = false;
 			NPC.dontTakeDamageFromHostiles = false;
@@ -101,18 +101,24 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			}
 			return true;
 		}
-
+		bool DidSoundYet = false;
 		public override void AI()
 		{
-			
-			float red = (float)Main.DiscoR / 150f;
+           
+            float red = (float)Main.DiscoR / 150f;
 			float green = (float)Main.DiscoG / 150f;
 			float blue = (float)Main.DiscoB / 150f;
-			NPC.color = Main.DiscoColor;
-			red *= 1f;
+			Color Rainbow = new Color(red, green, blue);
+            
+            red *= 1f;
 			green *= 1f;
 			blue *= 1f;
-			Lighting.AddLight((int)((NPC.position.X + (float)(NPC.width / 2)) / 16f), (int)((NPC.position.Y + (float)(NPC.height / 2)) / 16f), red, green, blue);
+
+
+            Color ReducedRainbow = Color.Lerp(new Color(red, green, blue), Color.White, 0.5f);
+            NPC.color = ReducedRainbow;
+
+            Lighting.AddLight((int)((NPC.position.X + (float)(NPC.width / 2)) / 16f), (int)((NPC.position.Y + (float)(NPC.height / 2)) / 16f), red, green, blue);
 			Player target = Main.player[NPC.target];
 			Vector2 directiony = (target.Center - NPC.Center).SafeNormalize(Vector2.UnitY);
 			Vector2 directionshoot = (target.Center - NPC.Center).SafeNormalize(Vector2.UnitX);
@@ -132,17 +138,23 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 				difficultyhealth = 7000;
 				shoottime = 45;
             }
-			if (NPC.life <= (difficultyhealth / 5) && (Math.Abs(NPC.velocity.X) < 12)) // I gotta learn what Math.Abs does
+			if (NPC.life <= (difficultyhealth / 6) && (Math.Abs(NPC.velocity.X) < 10)) 
 				{
 					NPC.velocity += new Vector2(NPC.direction * -1.05f, 0);
-					NPC.velocity.Y += (NPC.velocity.Y * 9.95f);
+					NPC.velocity.Y += (NPC.velocity.Y * 6.95f);
+                // Make their hp slowly recover when running
+				if (DidSoundYet == false)
+				{
+					SoundEngine.PlaySound(new SoundStyle("Creaturia/Assets/Sounds/RainbowFocus"), NPC.Center);
+					DidSoundYet = true;
+				}
 				NPC.EncourageDespawn(1000);
 				NPC.netUpdate = true;
 			}
 
 
 
-			if (Math.Abs(NPC.velocity.X) < 7 && (NPC.life >= difficultyhealth / 5)) // I gotta learn what Math.Abs does
+			if (Math.Abs(NPC.velocity.X) < 7 && (NPC.life >= difficultyhealth / 5))
 			{
 				NPC.velocity += new Vector2(NPC.direction * 1.06f, NPC.directionY * 2.5f);
 				NPC.netUpdate = true;
@@ -201,23 +213,20 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheHallow,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Rain,
-				new FlavorTextBestiaryInfoElement("The mythical Rainbow Fish is cool and magical and needs a description ")
+				new FlavorTextBestiaryInfoElement("The Rainbow Fish survives the chaos of the Hallow by staying in groups, releasing fragments of its sharp scales to cut into any potential threats - or prey.")
 			});
 		}
 
 
 
-		public override bool? CanBeHitByProjectile(Projectile projectile)
-		{
-			return true;
-		}
+		
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
 			//npcLoot.Add(ItemDropRule.Common(ItemID.HallowedKey, 15, 1, 1));
 
 			//npcLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 1, 0, 2));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RainbowScale2>(), 1, 2, 9));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RainbowScale2>(), 1, 2, 5));
 			//npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RainbowScale2>(), 50 , 0, 7)); //\This new method is cock and balls, don't forget to use terraria.lootshit so stuff can drop and also 1 = 100% chance of dropping, 100 = 1% chance of dropping for some stupid reason
 			//npcLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 50, 1, 2));
 		}
@@ -231,7 +240,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			Item.NewItem(NPC.GetSource_Death(), NPC.getRect(), ItemID.CandyApple, Main.rand.Next(0, 2));
 		}
 
-        public override void HitEffect(int hitDirection, double damage)
+        public override void HitEffect(NPC.HitInfo hit)
 		{
 			Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-15, 15)), NPC.width, NPC.height, DustID.RainbowMk2, NPC.velocity.X + Main.rand.Next(-10, 10), NPC.velocity.Y + Main.rand.Next(-10, 10));
 

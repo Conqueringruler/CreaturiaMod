@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.GameContent.Metadata;
@@ -47,8 +48,8 @@ namespace Creaturia.Tiles.Plants.Trees
 
             TileObjectData.addTile(Type);
 
-            ModTranslation name = CreateMapEntryName();
-            name.SetDefault("Ashwood Sapling");
+            LocalizedText name = CreateMapEntryName();
+            // name.SetDefault("Ashwood Sapling");
             AddMapEntry(new Color(200, 200, 200), name);
 
             TileID.Sets.TreeSapling[Type] = true;

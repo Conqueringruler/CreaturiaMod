@@ -13,9 +13,9 @@ namespace Creaturia.Items.Consumables.Fishing
 	{
 		public override void SetStaticDefaults()
         {
-			DisplayName.SetDefault("Glistening Lolly");
-			Tooltip.SetDefault("'Lolly is short for lollipop. I won't let you degenerates ruin this candy' \n" +
-												  "Use in the Hallow");
+			// DisplayName.SetDefault("Glistening Lolly");
+			/* Tooltip.SetDefault("'!' \n" + // "Lolly is short for lollipop. I won't let you degenerates ruin this candy" the original description, which imo was a bit too edgy of a joke for a Terraria mod.
+                                                  "Use in the Hallow"); */
 
 		}
 

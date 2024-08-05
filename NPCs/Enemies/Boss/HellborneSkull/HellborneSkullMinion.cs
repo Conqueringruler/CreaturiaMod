@@ -11,7 +11,7 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hellborne Skull Minion");
+			// DisplayName.SetDefault("Hellborne Skull Minion");
 		}
 
 		public override void SetDefaults()
@@ -35,7 +35,7 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 		}
        
 
-public override void ScaleExpertStats(int numPlayers, float bossLifeScale)
+public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 {
     NPC.lifeMax = 1400;
     NPC.defense = 20;
@@ -54,7 +54,7 @@ public override void AI()
 		{
 			database.Entries.Remove(bestiaryEntry);
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit)
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
 {
     target.AddBuff(BuffID.ShadowFlame, 200);
 

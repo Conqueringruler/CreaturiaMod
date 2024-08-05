@@ -17,7 +17,7 @@ namespace Creaturia.NPCs.Enemies
 		{
 			// DisplayName.SetDefault("Flutter Slime"); // Automatic from .lang files
 			Main.npcFrameCount[NPC.type] = 6; // make sure to set this for your modNPCs.
-			DisplayName.SetDefault("ExampleSlimeTesting");
+			// DisplayName.SetDefault("ExampleSlimeTesting");
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Hide = true

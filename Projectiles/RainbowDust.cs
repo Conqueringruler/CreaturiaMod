@@ -18,7 +18,7 @@ namespace Creaturia.Projectiles
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MudBall;
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Rainbow Dust");
+			// DisplayName.SetDefault("Rainbow Dust");
 		}
 		private int sparkletimer;
 		private int ExplodeTimer;

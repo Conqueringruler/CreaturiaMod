@@ -20,11 +20,11 @@ namespace Creaturia.Items.Ammo
 		public override void SetStaticDefaults()
 		{
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
-			DisplayName.SetDefault("Fish Bullet");
-			Tooltip.SetDefault("Transforms into a fish when in water or rain! \n" +
+			// DisplayName.SetDefault("Fish Bullet");
+			/* Tooltip.SetDefault("Transforms into a fish when in water or rain! \n" +
 							   "When transformed +5% chance to critical hit \n" +
 							   "When transformed has much higher knockback \n" +
-							   "When transformed targets enemies");
+							   "When transformed targets enemies"); */
                            //    "When transformed can penetrate once");
 		}
 
@@ -53,7 +53,7 @@ namespace Creaturia.Items.Ammo
     {
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Fish Bullet");
+			// DisplayName.SetDefault("Fish Bullet");
 			
 			Main.projFrames[Projectile.type] = 3;
 
@@ -202,7 +202,7 @@ namespace Creaturia.Items.Ammo
 			return false;
         }
 
-		public override void Kill(int timeLeft)
+		public override void OnKill(int timeLeft)
 		{
 			
 			Collision.HitTiles(Projectile.position + Projectile.velocity, Projectile.velocity, Projectile.width, Projectile.height);

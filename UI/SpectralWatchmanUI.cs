@@ -108,7 +108,7 @@ public class SpectralWatchmanUI : UIState
 			if (!_vanillaItemSlot.Item.IsAir)
 			{
 				// QuickSpawnClonedItem will preserve mod data of the item. QuickSpawnItem will just spawn a fresh version of the item, losing the prefix.
-				Main.LocalPlayer.QuickSpawnClonedItem(Player.GetSource_None(), _vanillaItemSlot.Item, _vanillaItemSlot.Item.stack);
+				Main.LocalPlayer.QuickSpawnItem(Player.GetSource_None(), _vanillaItemSlot.Item, _vanillaItemSlot.Item.stack);
 				// Now that we've spawned the item back onto the player, we reset the item by turning it into air.
 				_vanillaItemSlot.Item.TurnToAir();
 			}
@@ -167,7 +167,7 @@ public class SpectralWatchmanUI : UIState
 
 					
 
-					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 2500));
+					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 2800));
 					TotalOfPurchasingItem = (Main.LocalPlayer.CountItem(PurchasingItem));
 					awesomePrice = Item.buyPrice(0, 1, 0, 0);
 				}
@@ -175,7 +175,7 @@ public class SpectralWatchmanUI : UIState
 				{
 					PurchasingItem = ItemID.PixieDust;
 
-					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 2500));
+					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 2800));
 					 // Unless I change the buying system I can't do Pixie Dust because of stack limit
 				}
 
@@ -187,14 +187,14 @@ public class SpectralWatchmanUI : UIState
 				{
 					PurchasingItem = ItemID.SoulofLight;
 
-					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 12000));
+					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 13500));
 					awesomePrice = Item.buyPrice(1, 1, 0, 0);
 				}
 				else
 				{
 					PurchasingItem = ItemID.SoulofNight;
 
-					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 12000));
+					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 13500));
 					awesomePrice = Item.buyPrice(2, 1, 0, 0);
 				}
 			}
@@ -211,7 +211,7 @@ public class SpectralWatchmanUI : UIState
 				RarityColor = Colors.RarityYellow;
 				PurchasingItem = ItemID.Ectoplasm;
 
-				PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 15000));
+				PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 16000));
 				awesomePrice = Item.buyPrice(20, 1, 0, 0);
 			}
 			if (_vanillaItemSlot.Item.rare is ItemRarityID.Cyan)
@@ -219,14 +219,14 @@ public class SpectralWatchmanUI : UIState
 				RarityColor = Colors.RarityCyan;
 				PurchasingItem = ItemID.Ectoplasm; // but have it be more
 
-				PurchasingAmount = (15 + (int)(_vanillaItemSlot.Item.value / 12000));
+				PurchasingAmount = (15 + (int)(_vanillaItemSlot.Item.value / 13500));
 			}
 			if (_vanillaItemSlot.Item.rare is ItemRarityID.Red)
 			{
 				RarityColor = Colors.RarityRed;
 				PurchasingItem = ItemID.Ectoplasm; // but have it be even more
 
-				PurchasingAmount = (15 + (int)(_vanillaItemSlot.Item.value / 10000));
+				PurchasingAmount = (15 + (int)(_vanillaItemSlot.Item.value / 11500));
 			}
 			if (_vanillaItemSlot.Item.rare is ItemRarityID.Purple)
 			{
@@ -296,7 +296,7 @@ public class SpectralWatchmanUI : UIState
 					tickPlayed = true;
 					Main.LocalPlayer.mouseInterface = true;
 				if (Main.mouseLeftRelease && Main.mouseLeft && Main.LocalPlayer.HasItem(PurchasingItem)
-				&& (TotalOfPurchasingItem >= PurchasingAmount) && ItemLoader.PreReforge(_vanillaItemSlot.Item))
+				&& (TotalOfPurchasingItem >= PurchasingAmount) && ItemLoader.CanReforge(_vanillaItemSlot.Item))
 					{
 
 					// Make custom cost below 
@@ -317,7 +317,9 @@ public class SpectralWatchmanUI : UIState
 						int stack = _vanillaItemSlot.Item.stack;
 						Item reforgeItem = new Item();
 						reforgeItem.netDefaults(_vanillaItemSlot.Item.netID);
-						reforgeItem = reforgeItem.CloneWithModdedDataFrom(_vanillaItemSlot.Item);
+						//reforgeItem = reforgeItem.CloneWithModdedDataFrom(_vanillaItemSlot.Item)/* tModPorter Note: Removed. Use Clone, ResetPrefix or Refresh */;
+					reforgeItem = Main.item[_vanillaItemSlot.Item.whoAmI];
+					
 					
 
 					if (_vanillaItemSlot.Item.accessory)

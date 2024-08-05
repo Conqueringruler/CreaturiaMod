@@ -13,9 +13,9 @@ namespace Creaturia.Items.Consumables.Fishing
 	{
 		public override void SetStaticDefaults()
         {
-			DisplayName.SetDefault("Rotted Bait");
-			Tooltip.SetDefault("'!'\n" +
-												  "Use in the Corruption");
+			// DisplayName.SetDefault("Rotted Bait");
+			/* Tooltip.SetDefault("'!'\n" +
+												  "Use in the Corruption"); */
 		}
 
 		public override void SetDefaults()

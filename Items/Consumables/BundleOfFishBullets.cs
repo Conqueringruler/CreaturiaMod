@@ -21,9 +21,9 @@ namespace Creaturia.Items.Consumables
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Bundle of Fish Bullets");
-			Tooltip.SetDefault("Contains 10-20 Fish Bullets \n" +
-						"{$CommonItemTooltip.RightClickToOpen}"); // References a language key that says "Right Click To Open" in the language of the game
+			// DisplayName.SetDefault("Bundle of Fish Bullets");
+			/* Tooltip.SetDefault("Contains 10-20 Fish Bullets \n" +
+						"{$CommonItemTooltip.RightClickToOpen}"); */ // References a language key that says "Right Click To Open" in the language of the game
 
 		
 

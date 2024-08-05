@@ -22,9 +22,9 @@ namespace Creaturia.Items.Consumables.Fishing
 		public override string Texture => "Terraria/Images/Item_" + ItemID.GoldWorm;
 		public override void SetStaticDefaults()
         {
-			DisplayName.SetDefault("Magic Worm");
-			Tooltip.SetDefault("'An aura of power radiates, but not in an intimidating way' \n" +
-								"Use in the Ocean");
+			// DisplayName.SetDefault("Magic Worm");
+			/* Tooltip.SetDefault("'An aura of power radiates, but not in an intimidating way' \n" +
+								"Use in the Ocean"); */
 		}
 		Rectangle frame;
 		public override void SetDefaults()

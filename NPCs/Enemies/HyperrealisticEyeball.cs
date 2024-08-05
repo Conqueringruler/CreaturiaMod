@@ -17,7 +17,7 @@ namespace Creaturia.NPCs.Enemies
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("The Eye");
+			// DisplayName.SetDefault("The Eye");
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Hide = true
@@ -47,7 +47,7 @@ namespace Creaturia.NPCs.Enemies
 
 		
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (NPC.life <= 0)
 			{

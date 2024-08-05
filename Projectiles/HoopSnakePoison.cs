@@ -13,7 +13,7 @@ namespace Creaturia.Projectiles
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Hoop Snake Poison");
+			// DisplayName.SetDefault("Hoop Snake Poison");
 			Main.projFrames[Projectile.type] = 3;
 		}
 		private int DustTimer;
@@ -27,7 +27,7 @@ namespace Creaturia.Projectiles
 			AIType = ProjectileID.JungleSpike;
 			Projectile.CloneDefaults(ProjectileID.JungleSpike);
 		}
-        public override void OnHitPlayer(Player target, int damage, bool crit)
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
 			target.AddBuff(BuffID.Poisoned, 150);
 		}

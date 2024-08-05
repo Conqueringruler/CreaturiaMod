@@ -15,7 +15,7 @@ namespace Creaturia.Projectiles.EnemyMelee
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Plantera");
+			// DisplayName.SetDefault("Plantera");
 
 		}
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.EyeballFlyingFish;

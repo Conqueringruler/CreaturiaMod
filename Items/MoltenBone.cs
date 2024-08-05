@@ -8,8 +8,8 @@ namespace Creaturia.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Molten Bone"); 
-			Tooltip.SetDefault("");
+			// DisplayName.SetDefault("Molten Bone"); 
+			// Tooltip.SetDefault("");
 		}
 
 		public override void SetDefaults()

@@ -146,7 +146,7 @@ namespace Creaturia.NPCs.Town
 
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref bool shop)
+        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
         {
             if (firstButton)
             {
@@ -158,7 +158,7 @@ namespace Creaturia.NPCs.Town
             }
         }
 
-        public override void SetupShop(Chest shop, ref int nextSlot)
+        public override void ModifyActiveShop(string shopName, Item[] items)
         {
 
             shop.item[nextSlot].SetDefaults(ItemID.Duck);

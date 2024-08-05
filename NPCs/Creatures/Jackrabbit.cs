@@ -8,6 +8,8 @@ using static Terraria.ModLoader.ModContent;
 using static Terraria.ModLoader.PlayerDrawLayer;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.Shaders;
+using Creaturia;
 
 namespace Creaturia.NPCs.Creatures
 {
@@ -18,10 +20,11 @@ namespace Creaturia.NPCs.Creatures
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Jackrabbit");
+			// DisplayName.SetDefault("Jackrabbit");
 			Main.npcCatchable[NPC.type] = true;
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Bunny];
 			NPCID.Sets.CountsAsCritter[NPC.type] = true;
+			NPCID.Sets.DangerDetectRange[NPC.type] = 450;
 			NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[NPC.type] = true;
 
 			NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
@@ -40,6 +43,7 @@ namespace Creaturia.NPCs.Creatures
 			NPC.height = 28;
 			NPC.damage = 10;
 			NPC.defense = 0;
+			NPC.friendly = true;
 			NPC.CloneDefaults(NPCID.Bunny);
 			NPC.lifeMax = 5;
 			NPC.HitSound = SoundID.NPCHit1;
@@ -51,29 +55,110 @@ namespace Creaturia.NPCs.Creatures
 			AnimationType = NPCID.Bunny;
 		}
 		int JumpTimer;
+
+		bool BurrowOnGrounded = false;
 		public override void AI()
 		{
+			if (NPC.velocity.X > 0)
+			{
+				NPC.direction = 1;
+			}
+			if (NPC.velocity.X < 0)
+			{
+				NPC.direction = -1;
+			}
+
 			base.AI();
 			//NPC.ai[0] = 1;
-			if (((NPC.velocity.X < 2) && (NPC.velocity.X > -2)) && NPC.ai[0] == 1)
-            {
-				NPC.velocity.X *= 1.3f;
-            }
-			if (((NPC.velocity.X > 1.7f) || (NPC.velocity.X < -1.7f)) && (NPC.ai[0] == 1) && (NPC.velocity.Y == 0))
-            {
-				JumpTimer++;
-            }
-			if (JumpTimer > 20)
-            {
-				NPC.velocity.Y -= 4 +(2 * (MathF.Abs(NPC.velocity.X)));
-				NPC.velocity.X *= 1.05f;
-				JumpTimer = 0;
-            }
-			if (NPC.ai[2] == -1)
-            {
-				Dust.NewDustDirect(NPC.Center, NPC.width, NPC.height, DustID.Smoke, NPC.velocity.X + Main.rand.Next(-3, 3), NPC.velocity.Y + Main.rand.Next(-3, 3), default, Color.White, Main.rand.NextFloat(0.5f, 0.8f));
+			int yTile = (int)(NPC.position.Y + (float)NPC.height + 7f) / 16;
+			int initialXTile = (int)NPC.position.X / 16;
+			int maxXTile = (int)(NPC.position.X + (float)NPC.width) / 16;
+			for (int xTile = initialXTile; xTile <= maxXTile; xTile++) // I understand like 60% of this, which is higher than half so good enough for me. Right here it just changes when the X position changes
+			{
+				if (Main.tile[xTile, yTile] == null)
+				{
+					return;
+				}
+				if (Main.tile[xTile, yTile].TileType == TileID.LargePiles2) // like it disappears under the brush/skulls
+				{
+					NPC.velocity.X = 0;
+					JumpTimer = 21;
+					BurrowOnGrounded = true;
+					
+				}
+				if (Main.tile[xTile, yTile].TileType == TileID.OasisPlants && Main.tile[xTile, yTile].TileFrameX < 90 && Main.tile[xTile, yTile].TileFrameY < 10) // like it disappears under the brush/skulls
+				{
+					NPC.velocity.X = 0;
+					JumpTimer = 21;
+					BurrowOnGrounded = true;
+
+				}
+				
 			}
+			if (BurrowOnGrounded && NPC.velocity.Y == 0)
+			{
+				for (int i = 0; i < 24; i++)
+				{
+					int num = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 31, 0f, 0f, 125, Color.PaleGoldenrod, 1.25f);
+					Main.dust[num].position.X += Main.rand.Next(-10, 10);
+					Main.dust[num].position.Y += Main.rand.Next(-6, 6);
+					Main.dust[num].velocity *= 0.42f;
+					Main.dust[num].scale *= 1f + (float)Main.rand.Next(40) * 0.01f;
+					//Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(Player.cWaist, NPC);
+					if (Main.rand.Next(2) == 0)
+					{
+						Main.dust[num].scale *= 1f + (float)Main.rand.Next(40) * 0.01f; // I can't believe I've never thought of using Main.rand.next like this before
+						Main.dust[num].noGravity = true;
+					}
+					NPC.active = false;
+					NPC.netUpdate = true;
+				}
+			}
+			if (BurrowOnGrounded == false)
+			{
+				if (((NPC.velocity.X < 2) && (NPC.velocity.X > -2)) && NPC.ai[0] == 1)
+				{
+					NPC.velocity.X *= 1.4f;
+					NPC.netUpdate = true;
+				}
+				if (((NPC.velocity.X > 1.7f) || (NPC.velocity.X < -1.7f)) && (NPC.ai[0] == 1) && (NPC.velocity.Y == 0))
+				{
+					JumpTimer++;
+				}
+				if (NPC.velocity.Y != 0)
+				{
+					JumpTimer = 0;
+				}
+				if (JumpTimer > 20)
+				{
+					NPC.netUpdate = true;
+					NPC.velocity.Y -= 4.5f + (2 * (MathF.Abs(NPC.velocity.X)));
+					NPC.velocity.X *= 1.1f;
+					JumpTimer = 0;
+					for (int i = 0; i < 4; i++)
+					{
+						int num = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, 31, 0f, 0f, 100, default(Color), 0.8f);
+
+						Main.dust[num].position.X += Main.rand.Next(-4, 4);
+						Main.dust[num].position.Y += Main.rand.Next(-2, 2);
+						Main.dust[num].velocity *= 0.4f;
+						Main.dust[num].scale *= 1f + (float)Main.rand.Next(40) * 0.01f;
+						//Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(Player.cWaist, NPC);
+						if (Main.rand.Next(2) == 0)
+						{
+							Main.dust[num].scale *= 1f + (float)Main.rand.Next(40) * 0.01f;
+							Main.dust[num].noGravity = true;
+						}
+					}
+				}
+			}
+				if (NPC.ai[2] == -1)
+				{
+					Dust.NewDustDirect(NPC.Center, NPC.width, NPC.height, DustID.Smoke, NPC.velocity.X + Main.rand.Next(-3, 3), NPC.velocity.Y + Main.rand.Next(-3, 3), default, Color.White, Main.rand.NextFloat(0.5f, 0.8f));
+				}
+			
 		}
+		
 		
 		
 
@@ -86,10 +171,17 @@ namespace Creaturia.NPCs.Creatures
 			return SpawnCondition.OverworldDayDesert.Chance * 0.2f;
 		}
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (NPC.life <= 0)
 			{
+				Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(0, -3), NPC.velocity, Mod.Find<ModGore>("JackrabbitGore1").Type, 1f);
+				Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(2, 0), NPC.velocity, Mod.Find<ModGore>("JackrabbitGore2").Type, 1f);
+				Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(-2, 0), NPC.velocity, Mod.Find<ModGore>("JackrabbitGore2").Type, 1f);
+				//for (int i = 0; i < 6; i++)
+				//{
+				//	Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(Main.rand.Next(-2, 2), Main.rand.Next(-2, 2)), NPC.velocity, GoreID.BloodZombieChunk2, Main.rand.NextFloat(0.9f, 1.1f));
+				//}
 
 				//Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/"), 2f);
 				//	Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/"), 1f);
@@ -121,7 +213,7 @@ namespace Creaturia.NPCs.Creatures
 				return;
 			}
 		}
-
+		
 
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
@@ -141,7 +233,7 @@ namespace Creaturia.NPCs.Creatures
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Jackrabbit");
+			// DisplayName.SetDefault("Jackrabbit");
 		}
 
 		public override void SetDefaults()

@@ -15,7 +15,7 @@ namespace Creaturia.Projectiles.EnemyMelee
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Brain of Cthulhu");
+			// DisplayName.SetDefault("Brain of Cthulhu");
 		}
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.EyeballFlyingFish;
 		public override void SetDefaults()

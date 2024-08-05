@@ -99,7 +99,7 @@ public class SpectralWatchmanUIwithMoney : UIState
 			if (!_vanillaItemSlot.Item.IsAir)
 			{
 				// QuickSpawnClonedItem will preserve mod data of the item. QuickSpawnItem will just spawn a fresh version of the item, losing the prefix.
-				Main.LocalPlayer.QuickSpawnClonedItem(Player.GetSource_None(), _vanillaItemSlot.Item, _vanillaItemSlot.Item.stack);
+				Main.LocalPlayer.QuickSpawnItem(Player.GetSource_None(), _vanillaItemSlot.Item, _vanillaItemSlot.Item.stack);
 				// Now that we've spawned the item back onto the player, we reset the item by turning it into air.
 				_vanillaItemSlot.Item.TurnToAir();
 			}
@@ -243,7 +243,7 @@ public class SpectralWatchmanUIwithMoney : UIState
 					}
 					tickPlayed = true;
 					Main.LocalPlayer.mouseInterface = true;
-					if (Main.mouseLeftRelease && Main.mouseLeft && Main.LocalPlayer.CanBuyItem(awesomePrice, -1) && ItemLoader.PreReforge(_vanillaItemSlot.Item))
+					if (Main.mouseLeftRelease && Main.mouseLeft && Main.LocalPlayer.CanAfford(awesomePrice, -1) && ItemLoader.CanReforge(_vanillaItemSlot.Item))
 					{
 
 					// Make custom cost below 
@@ -256,7 +256,9 @@ public class SpectralWatchmanUIwithMoney : UIState
 						int stack = _vanillaItemSlot.Item.stack;
 						Item reforgeItem = new Item();
 						reforgeItem.netDefaults(_vanillaItemSlot.Item.netID);
-						reforgeItem = reforgeItem.CloneWithModdedDataFrom(_vanillaItemSlot.Item);
+						//reforgeItem = reforgeItem.CloneWithModdedDataFrom(_vanillaItemSlot.Item)/* tModPorter Note: Removed. Use Clone, ResetPrefix or Refresh */;
+					reforgeItem = Main.item[_vanillaItemSlot.Item.whoAmI];
+
 						// This is the main effect of this slot. Giving the Awesome prefix 90% of the time and the ReallyAwesome prefix the other 10% of the time. All for a constant 1 gold. Useless, but informative.
 						if (Main.rand.NextBool(10))
 						{

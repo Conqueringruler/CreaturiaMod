@@ -14,8 +14,8 @@ namespace Creaturia.Buffs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Blessing of the Fishman");
-            Description.SetDefault("Huge increase in movement and melee speed, and amplifies your senses!");
+            // DisplayName.SetDefault("Blessing of the Fishman");
+            // Description.SetDefault("Huge increase in movement and melee speed, and amplifies your senses!");
             Main.debuff[Type] = true;
             Main.pvpBuff[Type] = true;
             Main.buffNoSave[Type] = true;

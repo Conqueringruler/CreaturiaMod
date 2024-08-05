@@ -21,7 +21,7 @@ namespace Creaturia.NPCs.Creatures
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ruby-Throated Hummingbird");
+			// DisplayName.SetDefault("Ruby-Throated Hummingbird");
 
 			Main.npcCatchable[NPC.type] = true;
 			NPC.catchItem = (short)ItemType<HummingBird1Item>();
@@ -96,11 +96,11 @@ namespace Creaturia.NPCs.Creatures
 		public override void AI()
 		{
 			//	Vector3 rgb = Main.hslToRgb(Main.GlobalTimeWrappedHourly * 0.3f % 0.4f, 0.4f, 0.5f).ToVector3() * 0.3f;
-
+			
 
 
 			//		Lighting.AddLight(NPC.Center, rgb);
-			//Lighting.AddLight(NPC.Center, Color.Gold.ToVector3() * 1f);
+		//	Lighting.AddLight(NPC.Center, Color.DeepPink.ToVector3() * 1f);
 			NPC.catchItem = (short)ItemType<HummingBird1Item>();
 
 			WindTimer++;
@@ -129,10 +129,10 @@ namespace Creaturia.NPCs.Creatures
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldDayBirdCritter.Chance * 0.9f;
+			return SpawnCondition.OverworldDayBirdCritter.Chance * 0f;
 		}
 
-		public override void HitEffect(int hitDirection, double damage)
+		public override void HitEffect(NPC.HitInfo hit)
 		{
 
 			if (NPC.life <= 0)
@@ -182,8 +182,8 @@ namespace Creaturia.NPCs.Creatures
 	{
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Ruby-Throated Hummingbird");
-			Tooltip.SetDefault("'Pretty!'");
+			// DisplayName.SetDefault("Ruby-Throated Hummingbird");
+			// Tooltip.SetDefault("'Pretty!'");
 		}
 
 		public override void SetDefaults()

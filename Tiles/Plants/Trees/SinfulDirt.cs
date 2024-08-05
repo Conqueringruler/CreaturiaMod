@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
@@ -16,11 +17,11 @@ namespace Creaturia.Tiles.Plants.Trees
             Main.tileLighted[Type] = false;
             Main.tileLavaDeath[Type] = false;
             
-            ItemDrop = ModContent.ItemType<SinfulSoil>();
+           // ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<SinfulSoil>();
 
-            ModTranslation name = CreateMapEntryName();
+            LocalizedText name = CreateMapEntryName();
             AddMapEntry(Color.RosyBrown);
-            name.SetDefault("Sinful Soil");
+            // name.SetDefault("Sinful Soil");
             
         }
        

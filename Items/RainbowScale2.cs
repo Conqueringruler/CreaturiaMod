@@ -12,16 +12,15 @@ namespace Creaturia.Items
 	{
 		public override void SetStaticDefaults()
 		{
-			 DisplayName.SetDefault("Rainbow Scale"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-			Tooltip.SetDefault("The prismatic colors could definitely fetch a high price\n" +
-									"Can be traded with the Fishman");
+			 // DisplayName.SetDefault("Rainbow Scales"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
+			// Tooltip.SetDefault("The prismatic colors are mesmerizing!");
 		}
 
 		public override void SetDefaults()
 		{
 			
-			Item.width = 20;
-			Item.height = 18;
+			Item.width = 26;
+			Item.height = 28;
 			Item.value = 2000;
 			Item.rare = ItemRarityID.Pink;
 			Item.material = true;
@@ -31,12 +30,20 @@ namespace Creaturia.Items
 		}
 		public override void PostUpdate()
         {
-			Item.color = Main.DiscoColor;
+            float red = (float)Main.DiscoR / 200f;
+            float green = (float)Main.DiscoG / 200f;
+            float blue = (float)Main.DiscoB / 200f;
+            Color ReducedRainbow = Color.Lerp(new Color(red, green, blue), Color.White, 0.75f);
+            Item.color = ReducedRainbow;
         }
         public override void UpdateInventory(Player player)
         {
-			Item.color = Main.DiscoColor;
-		}
+            float red = (float)Main.DiscoR / 200f;
+            float green = (float)Main.DiscoG / 200f;
+            float blue = (float)Main.DiscoB / 200f;
+			Color ReducedRainbow = Color.Lerp(new Color(red, green, blue), Color.White, 0.75f);
+			Item.color = ReducedRainbow;
+        }
 		
 	}
 }
