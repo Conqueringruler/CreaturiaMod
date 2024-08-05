@@ -174,11 +174,11 @@ namespace Creaturia.Projectiles
                         target.life = 15;
                         target.defense = 15;
                     }
-                    damage = 0;
+                    modifiers.FinalDamage *= 0;
                     target.HealEffect(1, true);
                     target.life += 1;
 
-                    crit = false;
+                    modifiers.DisableCrit();
                 }
                 
             }
@@ -192,7 +192,7 @@ namespace Creaturia.Projectiles
                     || target.type == NPCID.Golem || target.type == NPCID.GolemFistLeft || target.type == NPCID.GolemFistRight || target.type == NPCID.GolemHead || target.type == NPCID.GolemHeadFree)
                 {
                     //projectile.damage *= 2;
-                    damage *= 2;
+                    modifiers.FinalDamage *= 2;
                     projectile.netUpdate = true;
                     target.netUpdate = true;
                 }
@@ -201,7 +201,7 @@ namespace Creaturia.Projectiles
             {
                 if (EmpoweredByPumpking)
                 {
-                    crit = true;
+                    modifiers.SetCrit();
                     target.AddBuff(BuffID.Oiled, 320, false);
                     target.AddBuff(BuffID.OnFire, 320, false);
                     Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity, ProjectileID.SolarWhipSwordExplosion, 120, 1f, projectile.owner);
@@ -209,7 +209,7 @@ namespace Creaturia.Projectiles
 
                 if (EmpoweredByFrostQueen)
                 {
-                    crit = true;
+                    modifiers.SetCrit();
                     target.AddBuff(BuffID.Frostburn2, 320, false);
 
                     Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity / 8 + new Vector2(Main.rand.Next(-3, 3), Main.rand.Next(0, 5)), ProjectileID.NorthPoleSnowflake, 40, 1f, projectile.owner);

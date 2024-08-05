@@ -428,7 +428,7 @@ new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.5f, TextureAssets.Npc[NP
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
 		{
 			target.AddBuff(BuffID.Chilled, 600);
-			base.OnHitPlayer(target, damage, crit);
+			base.OnHitPlayer(target, hurtInfo);
 
 			if (Main.expertMode || Main.masterMode)
 			{

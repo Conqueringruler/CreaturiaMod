@@ -23,6 +23,7 @@ using Creaturia.Items.Consumables;
 using Creaturia.Items.Weapon;
 using Creaturia.Common.Players;
 using Creaturia.Items.Ammo;
+using Creaturia.Currencies.FishCurrencies;
 
 namespace Creaturia.NPCs.Town
 {
@@ -396,7 +397,7 @@ namespace Creaturia.NPCs.Town
         {
             if (firstButton)
             {
-                shop = true;
+                shopName = "Shop";
             }
             else
             {
@@ -404,204 +405,294 @@ namespace Creaturia.NPCs.Town
             }
         }
         int checkwhichbait;
-        public override void ModifyActiveShop(string shopName, Item[] items)
+        public override void AddShops()
         {
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<ElectricEel>());
-            shop.item[nextSlot].shopCustomPrice = 1;
-            shop.item[nextSlot].shopSpecialCurrency = Creaturia.GoldenCarpId;
-            nextSlot++;
+            NPCShop npcShop = new NPCShop(Type)
+
+             .Add(new Item(ModContent.ItemType<ElectricEel>())
+             {
+                 shopCustomPrice = 1,
+                 shopSpecialCurrency = Creaturia.GoldenCarpId
+
+             })
+              .Add(new Item(ModContent.ItemType<BundleOfFishBullets>())
+              {
+                  shopCustomPrice = 1,
+                  shopSpecialCurrency = Creaturia.BassId
+
+              })
+               .Add(new Item(ModContent.ItemType<BundleOfCoral>())
+               {
+                   shopCustomPrice = 5,
+                   shopSpecialCurrency = Creaturia.BassId
+
+               })
+            .Add(new Item(ModContent.ItemType<BundleOfCoral>())
+             {
+                 shopCustomPrice = 2,
+                 shopSpecialCurrency = Creaturia.VariegatedLardfishId
+
+             });
             if (PriceDet1 == 1)
             {
-                shop.item[nextSlot].SetDefaults(ItemID.ApprenticeBait);
-                shop.item[nextSlot].shopCustomPrice = Main.rand.Next(3, 5); // don;t forget it gives 1 less than the max value, so (3, 5) can give 3, 4
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.FrostMinnowId;
-                nextSlot++;
+                npcShop.Add(new Item(ItemID.ApprenticeBait)
+                {
+                    shopCustomPrice = Main.rand.Next(3, 5), 
+                    shopSpecialCurrency = Creaturia.FrostMinnowId
+
+                });
             }
-            else
+              else
             {
-                shop.item[nextSlot].SetDefaults(ItemID.ApprenticeBait);
-                shop.item[nextSlot].shopCustomPrice = Main.rand.Next(3, 5); // don;t forget it gives 1 less than the max value
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.VariegatedLardfishId;
-                nextSlot++;
-            }
+                npcShop.Add(new Item(ItemID.ApprenticeBait)
+                {
+                    shopCustomPrice = Main.rand.Next(3, 5), 
+                    shopSpecialCurrency = Creaturia.VariegatedLardfishId
+
+                });
+            };
             if (OnetoThreePriceDet == 1)
             {
-                shop.item[nextSlot].SetDefaults(ItemID.JourneymanBait);
-                shop.item[nextSlot].shopCustomPrice = 2;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.FlarefinKoiId;
-                nextSlot++;
+                npcShop.Add(new Item(ItemID.JourneymanBait)
+                {
+                    shopCustomPrice = 2, 
+                    shopSpecialCurrency = Creaturia.FlarefinKoiId
+
+                });
             }
             if (OnetoFourPriceDet == 1)
             {
-                shop.item[nextSlot].SetDefaults(ItemID.MasterBait);
-                shop.item[nextSlot].shopCustomPrice = 7;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.HoneyFishId;
-                nextSlot++;
+                npcShop.Add(new Item(ItemID.MasterBait)
+                {
+                    shopCustomPrice = 7, 
+                    shopSpecialCurrency = Creaturia.HoneyFishId
+
+                });
             }
             if (PriceDet2 == 1)
             {
-                shop.item[nextSlot].SetDefaults(ItemID.SonarPotion);
-                shop.item[nextSlot].shopCustomPrice = 5;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.HoneyFishId;
-                nextSlot++;
+                npcShop.Add(new Item(ItemID.SonarPotion)
+                {
+                    shopCustomPrice = 5, 
+                    shopSpecialCurrency = Creaturia.HoneyFishId
 
-             
+                });
             }
             else
             {
-                shop.item[nextSlot].SetDefaults(ItemID.FishingPotion);
-                shop.item[nextSlot].shopCustomPrice = 5;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.FrostMinnowId;
-                nextSlot++;
+                npcShop.Add(new Item(ItemID.FishingPotion)
+                {
+                    shopCustomPrice = 5, 
+                    shopSpecialCurrency = Creaturia.FrostMinnowId
 
-               
+                });
             }
-             shop.item[nextSlot].SetDefaults(ModContent.ItemType<BundleOfFishBullets>());
-                shop.item[nextSlot].shopCustomPrice = 1;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.BassId;
-                nextSlot++;
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<BundleOfCoral>());
-            shop.item[nextSlot].shopCustomPrice = 2;
-            shop.item[nextSlot].shopSpecialCurrency = Creaturia.VariegatedLardfishId;
-            nextSlot++;
-            shop.item[nextSlot].SetDefaults(ModContent.ItemType<BundleOfCoral>());
-            shop.item[nextSlot].shopCustomPrice = 5;
-            shop.item[nextSlot].shopSpecialCurrency = Creaturia.BassId;
-            nextSlot++;
             if (Main.moonPhase == 5)
             {
-                
-                shop.item[nextSlot].SetDefaults(ItemID.AnglerEarring);
-                shop.item[nextSlot].shopCustomPrice = 1;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.GoldenCarpId;
-                nextSlot++;
+
+                npcShop.Add(new Item(ItemID.AnglerEarring)
+                {
+                    shopCustomPrice = 1, 
+                    shopSpecialCurrency = Creaturia.GoldenCarpId
+
+                });
             }
             if (Main.moonPhase > 6)
             {
+                npcShop.Add(new Item(ItemID.HighTestFishingLine)
+                {
+                    shopCustomPrice = 10,   
+                    shopSpecialCurrency = Creaturia.ChaosFishId
 
-                shop.item[nextSlot].SetDefaults(ItemID.HighTestFishingLine);
-                shop.item[nextSlot].shopCustomPrice = 10;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.ChaosFishId;
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ItemID.HighTestFishingLine);
-                shop.item[nextSlot].shopCustomPrice = 20;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.VariegatedLardfishId;
-                nextSlot++;
+                });
+                npcShop.Add(new Item(ItemID.HighTestFishingLine)
+                {
+                    shopCustomPrice = 20, 
+                    shopSpecialCurrency = Creaturia.VariegatedLardfishId
+
+                });
             }
             if (Main.hardMode)
             {
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<TridentoftheFishman>());
-                shop.item[nextSlot].shopCustomPrice = 3;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.GoldenCarpId;
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ModContent.ItemType<TridentoftheFishman>());
-                shop.item[nextSlot].shopCustomPrice = 15;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.RainbowScaleId;
-                nextSlot++;
-                checkwhichbait = Main.rand.Next(1,5);
-                shop.item[nextSlot].SetDefaults(ItemID.PixelBox);
+                npcShop.Add(new Item(ModContent.ItemType<TridentoftheFishman>())
+                {
+                    shopCustomPrice = 3, 
+                    shopSpecialCurrency = Creaturia.GoldenCarpId
+
+                });
+             /*   npcShop.Add(new Item(ModContent.ItemType<TridentoftheFishman>())
+                {
+                    shopCustomPrice = 15,
+                    shopSpecialCurrency = Creaturia.RainbowScaleId
+             
+                }); */
+
+                checkwhichbait = Main.rand.Next(1, 5);
+
+               /* shop.item[nextSlot].SetDefaults(ItemID.PixelBox);
                 shop.item[nextSlot].shopCustomPrice = 2;
                 shop.item[nextSlot].shopSpecialCurrency = Creaturia.BassId;
                 nextSlot++;
                 shop.item[nextSlot].SetDefaults(ItemID.BoringBow);
                 shop.item[nextSlot].shopCustomPrice = 20;
                 shop.item[nextSlot].shopSpecialCurrency = Creaturia.ChaosFishId;
-                nextSlot++;
+                nextSlot++; */
 
-                
+
                 if (checkwhichbait == 1)
                 {
-                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<HallowBait>());
-                    shop.item[nextSlot].shopCustomPrice = 6;
-                    shop.item[nextSlot].shopSpecialCurrency = MediumExpensiveFish1;
-                    nextSlot++;
+                    npcShop.Add(new Item(ModContent.ItemType<HallowBait>())
+                    {
+                        shopCustomPrice = 6,
+                        shopSpecialCurrency = MediumExpensiveFish1
+
+                    });
                 }
                 else if (checkwhichbait == 2)
                 {
-                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<CrimsonBait>());
-                    shop.item[nextSlot].shopCustomPrice = 6;
-                    shop.item[nextSlot].shopSpecialCurrency = MediumExpensiveFish2;
-                    nextSlot++;
+                    npcShop.Add(new Item(ModContent.ItemType<CrimsonBait>())
+                    {
+                        shopCustomPrice = 6,
+                        shopSpecialCurrency = MediumExpensiveFish2
+
+                    });
+                   
                 }
                 else if (checkwhichbait == 3)
                 {
-                    shop.item[nextSlot].SetDefaults(ModContent.ItemType<CorruptBait>());
-                    shop.item[nextSlot].shopCustomPrice = 4;
-                    shop.item[nextSlot].shopSpecialCurrency = Creaturia.FlarefinKoiId;
-                    nextSlot++;
+                    npcShop.Add(new Item(ModContent.ItemType<CorruptBait>())
+                    {
+                        shopCustomPrice = 4,
+                        shopSpecialCurrency = Creaturia.FlarefinKoiId
+
+                    });
                 }
                 else if (checkwhichbait == 4)
                 {
-                    shop.item[nextSlot].SetDefaults(ItemID.None);
+                    
                 }
             }
-            else if (checkwhichbait == 5)
-                {
-                    shop.item[nextSlot].SetDefaults(ItemID.None);
-                }
+            /*
+             
+              
+             
+             
+             
+             
+               if (Main.hardMode)
+               {
+                   shop.item[nextSlot].SetDefaults(ModContent.ItemType<TridentoftheFishman>());
+                   shop.item[nextSlot].shopCustomPrice = 3;
+                   shop.item[nextSlot].shopSpecialCurrency = Creaturia.GoldenCarpId;
+                   nextSlot++;
+                   shop.item[nextSlot].SetDefaults(ModContent.ItemType<TridentoftheFishman>());
+                   shop.item[nextSlot].shopCustomPrice = 15;
+                   shop.item[nextSlot].shopSpecialCurrency = Creaturia.RainbowScaleId;
+                   nextSlot++;
+                   checkwhichbait = Main.rand.Next(1,5);
+                   shop.item[nextSlot].SetDefaults(ItemID.PixelBox);
+                   shop.item[nextSlot].shopCustomPrice = 2;
+                   shop.item[nextSlot].shopSpecialCurrency = Creaturia.BassId;
+                   nextSlot++;
+                   shop.item[nextSlot].SetDefaults(ItemID.BoringBow);
+                   shop.item[nextSlot].shopCustomPrice = 20;
+                   shop.item[nextSlot].shopSpecialCurrency = Creaturia.ChaosFishId;
+                   nextSlot++;
 
-                if (Main.moonPhase == 1 && checkwhichbait < 4)
-                    {
-                        shop.item[nextSlot].shopSpecialCurrency = Creaturia.GoldenCarpId;
-                        shop.item[nextSlot].shopCustomPrice = 1;
-                    }
-                    else if (Main.moonPhase == 2 && checkwhichbait < 4)
-                {
-                        shop.item[nextSlot].shopSpecialCurrency = CostlyFish1;
-                        shop.item[nextSlot].shopCustomPrice = Main.rand.Next(4, 7);
-                    }
-                    else if (Main.moonPhase == 3 && checkwhichbait < 4)
-                {
-                        shop.item[nextSlot].shopSpecialCurrency = MediumExpensiveFish1;
-                        shop.item[nextSlot].shopCustomPrice = Main.rand.Next(4, 7);
-                    }
-                    else if (Main.moonPhase == 4 && checkwhichbait < 4)
-                {
-                        shop.item[nextSlot].shopSpecialCurrency = MediumExpensiveFish2;
-                        shop.item[nextSlot].shopCustomPrice = Main.rand.Next(4, 7);
-                    }
 
-                    else if (Main.moonPhase == 5 && checkwhichbait < 4)
-                {
-                        shop.item[nextSlot].shopSpecialCurrency = CostlyFish2;
-                        shop.item[nextSlot].shopCustomPrice = 3;
-                    }
+                   if (checkwhichbait == 1)
+                   {
+                       shop.item[nextSlot].SetDefaults(ModContent.ItemType<HallowBait>());
+                       shop.item[nextSlot].shopCustomPrice = 6;
+                       shop.item[nextSlot].shopSpecialCurrency = MediumExpensiveFish1;
+                       nextSlot++;
+                   }
+                   else if (checkwhichbait == 2)
+                   {
+                       shop.item[nextSlot].SetDefaults(ModContent.ItemType<CrimsonBait>());
+                       shop.item[nextSlot].shopCustomPrice = 6;
+                       shop.item[nextSlot].shopSpecialCurrency = MediumExpensiveFish2;
+                       nextSlot++;
+                   }
+                   else if (checkwhichbait == 3)
+                   {
+                       shop.item[nextSlot].SetDefaults(ModContent.ItemType<CorruptBait>());
+                       shop.item[nextSlot].shopCustomPrice = 4;
+                       shop.item[nextSlot].shopSpecialCurrency = Creaturia.FlarefinKoiId;
+                       nextSlot++;
+                   }
+                   else if (checkwhichbait == 4)
+                   {
+                       shop.item[nextSlot].SetDefaults(ItemID.None);
+                   }
+               }
+               else if (checkwhichbait == 5)
+                   {
+                       shop.item[nextSlot].SetDefaults(ItemID.None);
+                   }
 
-                    else if (Main.moonPhase == 6 && checkwhichbait < 4)
+                   if (Main.moonPhase == 1 && checkwhichbait < 4)
+                       {
+                           shop.item[nextSlot].shopSpecialCurrency = Creaturia.GoldenCarpId;
+                           shop.item[nextSlot].shopCustomPrice = 1;
+                       }
+                       else if (Main.moonPhase == 2 && checkwhichbait < 4)
+                   {
+                           shop.item[nextSlot].shopSpecialCurrency = CostlyFish1;
+                           shop.item[nextSlot].shopCustomPrice = Main.rand.Next(4, 7);
+                       }
+                       else if (Main.moonPhase == 3 && checkwhichbait < 4)
+                   {
+                           shop.item[nextSlot].shopSpecialCurrency = MediumExpensiveFish1;
+                           shop.item[nextSlot].shopCustomPrice = Main.rand.Next(4, 7);
+                       }
+                       else if (Main.moonPhase == 4 && checkwhichbait < 4)
+                   {
+                           shop.item[nextSlot].shopSpecialCurrency = MediumExpensiveFish2;
+                           shop.item[nextSlot].shopCustomPrice = Main.rand.Next(4, 7);
+                       }
+
+                       else if (Main.moonPhase == 5 && checkwhichbait < 4)
+                   {
+                           shop.item[nextSlot].shopSpecialCurrency = CostlyFish2;
+                           shop.item[nextSlot].shopCustomPrice = 3;
+                       }
+
+                       else if (Main.moonPhase == 6 && checkwhichbait < 4)
+                   {
+                           shop.item[nextSlot].shopSpecialCurrency = CostlyFish1;
+                           shop.item[nextSlot].shopCustomPrice = 3;
+                       }
+                       else if (checkwhichbait < 4)
+                       {
+                           shop.item[nextSlot].shopSpecialCurrency = Creaturia.BassId;
+                           shop.item[nextSlot].shopCustomPrice = Main.rand.Next(35, 51);
+                       }
+                   if (checkwhichbait != 4)
+                   {
+                       nextSlot++;
+                   }
+
+
+
+
+               /* if (Main.hardMode)
                 {
-                        shop.item[nextSlot].shopSpecialCurrency = CostlyFish1;
-                        shop.item[nextSlot].shopCustomPrice = 3;
-                    }
-                    else if (checkwhichbait < 4)
-                    {
-                        shop.item[nextSlot].shopSpecialCurrency = Creaturia.BassId;
-                        shop.item[nextSlot].shopCustomPrice = Main.rand.Next(35, 51);
-                    }
-                if (checkwhichbait != 4)
-                {
+                    shop.item[nextSlot].SetDefaults(ItemID.GuideVoodooDoll);
                     nextSlot++;
-                }
-                    
-                
-            
-            
-            /* if (Main.hardMode)
-             {
-                 shop.item[nextSlot].SetDefaults(ItemID.GuideVoodooDoll);
-                 nextSlot++;
-                 if (NPC.downedMechBossAny)
-                 {
+                    if (NPC.downedMechBossAny)
+                    {
 
-                     shop.item[nextSlot].SetDefaults(ItemID.MoonCharm);
-                     nextSlot++;
-                 }
-             } 
-             if (Main.LocalPlayer.HasBuff(BuffID.Slimed))
-             {
-                 shop.item[nextSlot].SetDefaults(ItemID.SlimeCrown);
-                 shop.item[nextSlot].shopCustomPrice = 200;
-                 nextSlot++;
-             } */
+                        shop.item[nextSlot].SetDefaults(ItemID.MoonCharm);
+                        nextSlot++;
+                    }
+                } 
+                if (Main.LocalPlayer.HasBuff(BuffID.Slimed))
+                {
+                    shop.item[nextSlot].SetDefaults(ItemID.SlimeCrown);
+                    shop.item[nextSlot].shopCustomPrice = 200;
+                    nextSlot++;
+                } */
 
         }
 

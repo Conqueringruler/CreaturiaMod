@@ -98,7 +98,7 @@ namespace Creaturia.NPCs.Creatures
 			{
                 for (int i = 0; i < 8; i++)
                 {
-                   int dust = Dust.NewDust(NPC.position + new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.Sluggy, (NPC.velocity.X + Main.rand.Next(-2, 2)) * hitDirection, NPC.velocity.Y + Main.rand.Next(-2, 2), 190, Color.Gray, Main.rand.NextFloat(0.6f, 0.9f));
+                   int dust = Dust.NewDust(NPC.position + new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.Sluggy, (NPC.velocity.X + Main.rand.Next(-2, 2)) * hit.HitDirection, NPC.velocity.Y + Main.rand.Next(-2, 2), 190, Color.Gray, Main.rand.NextFloat(0.6f, 0.9f));
                     Main.dust[dust].shader = GameShaders.Armor.GetSecondaryShader(55, Main.LocalPlayer);
                 }
                 //Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/"), 2f);

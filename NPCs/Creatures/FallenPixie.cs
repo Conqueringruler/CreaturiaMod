@@ -13,6 +13,7 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Creaturia.NPCs.Enemies;
+using Creaturia;
 using System.IO;
 
 namespace Creaturia.NPCs.Creatures

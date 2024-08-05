@@ -146,19 +146,43 @@ namespace Creaturia.NPCs.Town
 
         }
 
-        public override void OnChatButtonClicked(bool firstButton, ref string shopName)
+        public override void OnChatButtonClicked(bool firstButton, ref string shop)
         {
             if (firstButton)
             {
-                shop = true;
+                shop = "Shop";
             }
             else
             {
                 //   Main.npcChatText = "oppa gangam style";
             }
         }
+        public override void AddShops()
+        {
+            new NPCShop(Type)
+               // .Add<ExampleItem>()
+               .Add(new Item(ItemID.Duck)
+                {
+                shopCustomPrice = 1,
+					shopSpecialCurrency = Creaturia.BassId
 
-        public override void ModifyActiveShop(string shopName, Item[] items)
+                })
+               // .Add<ExampleItem>()
+               .Add(new Item(ItemID.Duck)
+               {
+                   shopCustomPrice = 2,
+                   shopSpecialCurrency = Creaturia.PrismiteId
+
+               })
+                 .Add(new Item(ItemID.Duck)
+                 {
+                     shopCustomPrice = 10,
+                     shopSpecialCurrency = Creaturia.FrostMinnowId
+
+                 })
+                .Register();
+        }
+       /* public override void ModifyActiveShop(string shopName, Item[] items)
         {
 
             shop.item[nextSlot].SetDefaults(ItemID.Duck);
@@ -210,25 +234,9 @@ namespace Creaturia.NPCs.Town
                 nextSlot++;
             }
 
-            /* if (Main.hardMode)
-             {
-                 shop.item[nextSlot].SetDefaults(ItemID.GuideVoodooDoll);
-                 nextSlot++;
-                 if (NPC.downedMechBossAny)
-                 {
+            
 
-                     shop.item[nextSlot].SetDefaults(ItemID.MoonCharm);
-                     nextSlot++;
-                 }
-             } 
-             if (Main.LocalPlayer.HasBuff(BuffID.Slimed))
-             {
-                 shop.item[nextSlot].SetDefaults(ItemID.SlimeCrown);
-                 shop.item[nextSlot].shopCustomPrice = 200;
-                 nextSlot++;
-             } */
-
-        }
+        } */
 
 
 

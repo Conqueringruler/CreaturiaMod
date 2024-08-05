@@ -20,6 +20,7 @@ using Creaturia.Items;
 using Creaturia.NPCs.Creatures;
 using Creaturia.Projectiles;
 using Microsoft.Xna.Framework;
+using Creaturia.Items.Weapon;
 
 namespace Creaturia.NPCs.Town
 {
@@ -251,7 +252,7 @@ namespace Creaturia.NPCs.Town
         {
             if (firstButton)
             {
-                shop = true;
+                shopName = "Shop";
             }
             else
             {
@@ -288,62 +289,52 @@ namespace Creaturia.NPCs.Town
             }
         }
 
-        
 
-        public override void ModifyActiveShop(string shopName, Item[] items)
+        public override void AddShops()
         {
-            shop.item[nextSlot].SetDefaults(ItemID.RedDynastyShingles);
-            nextSlot++;
-            shop.item[nextSlot].SetDefaults(ItemID.Sake);
-            nextSlot++;
-            shop.item[nextSlot].SetDefaults(ItemID.Shuriken);
-            nextSlot++;
-            shop.item[nextSlot].SetDefaults(ItemID.NinjaHood);
-            shop.item[nextSlot].shopCustomPrice = 8000;
-            nextSlot++;
-            shop.item[nextSlot].SetDefaults(ItemID.NinjaShirt);
-            shop.item[nextSlot].shopCustomPrice = 9200;
-            nextSlot++;
-            shop.item[nextSlot].SetDefaults(ItemID.NinjaPants);
-            shop.item[nextSlot].shopCustomPrice = 7800;
-            nextSlot++;
-            shop.item[nextSlot].SetDefaults(ItemID.Katana);
-            nextSlot++;
+            NPCShop npcShop = new NPCShop(Type)
+                    .Add(new Item(ItemID.RedDynastyShingles))
+                    .Add(new Item(ItemID.Sake))
+                    .Add(new Item(ItemID.Shuriken))
+                    .Add(new Item(ItemID.Katana))
+                        .Add(new Item(ItemID.NinjaHood)
+                        {
+                            shopCustomPrice = 8000,
+                        })
+             .Add(new Item(ItemID.NinjaShirt)
+             {
+                 shopCustomPrice = 9200,
+             })
+             .Add(new Item(ItemID.NinjaPants)
+             {
+                 shopCustomPrice = 7800,
+             });
             if (Main.slimeRain)
             {
-                shop.item[nextSlot].SetDefaults(ItemID.Gel);
-                nextSlot++;
-            }    
-            if (Main.hardMode)
-            {
-                shop.item[nextSlot].SetDefaults(ItemID.TigerClimbingGear);
-                shop.item[nextSlot].shopCustomPrice = 19000;
-                nextSlot++;
+                npcShop.Add(new Item(ItemID.Gel));
             }
-            
-
-
-          
-        
             if (Main.hardMode)
             {
-                shop.item[nextSlot].SetDefaults(ItemID.GuideVoodooDoll);
-                nextSlot++;
+                npcShop.Add(new Item(ItemID.TigerClimbingGear)
+                {
+                    shopCustomPrice = 19000,
+                });
+                npcShop.Add(new Item(ItemID.GuideVoodooDoll));
                 if (NPC.downedMechBossAny)
                 {
-
-                    shop.item[nextSlot].SetDefaults(ItemID.MoonCharm);
-                    nextSlot++;
+                    npcShop.Add(new Item(ItemID.MoonCharm));
                 }
+
             }
             if (Main.LocalPlayer.HasBuff(BuffID.Slimed))
             {
-                shop.item[nextSlot].SetDefaults(ItemID.SlimeCrown);
-                shop.item[nextSlot].shopCustomPrice = 200;
-                nextSlot++;
+                npcShop.Add(new Item(ItemID.SlimeCrown)
+                {
+                    shopCustomPrice = 2000,
+                });
             }
-       
         }
+      
         public override void HitEffect(NPC.HitInfo hit)
         {
             for (int i = 0; i < 10; i++)
@@ -353,11 +344,11 @@ namespace Creaturia.NPCs.Town
 
             if (NPC.life <= 0)
             {
-                Gore.NewGoreDirect(NPC.GetSource_FromAI(), NPC.Top, NPC.velocity * hitDirection + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), Mod.Find<ModGore>("NinjaHeadGore").Type, NPC.scale);
+                Gore.NewGoreDirect(NPC.GetSource_FromAI(), NPC.Top, NPC.velocity * hit.HitDirection + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), Mod.Find<ModGore>("NinjaHeadGore").Type, NPC.scale);
                 for (int i = 0; i <= 2; i++)
                 {
-                    Gore.NewGoreDirect(NPC.GetSource_FromAI(), NPC.Bottom, NPC.velocity * hitDirection + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), Mod.Find<ModGore>("NinjaFootGore").Type, NPC.scale);
-                    Gore.NewGoreDirect(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity * hitDirection + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), Mod.Find<ModGore>("NinjaArmGore").Type, NPC.scale);
+                    Gore.NewGoreDirect(NPC.GetSource_FromAI(), NPC.Bottom, NPC.velocity * hit.HitDirection + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), Mod.Find<ModGore>("NinjaFootGore").Type, NPC.scale);
+                    Gore.NewGoreDirect(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity * hit.HitDirection + new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), Mod.Find<ModGore>("NinjaArmGore").Type, NPC.scale);
                 }
                 for (int i = 0; i < 20; i++)
                 {

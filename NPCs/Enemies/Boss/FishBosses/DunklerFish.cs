@@ -922,17 +922,17 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
             {
 				if (NPC.direction == -1)
                 {
-					Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(-10, 0), NPC.velocity * hitDirection, Mod.Find<ModGore>("DunkGore4").Type, 1f);
+					Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(-10, 0), NPC.velocity * hit.HitDirection, Mod.Find<ModGore>("DunkGore4").Type, 1f);
 				}
 				if (NPC.direction == 1)
 				{
-					Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(10, 0), NPC.velocity * hitDirection, Mod.Find<ModGore>("DunkGore4").Type, 1f);
+					Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(10, 0), NPC.velocity * hit.HitDirection, Mod.Find<ModGore>("DunkGore4").Type, 1f);
 				}
-				Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(0, -8), NPC.velocity * hitDirection, Mod.Find<ModGore>("DunkGore3").Type, 1f);
-				Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(0, 1), NPC.velocity * hitDirection, Mod.Find<ModGore>("DunkGore").Type, 1f);
-				Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(0, -1), NPC.velocity * hitDirection, Mod.Find<ModGore>("DunkGore").Type, 1f);
+				Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(0, -8), NPC.velocity * hit.HitDirection, Mod.Find<ModGore>("DunkGore3").Type, 1f);
+				Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(0, 1), NPC.velocity * hit.HitDirection, Mod.Find<ModGore>("DunkGore").Type, 1f);
+				Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(0, -1), NPC.velocity * hit.HitDirection, Mod.Find<ModGore>("DunkGore").Type, 1f);
 
-				Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(-2, 0), NPC.velocity * hitDirection, Mod.Find<ModGore>("DunkGore5").Type, 1f);
+				Gore.NewGore(NPC.GetSource_FromAI(), NPC.position + new Vector2(-2, 0), NPC.velocity * hit.HitDirection, Mod.Find<ModGore>("DunkGore5").Type, 1f);
 			}
         }
 
