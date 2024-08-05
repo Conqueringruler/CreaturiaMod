@@ -427,14 +427,14 @@ new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.5f, TextureAssets.Npc[NP
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit)
 		{
-			target.AddBuff(BuffID.Chilled, 1600);
+			target.AddBuff(BuffID.Chilled, 600);
 			base.OnHitPlayer(target, damage, crit);
 
 			if (Main.expertMode || Main.masterMode)
 			{
 				if (Main.rand.NextBool(3))
 				{
-					target.AddBuff(BuffID.Slow, 300);
+					target.AddBuff(BuffID.Slow, 100);
 				}
 
 			}

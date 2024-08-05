@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using Terraria.IO;
 using Terraria.Localization;
 using Terraria.Audio;
+using Creaturia.NPCs.Creatures;
+using Creaturia.Projectiles;
 
 namespace Creaturia.Items.Weapon
 {
@@ -25,7 +27,7 @@ namespace Creaturia.Items.Weapon
 
 			DisplayName.SetDefault("Electric Eel");
 			Tooltip.SetDefault("Your summons will focus struck enemies\n" +
-				"100% chance to electrify enemies for 5 seconds minimum, up to 10 seconds when charged \n" +
+				"100% chance to electrify enemies for 2.5 seconds minimum, up to 5 seconds when charged \n" +
 				"Charging the whip will increase whip length up to 2x");
 
 
@@ -42,7 +44,7 @@ namespace Creaturia.Items.Weapon
 			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(gold: 6, silver: 50);
 			Item.channel = true;
-
+			//Item.shoot = ModContent.ProjectileType<EelWhipProjectile>();
 			
 		}
 
@@ -51,6 +53,7 @@ namespace Creaturia.Items.Weapon
 		{
 			return true;
 		}
+		
 	}
 	public class EelWhipProjectile : ModProjectile // This was one of the first things I added to the mod that's still here. As you can probably tell this code is straight from ExampleMod's example whip.
 												   // That's something that, now that I'm actually planning on publishing the mod, I'm not too happy about. So keep in mind this will inevitably be rewritten.
@@ -173,7 +176,7 @@ Dust dust = Dust.NewDustDirect(new Vector2(owner.position.X + 20 + Main.rand.Nex
 		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit)
 		{
-			target.AddBuff(BuffID.Electrified, 300 + ((int)ChargeTime * 2));
+			target.AddBuff(BuffID.Electrified, 150 + ((int)ChargeTime * 2));
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 		}
 

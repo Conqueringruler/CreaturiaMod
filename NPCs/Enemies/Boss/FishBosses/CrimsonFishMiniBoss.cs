@@ -16,6 +16,7 @@ using ReLogic.Content;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 
+using Creaturia.Items;
 using System.Collections.Generic;
 using Terraria.Graphics.CameraModifiers; // I wanna check out Camera Modifiers cause that sounds cool, maybe for corruption fish
 
@@ -84,7 +85,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 
 			NPC.width = 76;
 			NPC.height = 74; // Change ALL defaults 
-			NPC.damage = 50;
+			NPC.damage = 30;
 			NPC.defense = 25;
 			NPC.lifeMax = 7500;
 			NPC.HitSound = SoundID.NPCHit1;
@@ -98,20 +99,16 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			NPC.noTileCollide = true;
 			NPC.knockBackResist = 0f;
 			NPC.npcSlots = 10f;
-			NPC.value = Item.buyPrice(gold: 4, silver: 80);
+			NPC.value = Item.buyPrice(gold: 8, silver: 80);
 
 			NPC.boss = true;
 			if (!Main.dedServ)
 			{
-				Music = MusicLoader.GetMusicSlot(Mod, "Assets/Sounds/Music/underwater_fishy_terrariaminiboss");
+				Music = MusicLoader.GetMusicSlot(Mod, "Assets/Sounds/Music/FishBoss2");
 			}
 		}
 
-		public override bool? CanBeHitByItem(Player player, Item item)
-		{
-			return true;
-		}
-
+	
 	
 		
 
@@ -133,10 +130,10 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			//if (Main.rand.NextBool(5))
 			//{
 				//	Item.NewItem(NPC.getRect(), ItemID.Leather);
-				npcLoot.Add(ItemDropRule.Common(ItemID.CrimsonKey, 5, 1, 1));
+				//npcLoot.Add(ItemDropRule.Common(ItemID.CrimsonKey, 5, 1, 1));
 			//}
 
-			var parameters = new DropOneByOne.Parameters()
+			var parameters = new DropOneByOne.Parameters() // Where did I get this parameter shit from? I did this so long ago I can't remember. Not gonna use it though
 			{
 				ChanceNumerator = 1,
 				ChanceDenominator = 1,
@@ -147,6 +144,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			};
 
 			//new DropOneByOne(ItemID.SoulofNight, parameters);
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LumpsuckerHeart>(), 1, 10, 16));
 			npcLoot.Add(new DropOneByOne(ItemID.SoulofNight, parameters));
 			npcLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCID.PirateShip));
 
@@ -357,6 +355,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
             {
 				startsprayattack = true;
 				didsound = false;
+				NPC.netUpdate = true;
             }
 			if (startsprayattack == true)
             {
@@ -373,23 +372,31 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			}
 			if (sprayingtime > 6)
             {
-				if (Main.netMode != NetmodeID.MultiplayerClient)
-				{
+				
 					timeuntilsprayends++;
 					NPC.velocity.Y -= 8;
-					int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
+					}
 					if (Main.expertMode)
 					{
-						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
+					}
 					}
 					if (Main.masterMode)
 					{
-						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
+					if (Main.netMode != NetmodeID.MultiplayerClient)
+					{
+						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
+					}
 					}
 					sprayingtime = 0;
-					NPC.netUpdate = true;
-				}
+					//NPC.netUpdate = true;
+				
             }
 			if (timeuntilsprayends > 35)
             {
@@ -403,11 +410,13 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			if (sprayingtime != 0 && startsprayattack == true)
 			{
 				NPC.scale = 1f + (float)sprayingtime / 50;
+				NPC.netUpdate = true;
 			}
 			if (startsprayattack == false && startshootingoutbabies == false)
             {
 				NPC.scale = 1f + ((float)slowlybigger / 60) + ((float)slowlytomid / 60);
-            }
+				NPC.netUpdate = true;
+			}
 			
 			// FISH BABY ATTACK
 

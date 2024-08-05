@@ -41,7 +41,7 @@ namespace Creaturia.NPCs.Misc
 			//NPC.DeathSound = SoundID.Item;
 			NPC.noGravity = true;
 			NPC.noTileCollide = false;
-			
+			NPC.rarity = 2;
 			NPC.knockBackResist = 1f;
 			NPC.ShowNameOnHover = false;
 			NPC.lavaImmune = false;

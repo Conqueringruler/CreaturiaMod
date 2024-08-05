@@ -37,29 +37,72 @@ namespace Creaturia.Items.GlobalItems
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 
-			recipe = Recipe.Create(ItemID.RagePotion, 5);
+			
 
-			recipe.AddIngredient(ItemID.BottledWater, 4);
-			recipe.AddIngredient(ItemID.Deathweed, 2);
-			recipe.AddIngredient(ModContent.ItemType<LumpsuckerHeart>(), 1);
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
+
 
 			recipe = Recipe.Create(ItemID.HallowedKey);
 
 			recipe.AddIngredient(ModContent.ItemType<RainbowScale2>(), 10);
 			recipe.AddIngredient(ItemID.SoulofLight, 5);
-			recipe.AddIngredient(ItemID.JungleKey, 1);
+			recipe.AddIngredient(ItemID.TempleKey, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.WrathPotion, 3);
+
+			recipe.AddIngredient(ItemID.BottledWater, 3);
+			recipe.AddIngredient(ItemID.Vertebrae, 5);
+			recipe.AddIngredient(ModContent.ItemType<LumpsuckerHeart>(), 2);
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.RagePotion, 3);
+
+			recipe.AddIngredient(ItemID.BottledWater, 3);
+			recipe.AddIngredient(ItemID.Deathweed, 2);
+			recipe.AddIngredient(ModContent.ItemType<LumpsuckerHeart>(), 2);
+			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.CrimsonKey);
 
-			recipe.AddIngredient(ModContent.ItemType<LumpsuckerHeart>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<LumpsuckerHeart>(), 10);
 			recipe.AddIngredient(ItemID.SoulofNight, 5);
-			recipe.AddIngredient(ItemID.JungleKey, 1);
+			recipe.AddIngredient(ItemID.TempleKey, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
+
+
+
+
+			recipe = Recipe.Create(ItemID.EndurancePotion, 3);
+
+			recipe.AddIngredient(ItemID.BottledWater, 3);
+			recipe.AddIngredient(ItemID.RottenChunk, 5);
+			recipe.AddIngredient(ModContent.ItemType<DunkleVertebrae>(), 2);
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.ThornsPotion, 3);
+
+			recipe.AddIngredient(ItemID.BottledWater, 3);
+			recipe.AddIngredient(ItemID.Cactus, 5);
+			recipe.AddIngredient(ModContent.ItemType<DunkleVertebrae>(), 2);
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.CorruptionKey);
+
+			recipe.AddIngredient(ModContent.ItemType<DunkleVertebrae>(), 10);
+			recipe.AddIngredient(ItemID.SoulofNight, 5);
+			recipe.AddIngredient(ItemID.TempleKey, 1);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+
+
+
+
 
 			recipe = Recipe.Create(ItemID.BunnyStew);
 

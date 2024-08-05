@@ -27,6 +27,9 @@ using Terraria.GameContent.Creative;
 using System.IO;
 using Terraria.ModLoader.IO;
 using Creaturia;
+using NVorbis.Contracts;
+using System.Net.Sockets;
+using static Humanizer.In;
 
 
 namespace Creaturia.NPCs.Town
@@ -39,40 +42,42 @@ namespace Creaturia.NPCs.Town
         private bool pulledup = true;
 
 
-        private bool ChoosedWishes = false;
+        public bool ChoosedWishes = false;
 
-        private int RichesWish; // holy carp louis i fricking love long strings of similar looking text
-                                // fuck you peter i made it more legible
-        private int FishesWish;
-        private int WishesWish;
+        public int RichesWish; // holy carp louis i fricking love long strings of similar looking text
+                               // fuck you peter i made it more legible
+        public int FishesWish;
+        public int WishesWish;
 
-        private int SoulsWish = 0;
-        private int WarWish;
-        private int OresWish;
+        public int SoulsWish = 0;
+        public int WarWish;
+        public int OresWish;
 
         private bool FourthButton1 = false;
 
         private bool EvilWishes = false;
-        private int EvilCalculator;
+        public int EvilCalculator;
 
         private bool firstbuttonchosen;
 
 
-        private bool WishGranted = false;
+        public bool WishGranted = false;
         private int Poof;
-        private int PunishmentChooser;
+        public int PunishmentChooser = 1;
         private bool TurnRed = false;
 
-        private bool Button1IsRiches = false;
-        private bool Button1IsFishes = false;
-        private bool Button1IsWishes = false;
-        private bool Button1IsDishes = false;
+        public bool Button1IsRiches = false;
+        public bool Button1IsFishes = false;
+        public bool Button1IsWishes = false;
+        public bool Button1IsDishes = false;
 
-        private bool Button2IsWar = false;
-        private bool Button2IsSouls = false;
-        private bool Button2IsOres = false;
+        public bool Button2IsWar = false;
+        public bool Button2IsSouls = false;
+        public bool Button2IsOres = false;
 
+        public bool TryDoWish = false; // Need to do this for networking
 
+        public bool TwoButtonsPacket = false;
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 4;
@@ -87,17 +92,8 @@ namespace Creaturia.NPCs.Town
             //    NPCID.Sets.SpawnsWithCustomName[Type] = true; // So it chooses a name like a townnpc since it isnt actually one
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             DisplayName.SetDefault("Mysterious Golden Fish");
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
-            { // Influences NPC in Bestiary
-                PortraitPositionXOverride = -15f, //15f
-                PortraitPositionYOverride = 0, // 8f
-                Velocity = -1f,
-                Scale = 0.95f,
-                SpriteDirection = 1,
-                //Direction = -1
-
-            };
-            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value); // for whatever reason, I can
+            
+            //NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value); // for whatever reason, I can
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
@@ -111,7 +107,16 @@ namespace Creaturia.NPCs.Town
 
             ContentSamples.NpcBestiaryRarityStars[ModContent.NPCType<GoldenFish>()] = 4;
         }
-       
+        NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+        { // Influences NPC in Bestiary
+            PortraitPositionXOverride = -10f, //15f
+            PortraitPositionYOverride = 0, // 8f
+            Velocity = 1f,
+            Scale = 0.95f,
+            SpriteDirection = -1,
+            Direction = -1
+
+        };
         public override void SetDefaults()
         {
             NPC.friendly = true;
@@ -129,6 +134,10 @@ namespace Creaturia.NPCs.Town
             NPC.color = Color.Gold;
             NPC.noGravity = true;
             NPC.dontTakeDamageFromHostiles = true;
+
+            
+
+
         }
         int DustTimer;
 
@@ -191,9 +200,43 @@ namespace Creaturia.NPCs.Town
 
             return false;
         }
+        bool SentPacketYet = false;
+        int waitasec;
         public override void AI()
         {
-
+            /*  if (Main.netMode == NetmodeID.Server)
+              {
+                  if (waitasec <= 3)
+                  {
+                      waitasec++;
+                  }
+                  if (waitasec >= 3 && SentPacketYet == false)
+                  {
+                      SentPacketYet = true;
+                       ModPacket packet = Mod.GetPacket(); // use this instead of other
+                      packet.Write((byte)Creaturia.MessageType.GoldenFishMsg); // id
+                      packet.Write((byte)NPC.whoAmI); // NPC identity
+                      packet.Write((bool)ChoosedWishes); // WishesChosen
+                      packet.Write((bool)WishGranted); // Wish Granted
+                      packet.Write((byte)EvilCalculator); // Evil Calc
+                      packet.Write((byte)PunishmentChooser); // Punshment Chosen
+                      packet.Write((byte)RichesWish);
+                      packet.Write((byte)WishesWish);
+                      packet.Write((byte)FishesWish);
+                      packet.Write((byte)OresWish);
+                      packet.Write((byte)SoulsWish);
+                      packet.Write((byte)WarWish);
+                      packet.Write((bool)TryDoWish);
+                      packet.Send();
+                  }
+              } */
+            // ^^^ the point of this is to sync the buttons, idk if it will work though. Edit: Except I don't need to sync it here
+            if (TryDoWish)
+            {
+                
+                DoWish(!secondButton, secondButton); // I can do the opposite of secondButton, this is actually genius 
+                TryDoWish = false;
+            }
 
             if (pulledup == true)
             {
@@ -225,21 +268,31 @@ namespace Creaturia.NPCs.Town
 
             if (ChoosedWishes == false)
             {
-                RichesWish = Main.rand.Next(2);
-                FishesWish = Main.rand.Next(2);
-                WishesWish = Main.rand.Next(2);
-                FourthButton1 = Main.rand.NextBool(5); // I can do one more wish
-                if (Main.hardMode)
-                {
-                    SoulsWish = Main.rand.Next(2);
-                }
+               // if (Main.netMode != NetmodeID.MultiplayerClient)
+              //  {
 
-                WarWish = Main.rand.Next(2);
-                SoulsWish = Main.rand.Next(2);
-                OresWish = Main.rand.Next(2);
-                WishesWish = Main.rand.Next(2);
-                PunishmentChooser = Main.rand.Next(1, 5);
-                EvilCalculator = Main.rand.Next(8);
+
+                    RichesWish = Main.rand.Next(2);
+                    FishesWish = Main.rand.Next(2);
+                    WishesWish = Main.rand.Next(2);
+                    FourthButton1 = Main.rand.NextBool(5); // I can do one more wish
+                    if (Main.hardMode)
+                    {
+                        SoulsWish = Main.rand.Next(2);
+                    }
+
+                    WarWish = Main.rand.Next(2);
+                    SoulsWish = Main.rand.Next(2);
+                    OresWish = Main.rand.Next(2);
+                    WishesWish = Main.rand.Next(2);
+                    PunishmentChooser = Main.rand.Next(1, 5);
+                    EvilCalculator = Main.rand.Next(8);
+             //   }
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    SendPacketNowThatValuesAreSet();
+                   
+                }
                 // PunishmentChooser
 
                 ChoosedWishes = true;
@@ -247,6 +300,11 @@ namespace Creaturia.NPCs.Town
 
             if (WishGranted == true)
             {
+
+                if (SentPacketYet == false)
+                {
+
+                }
                 Poof++;
                 if (Poof > 180)
                 {
@@ -292,10 +350,10 @@ namespace Creaturia.NPCs.Town
                                 projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(-10, -180), NPC.velocity, ProjectileID.BeeHive, 130, 0);
 
                                 // High up boulders
-                                projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(20, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
-                                projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(-20, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
-                                projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(60, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
-                                projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(-60, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
+                                for (int i = 0; i < 5; i++)
+                                {
+                                    projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(20 + (i * -40), -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
+                                }
                             }
                             if (PunishmentChooser == 2)
                             {
@@ -334,20 +392,25 @@ namespace Creaturia.NPCs.Town
                                 }
                                 else
                                 {
-                                    int projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(0, -140), NPC.velocity, ProjectileID.Boulder, 130, 0);
-
-                                    for (int i = 0; i < 5; i++)
+                                    if (Main.netMode != NetmodeID.MultiplayerClient)
                                     {
-                                        projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(0 + (i * 5), -140 + (i * -5)), NPC.velocity, ProjectileID.Boulder, 130, 0);
-                                    }
-                                    projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(10, -180), NPC.velocity, ProjectileID.BeeHive, 130, 0);
-                                    projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(-10, -180), NPC.velocity, ProjectileID.BeeHive, 130, 0);
 
-                                    // High up boulders
-                                    projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(20, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
-                                    projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(-20, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
-                                    projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(60, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
-                                    projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(-60, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
+
+                                        int projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(0, -140), NPC.velocity, ProjectileID.Boulder, 130, 0);
+
+                                        for (int i = 0; i < 5; i++)
+                                        {
+                                            projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(0 + (i * 5), -140 + (i * -5)), NPC.velocity, ProjectileID.Boulder, 130, 0);
+                                        }
+                                        projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(10, -180), NPC.velocity, ProjectileID.BeeHive, 130, 0);
+                                        projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(-10, -180), NPC.velocity, ProjectileID.BeeHive, 130, 0);
+
+                                        // High up boulders
+                                        projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(20, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
+                                        projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(-20, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
+                                        projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(60, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
+                                        projectile = Projectile.NewProjectile(NPC.GetSource_NaturalSpawn(), Main.LocalPlayer.position + new Vector2(-60, -540), NPC.velocity, ProjectileID.Boulder, 130, 0);
+                                    }
                                 }
                             }
                             if (PunishmentChooser == 4)
@@ -361,8 +424,10 @@ namespace Creaturia.NPCs.Town
 
 
                         }
-                        NPC.active = false;
+                       
                     }
+                    NPC.active = false;
+                    NPC.netUpdate = true;
                     for (int i = 0; i < 20; i++)
                     {
                         Dust dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-15, 15)), NPC.width, NPC.height, DustID.GoldFlame, NPC.velocity.X + Main.rand.Next(-5, 5), NPC.velocity.Y + Main.rand.Next(-5, 5));
@@ -372,7 +437,24 @@ namespace Creaturia.NPCs.Town
                 }
             }
         }
-
+        public void SendPacketNowThatValuesAreSet()
+        {
+            ModPacket packet = Mod.GetPacket(); // use this instead of other
+            packet.Write((byte)Creaturia.MessageType.GoldenFishMsg); // id
+            packet.Write((Int32)NPC.whoAmI); // NPC identity
+            packet.Write((bool)ChoosedWishes); // WishesChosen
+            packet.Write((bool)WishGranted); // Wish Granted
+            packet.Write((Int32)EvilCalculator); // Evil Calc
+            packet.Write((Int32)PunishmentChooser); // Punshment Chosen
+            packet.Write((Int32)RichesWish);
+            packet.Write((Int32)WishesWish);
+            packet.Write((Int32)FishesWish);
+            packet.Write((Int32)OresWish);
+            packet.Write((Int32)SoulsWish);
+            packet.Write((Int32)WarWish);
+            packet.Write((bool)TryDoWish);
+            packet.Send();
+        }
         public override bool CanChat() // gotta add since isn't a real town npc
         {
             return true;
@@ -436,60 +518,127 @@ namespace Creaturia.NPCs.Town
                     return "If you let me free, I'll fulfill you a wish!";
             }
         }
+        /*  public void Send(int toWho, int fromWho)
+          {
+              ModPacket packet = Mod.GetPacket(); // use this instead of other
+              if (Main.netMode == NetmodeID.Server)
+              {
+                  packet.Write(fromWho);
+              }
+              packet.Write((bool)ChoosedWishes); // WishesChosen
+              packet.Write((bool)WishGranted); // Wish Granted
+              packet.Write(EvilCalculator); // Evil Calc
+              packet.Write(PunishmentChooser); // Punshment Chosen
+              packet.Send(toWho, fromWho);
+          }
 
+          public void Receive(BinaryReader reader, int fromWho)
+          {
+              if (Main.netMode == NetmodeID.MultiplayerClient)
+              {
+                  fromWho = reader.ReadInt32();
+              }
+              ChoosedWishes = reader.ReadBoolean();
+              WishGranted = reader.ReadBoolean();
+              EvilCalculator = reader.ReadInt32();
+              PunishmentChooser = reader.ReadInt32();
+              if (Main.netMode == NetmodeID.Server)
+              {
+                  Send(-1, fromWho);
+              }
+
+          } */ // You know what, I'm just gonna use SendExtraAI cause it really doesn't matter that much tbh
+
+        public bool ButtonsChosenDontChangePleasePlease = false;
+
+       
         public override void SetChatButtons(ref string button, ref string button2)
         {
 
 
             // Fuck I wish I had real C# coding knowledge to know how to make this clean, I guess I could just use the notes
+            // Edit from the future: holy shit I can't believe I made this, I mean I guess it works LOL
             if (FourthButton1 != true)
             {
-                if (RichesWish == 1 && WishesWish != 1 && FishesWish != 1) // O X X
-                {
-                    button = Language.GetTextValue("Wish for Riches");
-                    Button1IsRiches = true;
-                }
-                if (RichesWish != 1 && WishesWish == 1 && FishesWish != 1) // X O X
-                {
-                    button = Language.GetTextValue("Wish for Wishes");
-                    Button1IsWishes = true;
-                }
-                if (RichesWish != 1 && WishesWish != 1 && FishesWish == 1) // X X O
-                {
-                    button = Language.GetTextValue("Wish for Fishes");
-                    Button1IsFishes = true;
-                }
-                if (RichesWish == 1 && WishesWish != 1 && FishesWish == 1) // O X O
-                {
-                    button = Language.GetTextValue("Wish for Riches");
-                    Button1IsRiches = true;
-                }
-                if (RichesWish == 1 && WishesWish == 1 && FishesWish != 1) // O O X
-                {
-                    button = Language.GetTextValue("Wish for Wishes");
-                    Button1IsWishes = true;
-                }
-                if (RichesWish != 1 && WishesWish == 1 && FishesWish == 1) // X O O
-                {
-                    button = Language.GetTextValue("Wish for Fishes");
-                    Button1IsFishes = true;
-                }
-                if (RichesWish != 1 && WishesWish != 1 && FishesWish != 1) // X X X
-                {
-                    button = Language.GetTextValue("Wish for Riches");
-                    Button1IsRiches = true;
-                }
-                if (RichesWish == 1 && WishesWish == 1 && FishesWish == 1) // O O O
-                {
-                    button = Language.GetTextValue("Wish for Fishes");
-                    Button1IsFishes = true;
-                }// I think that's every combo
+               // if (ButtonsChosenDontChangePleasePlease == false)
+               // {
+
+
+                    if (RichesWish == 1 && WishesWish != 1 && FishesWish != 1) // O X X
+                    {
+                        button = Language.GetTextValue("Wish for Riches");
+                        Button1IsRiches = true;
+                        Button1IsDishes = false;
+                        Button1IsWishes = false;
+                        Button1IsFishes = false;
+                    }
+                    if (RichesWish != 1 && WishesWish == 1 && FishesWish != 1) // X O X
+                    {
+                        button = Language.GetTextValue("Wish for Wishes");
+                        Button1IsWishes = true;
+
+                        Button1IsRiches = false;
+                        Button1IsDishes = false;
+                        Button1IsFishes = false;
+                    }
+                    if (RichesWish != 1 && WishesWish != 1 && FishesWish == 1) // X X O
+                    {
+                        button = Language.GetTextValue("Wish for Fishes");
+                        Button1IsFishes = true;
+                        Button1IsRiches = false;
+                        Button1IsDishes = false;
+                        Button1IsWishes = false;
+                    }
+                    if (RichesWish == 1 && WishesWish != 1 && FishesWish == 1) // O X O
+                    {
+                        button = Language.GetTextValue("Wish for Riches");
+                        Button1IsRiches = true;
+                        Button1IsDishes = false;
+                        Button1IsWishes = false;
+                        Button1IsFishes = false;
+                    }
+                    if (RichesWish == 1 && WishesWish == 1 && FishesWish != 1) // O O X
+                    {
+                        button = Language.GetTextValue("Wish for Wishes");
+                        Button1IsWishes = true;
+                        Button1IsRiches = false;
+                        Button1IsDishes = false;
+                        Button1IsFishes = false;
+                    }
+                    if (RichesWish != 1 && WishesWish == 1 && FishesWish == 1) // X O O
+                    {
+                        button = Language.GetTextValue("Wish for Fishes");
+                        Button1IsFishes = true;
+                        Button1IsRiches = false;
+                        Button1IsDishes = false;
+                        Button1IsWishes = false;
+                    }
+                    if (RichesWish != 1 && WishesWish != 1 && FishesWish != 1) // X X X
+                    {
+                        button = Language.GetTextValue("Wish for Riches");
+                        Button1IsRiches = true;
+                        Button1IsDishes = false;
+                        Button1IsWishes = false;
+                        Button1IsFishes = false;
+                    }
+                    if (RichesWish == 1 && WishesWish == 1 && FishesWish == 1) // O O O
+                    {
+                        button = Language.GetTextValue("Wish for Fishes");
+                        Button1IsFishes = true;
+                        Button1IsRiches = false;
+                        Button1IsDishes = false;
+                        Button1IsWishes = false;
+                    }// I think that's every combo
+               // }
             }
 
             if (FourthButton1 == true)
             {
                 button = Language.GetTextValue("Wish for Dishes");
                 Button1IsDishes = true;
+                Button1IsRiches = false;
+                Button1IsWishes = false;
+                Button1IsFishes = false;
             }
 
 
@@ -502,46 +651,72 @@ namespace Creaturia.NPCs.Town
 
             //if (FourthButton2 != true)
             //{
-            if (SoulsWish == 1 && WarWish != 1 && OresWish != 1) // O X X
-            {
-                button2 = Language.GetTextValue("Wish for Souls");
-                Button2IsSouls = true;
-            }
-            if (SoulsWish != 1 && WarWish == 1 && OresWish != 1) // X O X
-            {
-                button2 = Language.GetTextValue("Wish for War");
-                Button2IsWar = true;
-            }
-            if (SoulsWish != 1 && WarWish != 1 && OresWish == 1) // X X O
-            {
-                button2 = Language.GetTextValue("Wish for Ores");
-                Button2IsOres = true;
-            }
-            if (SoulsWish == 1 && WarWish != 1 && OresWish == 1) // O X O
-            {
-                button2 = Language.GetTextValue("Wish for Souls");
-                Button2IsSouls = true;
-            }
-            if (SoulsWish == 1 && WarWish == 1 && OresWish != 1) // O O X
-            {
-                button2 = Language.GetTextValue("Wish for War");
-                Button2IsWar = true;
-            }
-            if (SoulsWish != 1 && WarWish == 1 && OresWish == 1) // X O O
-            {
-                button2 = Language.GetTextValue("Wish for Ores");
-                Button2IsOres = true;
-            }
-            if (SoulsWish != 1 && WarWish != 1 && OresWish != 1) // X X X
-            {
-                button2 = Language.GetTextValue("Wish for Souls");
-                Button2IsSouls = true;
-            }
-            if (SoulsWish == 1 && WarWish == 1 && OresWish == 1) // O O O
-            {
-                button2 = Language.GetTextValue("Wish for Ores");
-                Button2IsOres = true;
-            }// I think that's every combo
+            //if (ButtonsChosenDontChangePleasePlease == false)
+           // {
+
+
+                if (SoulsWish == 1 && WarWish != 1 && OresWish != 1) // O X X
+                {
+
+                    button2 = Language.GetTextValue("Wish for Souls");
+                    Button2IsSouls = true;
+
+                    Button2IsOres = false;
+                    Button2IsWar = false;
+                }
+                if (SoulsWish != 1 && WarWish == 1 && OresWish != 1) // X O X
+                {
+                    button2 = Language.GetTextValue("Wish for War");
+                    Button2IsWar = true;
+
+                    Button2IsOres = false;
+                    Button2IsSouls = false;
+                }
+                if (SoulsWish != 1 && WarWish != 1 && OresWish == 1) // X X O
+                {
+                    button2 = Language.GetTextValue("Wish for Ores");
+                    Button2IsOres = true;
+                    Button2IsSouls = false;
+                    Button2IsWar = false;
+                }
+                if (SoulsWish == 1 && WarWish != 1 && OresWish == 1) // O X O
+                {
+                    button2 = Language.GetTextValue("Wish for Souls");
+                    Button2IsSouls = true;
+                    Button2IsOres = false;
+                    Button2IsWar = false;
+                }
+                if (SoulsWish == 1 && WarWish == 1 && OresWish != 1) // O O X
+                {
+                    button2 = Language.GetTextValue("Wish for War");
+                    Button2IsWar = true;
+                    Button2IsOres = false;
+                    Button2IsSouls = false;
+                }
+                if (SoulsWish != 1 && WarWish == 1 && OresWish == 1) // X O O
+                {
+                    button2 = Language.GetTextValue("Wish for Ores");
+                    Button2IsOres = true;
+                    Button2IsSouls = false;
+                    Button2IsWar = false;
+                }
+                if (SoulsWish != 1 && WarWish != 1 && OresWish != 1) // X X X
+                {
+                    button2 = Language.GetTextValue("Wish for Souls");
+                    Button2IsSouls = true;
+                    Button2IsOres = false;
+                    Button2IsWar = false;
+                }
+                if (SoulsWish == 1 && WarWish == 1 && OresWish == 1) // O O O
+                {
+                    button2 = Language.GetTextValue("Wish for Ores");
+                    Button2IsOres = true;
+                    Button2IsSouls = false;
+                    Button2IsWar = false;
+                }
+                ButtonsChosenDontChangePleasePlease = true;
+           // }
+            // I think that's every combo
              //}
 
             //    if (FourthButton1 == true)
@@ -560,7 +735,7 @@ namespace Creaturia.NPCs.Town
         }
 
 
-
+        bool secondButton = false;
         public override void OnChatButtonClicked(bool firstButton, ref bool shop)
         {
             if (WishGranted == false)
@@ -572,93 +747,193 @@ namespace Creaturia.NPCs.Town
 
                     if (EvilCalculator != 1)
                     {
-                        if (Button1IsDishes != true)
+                        //if (Main.netMode != NetmodeID.MultiplayerClient)
+                       // {
+                            DoWish(firstButton, secondButton);
+                        //}
+                        TryDoWish = true;
+
+                        if (Main.netMode != NetmodeID.SinglePlayer)
                         {
+                         /*   ModPacket packet = Mod.GetPacket(); // use this instead of other
+                            packet.Write((byte)Creaturia.MessageType.GoldenFishMsg); // id
+                            packet.Write((Int32)NPC.whoAmI); // NPC identity
+                            packet.Write((bool)ChoosedWishes); // WishesChosen
+                            packet.Write((bool)WishGranted); // Wish Granted
+                            packet.Write((Int32)EvilCalculator); // Evil Calc
+                            packet.Write((Int32)PunishmentChooser); // Punshment Chosen
+                            packet.Write((Int32)RichesWish);
+                            packet.Write((Int32)WishesWish);
+                            packet.Write((Int32)FishesWish);
+                            packet.Write((Int32)OresWish);
+                            packet.Write((Int32)SoulsWish);
+                            packet.Write((Int32)WarWish);
+                            packet.Write((bool)TryDoWish);
+                            packet.Send(); */
+                        }
+
+
+
+                    }
+
+                   // WishGranted = true;
+                }
+                else
+                {
+                    secondButton = true;
+                    firstButton = false;
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        DoWish(firstButton, secondButton);
+                    }
+                    TryDoWish = true;
+
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    {
+                        ModPacket packet = Mod.GetPacket(); // use this instead of other
+                        packet.Write((byte)Creaturia.MessageType.GoldenFishMsg); // id
+                        packet.Write((Int32)NPC.whoAmI); // NPC identity
+                        packet.Write((bool)ChoosedWishes); // WishesChosen
+                        packet.Write((bool)WishGranted); // Wish Granted
+                        packet.Write((Int32)EvilCalculator); // Evil Calc
+                        packet.Write((Int32)PunishmentChooser); // Punshment Chosen
+                        packet.Write((Int32)RichesWish);
+                        packet.Write((Int32)WishesWish);
+                        packet.Write((Int32)FishesWish);
+                        packet.Write((Int32)OresWish);
+                        packet.Write((Int32)SoulsWish);
+                        packet.Write((Int32)WarWish);
+                        packet.Write((bool)TryDoWish);
+                        packet.Send();
+                    }
+                }
+
+
+            }
+        }
+        public void DoWish(bool firstbutton, bool secondbutton)
+        {
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                ModPacket packet = Mod.GetPacket(); // use this instead of other
+                packet.Write((byte)Creaturia.MessageType.WishMsg); // id
+                packet.Write((Int32)NPC.whoAmI); // NPC identity
+                packet.Write((bool)ChoosedWishes); // WishesChosen
+                packet.Write((bool)WishGranted); // Wish Granted
+                packet.Write((Int32)EvilCalculator); // Evil Calc
+                packet.Write((Int32)PunishmentChooser); // Punshment Chosen
+                packet.Write((bool)Button1IsRiches);
+                packet.Write((bool)Button1IsWishes);
+                packet.Write((bool)Button1IsFishes);
+                packet.Write((bool)Button2IsOres);
+                packet.Write((bool)Button2IsSouls);
+                packet.Write((bool)Button2IsWar);
+                packet.Write((bool)TryDoWish);
+                packet.Write((bool)firstbutton);
+                packet.Write((bool)secondbutton);
+                packet.Send();
+            }
+            if (WishGranted == false)
+            {
+                if (firstbutton)
+                {
+
+
+                    if (EvilCalculator != 1)
+                    {
+
+
+
+                        
 
                             if (Button1IsWishes != true)
                             {
                                 Main.npcChatText = "Your wish is my command!";
                             }
 
-
-
-                            if (Button1IsFishes == true)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                if (Main.rand.NextBool(3) && Main.hardMode)
+                                if (Button1IsDishes != true)
                                 {
 
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.ChaosFish, Main.rand.Next(0, 3));
-                                }
-                                if (Main.rand.NextBool(3))
+                                    if (Button1IsFishes == true)
                                 {
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Ebonkoi, Main.rand.Next(0, 3));
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Honeyfin, Main.rand.Next(0, 3));
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CrimsonTigerfish, Main.rand.Next(0, 5));
-                                }
-                                if (Main.rand.NextBool(5))
-                                {
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Fish, 1);
-                                }
-                                if (Main.rand.NextBool(4))
-                                {
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.BalloonPufferfish, 1);
-                                }
-                                if (Main.rand.NextBool(3) && Main.hardMode)
-                                {
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CrystalSerpent, 1);
-                                }
-                                if (Main.rand.NextBool(3) && Main.hardMode)
-                                {
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.ObsidianSwordfish, 1);
-                                }
-                                if (Main.rand.NextBool(5) && !Main.hardMode)
-                                {
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.PurpleClubberfish, 1);
-                                }
-                                if (Main.rand.NextBool(5) && !Main.hardMode)
-                                {
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Swordfish, 1);
-                                }
-                                if (Main.rand.NextBool(3) && !Main.hardMode)
-                                {
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.ReaverShark, 1);
-                                }
-                                if (Main.rand.NextBool(1))
-                                {
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.GoldenCarp, 1);
-                                }
-                                //  Main.LocalPlayer.QuickSpawnItem(EntitySource_Loot, ItemID.AtlanticCod); 
-                                if (Main.rand.NextBool(2) && Main.hardMode)
-                                {
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.PrincessFish, Main.rand.Next(0, 4));
-                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Prismite, Main.rand.Next(0, 3));
-                                }
-                                Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Tuna, Main.rand.Next(0, 7));
-                                Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.FrostMinnow, Main.rand.Next(0, 3));
-                                Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.DoubleCod, Main.rand.Next(0, 6));
-                                Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.RedSnapper, Main.rand.Next(0, 6));
-                                Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.BombFish, Main.rand.Next(2, 8));
+                                    if (Main.rand.NextBool(3) && Main.hardMode)
+                                    {
 
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.ChaosFish, Main.rand.Next(0, 3));
+
+                                    }
+                                    if (Main.rand.NextBool(3))
+                                    {
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Ebonkoi, Main.rand.Next(0, 3));
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Honeyfin, Main.rand.Next(0, 3));
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CrimsonTigerfish, Main.rand.Next(0, 5));
+                                    }
+                                    if (Main.rand.NextBool(5))
+                                    {
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Fish, 1);
+                                    }
+                                    if (Main.rand.NextBool(4))
+                                    {
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.BalloonPufferfish, 1);
+                                    }
+                                    if (Main.rand.NextBool(3) && Main.hardMode)
+                                    {
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CrystalSerpent, 1);
+                                    }
+                                    if (Main.rand.NextBool(3) && Main.hardMode)
+                                    {
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.ObsidianSwordfish, 1);
+                                    }
+                                    if (Main.rand.NextBool(5) && !Main.hardMode)
+                                    {
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.PurpleClubberfish, 1);
+                                    }
+                                    if (Main.rand.NextBool(5) && !Main.hardMode)
+                                    {
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Swordfish, 1);
+                                    }
+                                    if (Main.rand.NextBool(3) && !Main.hardMode)
+                                    {
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.ReaverShark, 1);
+                                    }
+                                    if (Main.rand.NextBool(1))
+                                    {
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.GoldenCarp, 1);
+                                    }
+                                    //  Main.LocalPlayer.QuickSpawnItem(EntitySource_Loot, ItemID.AtlanticCod); 
+                                    if (Main.rand.NextBool(2) && Main.hardMode)
+                                    {
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.PrincessFish, Main.rand.Next(0, 4));
+                                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Prismite, Main.rand.Next(0, 3));
+                                    }
+                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Tuna, Main.rand.Next(0, 7));
+                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.FrostMinnow, Main.rand.Next(0, 3));
+                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.DoubleCod, Main.rand.Next(0, 6));
+                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.RedSnapper, Main.rand.Next(0, 6));
+                                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.BombFish, Main.rand.Next(2, 8));
+
+                                }
+
+                                // holy carp louis i frickin love nestled if statements and repeating rand.NextBool!
+                                // thats great petah cause we have plenty!
+
+
+
+
+
+                                if (Button1IsRiches == true)
+                                {
+                                    int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0f, -42f), NPC.velocity, ProjectileID.CoinPortal, 0, 0);
+                                    projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0f, -42f), NPC.velocity, ProjectileID.CoinPortal, 0, 0);
+                                }
+                                //    else
+                                //   {
+
+                                //     }
                             }
-
-                            // holy carp louis i frickin love nestled if statements and repeating rand.NextBool!
-                            // thats great petah cause we have plenty!
-
-
-
-
-
-                            if (Button1IsRiches == true)
-                            {
-                                int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0f, -42f), NPC.velocity, ProjectileID.CoinPortal, 0, 0);
-                                projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0f, -42f), NPC.velocity, ProjectileID.CoinPortal, 0, 0);
-                            }
-                            //    else
-                            //   {
-
-                            //     }
-                        }
-                        if (Button1IsDishes == true)
+                            if (Button1IsDishes == true)
                         {
                             Main.npcChatText = "Your wish is my command!";
                             Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CookedFish, Main.rand.Next(1, 4));
@@ -676,6 +951,8 @@ namespace Creaturia.NPCs.Town
                             Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.ManaPotion, Main.rand.Next(0, 4));
                             Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.HealingPotion, Main.rand.Next(0, 4));
                         }
+                            }
+                       
                     }
                     if (Button1IsWishes == true || EvilCalculator == 1)
                     {
@@ -686,7 +963,10 @@ namespace Creaturia.NPCs.Town
                         if (Button1IsWishes == true)
                         {
                             Main.npcChatText = "'How dare you try to cheat the system like that!'";
-                            EvilCalculator = 1;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                            {
+                                EvilCalculator = 1;
+                            }
                         }
                         //  Main.PlaySound(SoundID.Item8);
                         TurnRed = true;
@@ -703,13 +983,17 @@ namespace Creaturia.NPCs.Town
                      } */
 
                 }
+                WishGranted = true;
+            }
+
+            if (secondbutton)
+            {
 
 
 
 
-
-                else
-                {
+            
+                
                     if (EvilCalculator == 1)
                     {
                         if (EvilCalculator == 1)
@@ -723,193 +1007,211 @@ namespace Creaturia.NPCs.Town
 
                     }
 
-                    if (EvilCalculator != 1)
+                if (EvilCalculator != 1)
+                {
+                    Main.npcChatText = "Your wish is my command, sire!";
+                    Button1IsWishes = false;
+
+                    if (Button2IsSouls == true)
                     {
-                        Main.npcChatText = "Your wish is my command, sire!";
-                        Button1IsWishes = false;
-
-                        if (Button2IsSouls == true)
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofFlight, Main.rand.Next(0, 13));
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofNight, Main.rand.Next(0, 13));
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofLight, Main.rand.Next(0, 13));
+                        if (NPC.downedMechBoss3)
                         {
-                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofFlight, Main.rand.Next(0, 13));
-                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofNight, Main.rand.Next(0, 13));
-                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofLight, Main.rand.Next(0, 13));
-                            if (NPC.downedMechBoss3)
-                            {
-                                Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofFright, Main.rand.Next(0, 9));
-                            }
-                            if (NPC.downedMechBoss2)
-                            {
-                                Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofSight, Main.rand.Next(0, 9));
-                            }
-                            if (NPC.downedMechBoss1)
-                            {
-                                Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofMight, Main.rand.Next(0, 9));
-                            }
-                            //         if (ModLoader.TryGetMod("Consolaria", out Mod Consolaria) && Consolaria.TryFind("SoulofBlight", out ModItem SoulOfBlight))// && (bool)ModLoader.GetMod("Consolaria").Call("DownedBossSystem", "downedOcram"))
-                            //         {
-                            // This shit ALMOST works, I just need to figure out how to check if Ocram is downed. fuck
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofFright, Main.rand.Next(0, 9));
+                        }
+                        if (NPC.downedMechBoss2)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofSight, Main.rand.Next(0, 9));
+                        }
+                        if (NPC.downedMechBoss1)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SoulofMight, Main.rand.Next(0, 9));
+                        }
+                        //         if (ModLoader.TryGetMod("Consolaria", out Mod Consolaria) && Consolaria.TryFind("SoulofBlight", out ModItem SoulOfBlight))// && (bool)ModLoader.GetMod("Consolaria").Call("DownedBossSystem", "downedOcram"))
+                        //         {
+                        // This shit ALMOST works, I just need to figure out how to check if Ocram is downed. fuck
 
 
 
-                            /*     if (ModLoader.TryGetMod("Consolaria", out Mod Consolaria))
+                        /*     if (ModLoader.TryGetMod("Consolaria", out Mod Consolaria))
+                             {
+                                 if (Consolaria.TryFind("SoulofBlight", out ModItem SoulOfBlight))
                                  {
-                                     if (Consolaria.TryFind("SoulofBlight", out ModItem SoulOfBlight))
+                                     if (Consolaria.TryFind("DownedBossSystem", out ModSystem ConsolariaBossDowned))
                                      {
-                                         if (Consolaria.TryFind("DownedBossSystem", out ModSystem ConsolariaBossDowned))
+                                         if (ConsolariaBossDowned.GetType("gjhg"))
+                                            // if ((bool)Consolaria.Call("DownedBossSystem", "DownedOcram"))
                                          {
-                                             if (ConsolariaBossDowned.GetType("gjhg"))
-                                                // if ((bool)Consolaria.Call("DownedBossSystem", "DownedOcram"))
-                                             {
-                                                 Item.NewItem(NPC.GetSource_Loot(), NPC.Center, SoulOfBlight.Type, Main.rand.Next(1, 9));
-                                             }
+                                             Item.NewItem(NPC.GetSource_Loot(), NPC.Center, SoulOfBlight.Type, Main.rand.Next(1, 9));
                                          }
                                      }
+                                 }
 
-                             */
-                                      // I really want to add support for Souls of Blight from Consolaria mod, but I do NOT want it so badly that I'll go through the process of creating a weakRefence just for getting if Ocram is downed
+                         */
+                        // I really want to add support for Souls of Blight from Consolaria mod, but I do NOT want it so badly that I'll go through the process of creating a weakRefence just for getting if Ocram is downed
 
-                        }// && (bool)ModLoader.GetMod("Consolaria").Call("DownedBossSystem", "downedOcram"))
-                         //         {
-                         //               Item.NewItem(NPC.GetSource_Loot(), NPC.Center, SoulOfBlight.Type, Main.rand.Next(1, 9));
-                         //            }
+                    }// && (bool)ModLoader.GetMod("Consolaria").Call("DownedBossSystem", "downedOcram"))
+                     //         {
+                     //               Item.NewItem(NPC.GetSource_Loot(), NPC.Center, SoulOfBlight.Type, Main.rand.Next(1, 9));
+                     //            }
 
-                        //   if (ModLoader.GetMod("Consolaria") != null && NPC.downedMechBossAny)
-                        //    {
+                    //   if (ModLoader.GetMod("Consolaria") != null && NPC.downedMechBossAny)
+                    //    {
 
-                        //     }
-                        //ModLoader.TryGetMod("Consolaria", out Mod Consolaria);
+                    //     }
+                    //ModLoader.TryGetMod("Consolaria", out Mod Consolaria);
 
-                        //Mod Consolaria = ModLoader.GetMod("Consolaria");
-                        // Consolaria.TryFind("DownedBossSystem", out ModSystem DownedBossSystem);
-                        //    Consolaria.TryFind("downedOcram", out bool downedOcram);
-                        //    if (Creaturia.ConsolariaLoaded)
-                        //   {
+                    //Mod Consolaria = ModLoader.GetMod("Consolaria");
+                    // Consolaria.TryFind("DownedBossSystem", out ModSystem DownedBossSystem);
+                    //    Consolaria.TryFind("downedOcram", out bool downedOcram);
+                    //    if (Creaturia.ConsolariaLoaded)
+                    //   {
 
-                        // if ((Consolaria != null) && (Consolaria.Call("DownedBossSystem", "downedOcram") is true))
-                        //  {
-                        //        if (DownedBossSystem.boo)
-                        //        Consolaria.TryFind("SoulofBlight", out ModItem SoulOfBlight);
-                        //         Item.NewItem(NPC.GetSource_Loot(), NPC.Center, SoulOfBlight.Type, Main.rand.Next(5, 9));
-                        //      } 
+                    // if ((Consolaria != null) && (Consolaria.Call("DownedBossSystem", "downedOcram") is true))
+                    //  {
+                    //        if (DownedBossSystem.boo)
+                    //        Consolaria.TryFind("SoulofBlight", out ModItem SoulOfBlight);
+                    //         Item.NewItem(NPC.GetSource_Loot(), NPC.Center, SoulOfBlight.Type, Main.rand.Next(5, 9));
+                    //      } 
 
-                        //    if (Consolar)
-                        //    {
-                        //        if (Consolaria.Call("Downed", "downedOcram"))
-                        //        {
-                        //            Consolaria.TryFind("SoulofBlight", out ModItem SoulOfBlight);
-                        //             Item.NewItem(NPC.GetSource_Loot(), NPC.Center, SoulOfBlight.Type, Main.rand.Next(1, 9));
-                        //        }
-                        //    }
+                    //    if (Consolar)
+                    //    {
+                    //        if (Consolaria.Call("Downed", "downedOcram"))
+                    //        {
+                    //            Consolaria.TryFind("SoulofBlight", out ModItem SoulOfBlight);
+                    //             Item.NewItem(NPC.GetSource_Loot(), NPC.Center, SoulOfBlight.Type, Main.rand.Next(1, 9));
+                    //        }
+                    //    }
 
-                    }
+
                     //Consolaria.TryFind("DownedBossSystem", out ModSystem DownedBossSystem);
                     // public bool ConsolariaDownedOcram
                     //    {
                     //          get { return Consolaria.DownedBossSystem.downedOcram; }
                     //      }
 
+
+                    if (Button2IsWar == true)
+                    {
+                        if (!Main.hardMode)
+                        {
+                            Main.StartInvasion(InvasionID.GoblinArmy);
+                        }
+
+                        if (Main.hardMode && Main.LocalPlayer.statLifeMax > 200 && !NPC.downedPlantBoss)
+                        {
+                            Main.StartInvasion(InvasionID.PirateInvasion);
+                        }
+                        if (NPC.downedPlantBoss && Main.hardMode && Main.LocalPlayer.statLifeMax > 200)
+                        {
+                            Main.StartInvasion(InvasionID.MartianMadness);
+                        }
+                    }
+                    if (Button2IsOres == true)
+                    {
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CopperOre, Main.rand.Next(0, 6));
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.TinOre, Main.rand.Next(0, 6));
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SilverOre, Main.rand.Next(0, 6));
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.TungstenOre, Main.rand.Next(0, 6));
+                        if (Main.rand.NextBool(2) && !Main.hardMode)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CopperOre, Main.rand.Next(0, 13));
+                        }
+                        if (Main.rand.NextBool(2) && !Main.hardMode)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.TinOre, Main.rand.Next(0, 13));
+                        }
+                        if (Main.rand.NextBool(2) && !Main.hardMode)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SilverOre, Main.rand.Next(0, 11));
+                        }
+                        if (Main.rand.NextBool(2) && !Main.hardMode)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.TungstenOre, Main.rand.Next(0, 11));
+                        }
+
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.IronOre, Main.rand.Next(0, 11));
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.LeadOre, Main.rand.Next(0, 11));
+
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.GoldOre, Main.rand.Next(0, 11));
+                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.PlatinumOre, Main.rand.Next(0, 11));
+                        if (NPC.downedBoss1)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CrimtaneOre, Main.rand.Next(0, 13));
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.DemoniteOre, Main.rand.Next(0, 13));
+                        }
+
+                        if (NPC.downedBoss2)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Meteorite, Main.rand.Next(0, 17));
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.PlatinumOre, Main.rand.Next(0, 11)); // Want it to give more of lesser tier ores as you progress
+                        }
+                        if (NPC.downedBoss3 && NPC.downedBoss2)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Hellstone, Main.rand.Next(6, 21));
+                        }
+                        if (Main.hardMode)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CobaltOre, Main.rand.Next(5, 13));
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.PalladiumOre, Main.rand.Next(5, 13));
+                        }
+
+                        if (NPC.downedMechBossAny || NPC.downedQueenSlime)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.MythrilOre, Main.rand.Next(5, 13));
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.AdamantiteOre, Main.rand.Next(5, 13));
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.OrichalcumOre, Main.rand.Next(5, 13));
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.TitaniumOre, Main.rand.Next(5, 13));
+                        }
+                        if (NPC.downedPlantBoss)
+                        {
+                            Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.ChlorophyteOre, Main.rand.Next(5, 21));
+                        }
+                        //  if (ModLoader.GetMod("Consolaria") != null && NPC.downedMechBossAny && )
+                        //  {
+
+                        //   }
+
+                    }
                 }
-                if (Button2IsWar == true)
-                {
-                    if (!Main.hardMode)
-                    {
-                        Main.StartInvasion(InvasionID.GoblinArmy);
-                    }
-
-                    if (Main.hardMode && Main.LocalPlayer.statLifeMax > 200 && !NPC.downedPlantBoss)
-                    {
-                        Main.StartInvasion(InvasionID.PirateInvasion);
-                    }
-                    if (NPC.downedPlantBoss && Main.hardMode && Main.LocalPlayer.statLifeMax > 200)
-                    {
-                        Main.StartInvasion(InvasionID.MartianMadness);
-                    }
-                }
-                if (Button2IsOres == true)
-                {
-                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CopperOre, Main.rand.Next(0, 6));
-                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.TinOre, Main.rand.Next(0, 6));
-                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SilverOre, Main.rand.Next(0, 6));
-                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.TungstenOre, Main.rand.Next(0, 6));
-                    if (Main.rand.NextBool(2) && !Main.hardMode)
-                    {
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CopperOre, Main.rand.Next(0, 13));
-                    }
-                    if (Main.rand.NextBool(2) && !Main.hardMode)
-                    {
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.TinOre, Main.rand.Next(0, 13));
-                    }
-                    if (Main.rand.NextBool(2) && !Main.hardMode)
-                    {
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.SilverOre, Main.rand.Next(0, 11));
-                    }
-                    if (Main.rand.NextBool(2) && !Main.hardMode)
-                    {
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.TungstenOre, Main.rand.Next(0, 11));
-                    }
-
-                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.IronOre, Main.rand.Next(0, 11));
-                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.LeadOre, Main.rand.Next(0, 11));
-
-                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.GoldOre, Main.rand.Next(0, 11));
-                    Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.PlatinumOre, Main.rand.Next(0, 11));
-                    if (NPC.downedBoss1)
-                    {
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CrimtaneOre, Main.rand.Next(0, 13));
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.DemoniteOre, Main.rand.Next(0, 13));
-                    }
-
-                    if (NPC.downedBoss2)
-                    {
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Meteorite, Main.rand.Next(0, 17));
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.PlatinumOre, Main.rand.Next(0, 11)); // Want it to give more of lesser tier ores as you progress
-                    }
-                    if (NPC.downedBoss3 && NPC.downedBoss2)
-                    {
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Hellstone, Main.rand.Next(6, 21));
-                    }
-                    if (Main.hardMode)
-                    {
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CobaltOre, Main.rand.Next(5, 13));
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.PalladiumOre, Main.rand.Next(5, 13));
-                    }
-
-                    if (NPC.downedMechBossAny || NPC.downedQueenSlime)
-                    {
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.MythrilOre, Main.rand.Next(5, 13));
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.AdamantiteOre, Main.rand.Next(5, 13));
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.OrichalcumOre, Main.rand.Next(5, 13));
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.TitaniumOre, Main.rand.Next(5, 13));
-                    }
-                    if (NPC.downedPlantBoss)
-                    {
-                        Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.ChlorophyteOre, Main.rand.Next(5, 21));
-                    }
-                    //  if (ModLoader.GetMod("Consolaria") != null && NPC.downedMechBossAny && )
-                    //  {
-
-                    //   }
-
-                }
-
-
-
-
-
-
-
             }
+        
 
-            WishGranted = true;
+
+
+
+WishGranted = true;
+            }
+        public void Send(int toWho, int fromWho)
+        {
+            ModPacket packet = Mod.GetPacket(); // use this instead of other
+            packet.Write((byte)Creaturia.MessageType.GoldenFishMsg); // id
+            packet.Write((Int32)NPC.whoAmI); // NPC identity
+            packet.Write((bool)ChoosedWishes); // WishesChosen
+            packet.Write((bool)WishGranted); // Wish Granted
+            packet.Write((Int32)EvilCalculator); // Evil Calc
+            packet.Write((Int32)PunishmentChooser); // Punshment Chosen
+            packet.Write((Int32)RichesWish);
+            packet.Write((Int32)WishesWish);
+            packet.Write((Int32)FishesWish);
+            packet.Write((Int32)OresWish);
+            packet.Write((Int32)SoulsWish);
+            packet.Write((Int32)WarWish);
+            packet.Write((bool)TryDoWish);
+            packet.Send();
+        }
+            
         }
     }
-}
-        
-        
-    
 
-       
-     
+
+
+
+
+
+
 
             /* if (Main.hardMode)
              {
@@ -929,31 +1231,31 @@ namespace Creaturia.NPCs.Town
                  nextSlot++;
              } */
 
-        
 
 
 
 
-      
-   /*     public class ExamplePersonProfile : ITownNPCProfile
-        {
-            public int RollVariation() => 0;
-            public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
 
-            public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc)
-            {
-                if (npc.IsABestiaryIconDummy && !npc.ForcePartyHatOn)
-                    return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman");
 
-                if (npc.altTexture == 1)
-                    return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman_Party");
+/*     public class ExamplePersonProfile : ITownNPCProfile
+     {
+         public int RollVariation() => 0;
+         public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
 
-                return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman");
-            }
+         public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc)
+         {
+             if (npc.IsABestiaryIconDummy && !npc.ForcePartyHatOn)
+                 return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman");
 
-            public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Creaturia/NPCs/Town/Fishman_Head");
-        } */
-    
+             if (npc.altTexture == 1)
+                 return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman_Party");
+
+             return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman");
+         }
+
+         public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Creaturia/NPCs/Town/Fishman_Head");
+     } */
+
 
 
 

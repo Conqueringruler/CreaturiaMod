@@ -425,14 +425,14 @@ namespace Creaturia.NPCs.Enemies.Boss
 		}
         public override void OnHitPlayer(Player target, int damage, bool crit)
         {
-			target.AddBuff(BuffID.OnFire3, 1600);
-			target.AddBuff(BuffID.OnFire, 1600);
+			
+			target.AddBuff(BuffID.OnFire, 600);
 
 			if (Main.expertMode || Main.masterMode)
             {
 				if (Main.rand.NextBool(3))
 				{ 
-					target.AddBuff(BuffID.Slow, 300);
+					target.AddBuff(BuffID.Slow, 100);
 				}
 
 			}

@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using Creaturia.Common.Players;
+using Creaturia.NPCs.Creatures;
 
 namespace Creaturia.Items.Accessories
 {
@@ -51,10 +52,17 @@ namespace Creaturia.Items.Accessories
 			player.luck += 0.15f;
 			player.GetModPlayer<CreaturiaPlayer>().RabbitFootAcc = true;
         }
+		public override void AddRecipes()
+		{
+			CreateRecipe()
+				.AddIngredient<JackrabbitItem>(1)
+				.AddIngredient(ItemID.Chain)
+				.AddTile(TileID.Sawmill)
+				.Register();
+		}
 
 
-
-    }
+	}
 
 	
 

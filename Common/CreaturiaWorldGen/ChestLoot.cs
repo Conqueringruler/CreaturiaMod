@@ -15,6 +15,7 @@ public class ChestLoot : ModSystem
         for (int chestIndex = 0; chestIndex < 1000; chestIndex++) // So it just tries the first 1000 chests it finds (which is a value a world would most likely never get past)
         {
             Chest chest = Main.chest[chestIndex];
+            
             if (chest != null)
             {
                 if (WorldGen.genRand.NextBool(6) &&

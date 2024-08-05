@@ -12,6 +12,7 @@ using Terraria.Graphics;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Creaturia.NPCs.Creatures
 {
@@ -19,38 +20,38 @@ namespace Creaturia.NPCs.Creatures
 	{
 
 
-		public override string Texture => "Terraria/Images/NPC_" + NPCID.Frog;
+		//public override string Texture => "Terraria/Images/NPC_" + NPCID.Frog;
 
 		public override void SetStaticDefaults()
 		{
-			DisplayName.SetDefault("Dungeon Frog");
+			DisplayName.SetDefault("Ectoad");
 			Main.npcCatchable[NPC.type] = true;
-			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Frog];
+			Main.npcFrameCount[NPC.type] = 12;
 			NPCID.Sets.CountsAsCritter[Type] = true;
 
-			NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
-			{ // frog runs now in bestiary!! yay :D
-				Velocity = -1f
-			};
-		}
-
-		public override void SetDefaults()
+			
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
+        }
+        NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+        { // frog runs now in bestiary!! yay :D
+            Velocity = -1f
+        };
+        public override void SetDefaults()
 		{
-			NPC.width = 20;
+			NPC.width = 40;
 			NPC.height = 30;
 			NPC.damage = 0;
 			NPC.defense = 0;
 			NPC.lifeMax = 5;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
-			NPC.scale = 2f;
-			NPC.stepSpeed = 500;
+			NPC.scale = 1f;
+			NPC.stepSpeed = 100;
 			//NPC.catchItem = (short)ItemType<JackrabbitItem>();
 			NPC.lavaImmune = false;
 			NPC.aiStyle = 7;
-			NPC.friendly = true;
 			NPC.dontTakeDamageFromHostiles = true;
-			AnimationType = NPCID.Frog;
+			//AnimationType = NPCID.Frog;
 			NPC.ShowNameOnHover = false;
 			NPC.color = Color.SlateBlue;
 		}
@@ -61,6 +62,7 @@ namespace Creaturia.NPCs.Creatures
 			Lighting.AddLight(NPC.Center, Color.BlueViolet.ToVector3() * 1f);
 
 		}
+		
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			Texture2D texture = TextureAssets.Npc[NPC.type].Value;
@@ -91,17 +93,18 @@ namespace Creaturia.NPCs.Creatures
 
 
 
+			spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY) + new Vector2(0, -18), NPC.frame, Color.White, NPC.rotation, new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.5f, TextureAssets.Npc[NPC.type].Value.Height * 0.019f), NPC.scale, spriteEffects, 0f);
+
+
+			spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY) + new Vector2(0, -18), NPC.frame, new Color(20, 50, 200, 0) * (0.2f + 0.5f * ((255 - NPC.alpha) / 255f)), NPC.rotation, new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.5f, TextureAssets.Npc[NPC.type].Value.Height * 0.019f), NPC.scale, spriteEffects, 0f);
 
 
 
-
-
-
-			for (int i = 0; i < 4; i++)
+		/*	for (int i = 0; i < 4; i++)
 			{ // This is the glowy effect, reminder that gfxOffY is to offset the y posittion for the little outline
 				Vector2 circular = new Vector2(2, 0).RotatedBy(NPC.rotation + i * MathHelper.PiOver2);
-				spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos  + new Vector2(0, NPC.gfxOffY) + circular , NPC.frame, new Color(20, 50, 200, 0) * (0.2f + 0.5f * ((255 - NPC.alpha) / 255f)), NPC.rotation, new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.5f, TextureAssets.Npc[NPC.type].Value.Height * 0.019f), NPC.scale * 1.05f, spriteEffects, 0f);
-			}
+				spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos  + new Vector2(0, NPC.gfxOffY) + circular , NPC.frame, new Color(20, 50, 200, 0) * (0.2f + 0.5f * ((255 - NPC.alpha) / 255f)), NPC.rotation, new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.5f, TextureAssets.Npc[NPC.type].Value.Height * 0.019f), NPC.scale, spriteEffects, 0f);
+			} */
 
 
 			
@@ -115,25 +118,47 @@ namespace Creaturia.NPCs.Creatures
 
 			if (NPC.downedPlantBoss == true)
             {
-				return SpawnCondition.Dungeon.Chance * 0.015f;
+				return SpawnCondition.Dungeon.Chance * 0.06f;
 			}
 			else return SpawnCondition.Dungeon.Chance * 0f;
 		}
-
-		public override void HitEffect(int hitDirection, double damage)
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return false;
+        }
+        public override bool? CanHitNPC(NPC target)
+        {
+            return false;
+        }
+        public override void HitEffect(int hitDirection, double damage)
 		{
 			if (NPC.life <= 0)
 			{
-				for (int i = 0; i < 10; i++)
+                for (int i = 0; i < 30; i++)
                 {
-					Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.TintableDustLighted, NPC.velocity.X, NPC.velocity.Y, 30);
-				}
-				
+                  var dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.BlueTorch, NPC.velocity.X + Main.rand.Next(-10, 10), NPC.velocity.Y + Main.rand.Next(-10, 10), 30, Color.White, Main.rand.NextFloat(1f, 1.9f));
+					//dust.noGravity = true;
+					dust.velocity.X *= 0.95f;
+                    dust.velocity.Y *= 0.95f;
+					dust.noGravity = true;
+					
+                }
+                for (int i = 0; i < 30; i++)
+                {
+                    var dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Firework_Blue, NPC.velocity.X + Main.rand.Next(-10, 10), NPC.velocity.Y + Main.rand.Next(-10, 10), 30, Color.White, Main.rand.NextFloat(1f, 1.4f));
+                    //dust.noGravity = true;
+                    dust.velocity.X *= 0.99f;
+                    dust.velocity.Y *= 0.99f;
+					
+
+                }
 				//Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/"), 2f);
 				//	Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/"), 1f);
-			}
+				SoundEngine.PlaySound(SoundID.NPCDeath39);
+            }
 		}
-		/*public override void ModifyNPCLoot(NPCLoot npcLoot)
+
+        /*public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
 			if (Main.rand.NextBool(5))
 			{
@@ -141,7 +166,7 @@ namespace Creaturia.NPCs.Creatures
 			}
 		} */
 
-		/*public override void OnCaughtBy(Player player, Item item, bool failed)
+        /*public override void OnCaughtBy(Player player, Item item, bool failed)
 		{
 			item.stack = 1;
 
@@ -159,9 +184,146 @@ namespace Creaturia.NPCs.Creatures
 				return;
 			}
 		} */
+        int num = 1;
+        public override void FindFrame(int frameHeight)
+        {
+            NPC.position += NPC.netOffset;
+            
+            if (!Main.dedServ)
+            {
+                if (!TextureAssets.Npc[NPC.type].IsLoaded)
+                {
+                    return;
+                }
+                num = TextureAssets.Npc[NPC.type].Height() / Main.npcFrameCount[NPC.type];
+            }
+            int num2 = 0;
+            if (NPC.aiAction == 0)
+            {
+                num2 = ((NPC.velocity.Y < 0f) ? 2 : ((NPC.velocity.Y > 0f) ? 3 : ((NPC.velocity.X != 0f) ? 1 : 0)));
+            }
+            else if (NPC.aiAction == 1)
+            {
+                num2 = 4;
+            }
+            NPC.spriteDirection = NPC.direction;
+			if (!NPC.wet)
+			{
 
+				if (NPC.velocity.X == 0 && NPC.velocity.Y == 0)
+				{
+					NPC.frame.Y = 0;
+				}
+				if (NPC.velocity.X > 0.05f || NPC.velocity.X < -0.05f)
+				{
+					NPC.frameCounter++;
+					if (NPC.frameCounter < 5)
+					{
+						NPC.frame.Y = 6 * num;
+					}
+					else if (NPC.frameCounter < 10)
+					{
+						NPC.frame.Y = 7 * num;
+					}
+					else if (NPC.frameCounter < 15)
+					{
+						NPC.frame.Y = 8 * num;
+					}
+					else if (NPC.frameCounter < 20)
+					{
+						NPC.frame.Y = 9 * num;
+					}
+					else if (NPC.frameCounter < 25)
+					{
+						NPC.frame.Y = 10 * num;
+					}
+					else if (NPC.frameCounter < 30)
+					{
+						NPC.frame.Y = 11 * num;
+					}
+					else if (NPC.frameCounter < 35)
+					{
+						NPC.frame.Y = 11 * num;
+						NPC.frameCounter = 0;
+					}
+					if (NPC.frameCounter > 35)
+					{
+						NPC.frameCounter = 0;
+					}
 
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+					//NPC.frame.Y = num * 10;
+
+				}
+			}
+			/*
+            if (NPC.wet)
+            {
+                NPC.frameCounter = 0.0;
+                if (NPC.velocity.X > 0.25f || NPC.velocity.X < -0.25f)
+                {
+					
+                    NPC.frame.Y = num * 10;
+                }
+                else if (NPC.velocity.X > 0.15f || NPC.velocity.X < -0.15f)
+                {
+                    NPC.frame.Y = num * 11;
+                }
+                else
+                {
+                    NPC.frame.Y = num * 12;
+                }
+				
+            }
+            if (NPC.velocity.Y == 0f && NPC.velocity.X == 0f)
+            {
+                if (NPC.velocity.X == 0f)
+                {
+                    NPC.frameCounter++;
+                    if (NPC.frameCounter > 6.0)
+                    {
+                        NPC.frameCounter = 0.0;
+                        NPC.frame.Y += num;
+                    }
+                    if (NPC.frame.Y > num * 5)
+                    {
+                        NPC.frame.Y = 0;
+                    }
+                    
+                }
+                NPC.frameCounter += 1.0;
+                int num216 = 6;
+                if (NPC.frameCounter < (double)num216)
+                {
+                    NPC.frame.Y = 0;
+                    
+                }
+                if (NPC.frameCounter < (double)(num216 * 2))
+                {
+                    NPC.frame.Y = num * 6;
+                    
+                }
+                if (NPC.frameCounter < (double)(num216 * 3))
+                {
+                    NPC.frame.Y = num * 8;
+                    
+                }
+                NPC.frame.Y = num * 9;
+                if (NPC.frameCounter >= (double)(num216 * 4 - 1))
+                {
+                    NPC.frameCounter = 0.0;
+                }
+            }
+            else if (NPC.velocity.Y > 0f)
+            {
+                NPC.frame.Y = num * 9;
+            }
+            else
+            {
+                NPC.frame.Y = num * 8;
+            }
+			*/
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			// Use AddRange instead of calling Add multiple times
 			
@@ -171,8 +333,7 @@ namespace Creaturia.NPCs.Creatures
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheDungeon,
 				
 				//BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.,
-				new FlavorTextBestiaryInfoElement("A mysterious inhabitant of the dungeon,\n" +
-												  "subsisting off things that it really shouldn't.")
+				new FlavorTextBestiaryInfoElement("A mysterious inhabitant of the dungeon, subsisting off things that it really shouldn't.")
 			});
 		}
 	}

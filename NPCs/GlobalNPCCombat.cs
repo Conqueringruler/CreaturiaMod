@@ -78,6 +78,7 @@ namespace Creaturia.NPCs
 
           //  public static bool[] HurtingBeesTest = NPCID.Sets.Factory.CreateBoolSet(210, 211, 222);
        // }
+
         int[] HallowedList = new int[] {NPCID.Unicorn, NPCID.Pixie, NPCID.SandsharkHallow, NPCID.HallowBoss, NPCID.QueenSlimeBoss, NPCID.QueenSlimeMinionBlue,
                                         NPCID.QueenSlimeMinionPink, NPCID.Gastropod, NPCID.LightMummy, NPCID.RainbowSlime, NPCID.FlyingFish,
                                     ModContent.NPCType<RainbowFish>(), NPCID.EmpressButterfly, NPCID.DesertGhoulHallow,
@@ -90,6 +91,7 @@ namespace Creaturia.NPCs
                       , NPCID.DesertGhoulCrimson, NPCID.DesertGhoulCorruption, NPCID.CursedHammer, NPCID.SeekerBody, NPCID.Clinger, NPCID.BigMimicCorruption, NPCID.BigMimicCrimson, NPCID.ServantofCthulhu,
             NPCID.EyeofCthulhu, NPCID.SkeletronHand, NPCID.SkeletronHead };
         public override bool InstancePerEntity => true;
+
 
         /**
         public override bool? CanHitNPC(NPC npc, NPC target)

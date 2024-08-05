@@ -85,7 +85,7 @@ namespace Creaturia.Items.Weapon
 			if (rightclickready == true && rightclickplayedsound == false)
             {
 				SoundEngine.PlaySound(SoundID.Item9, player.position);
-				CombatText.NewText(Main.LocalPlayer.Hitbox, Color.LightBlue, "Fishman's Blessing is ready!");
+				CombatText.NewText(player.Hitbox, Color.LightBlue, "Fishman's Blessing is ready!");
 				var dust = Dust.NewDustDirect(player.position + new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5)), player.width, player.height, DustID.WaterCandle, player.velocity.X * Main.rand.Next(-2, 2), player.velocity.Y * Main.rand.Next(-2, 2), 60, Color.Gold, Main.rand.NextFloat(0.3f, 1.5f));
 
 				for (int i = 0; i < 10; i++)

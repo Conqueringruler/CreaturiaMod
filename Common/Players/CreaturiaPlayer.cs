@@ -38,11 +38,13 @@ namespace Creaturia.Common.Players
             Main.runningCollectorsEdition = true;
 
         }
+        
         // public override void UpdateEquips()
         // {
-        //     base.UpdateEquips();
-        // }
+         //    base.UpdateEquips();
+         //}
         public bool RabbitFootAcc;
+        public bool LumpsuckerAcc;
         public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item)
         {
             if (vendor.type == ModContent.NPCType<Fishman>())
@@ -56,6 +58,7 @@ namespace Creaturia.Common.Players
         public override void ResetEffects()
         {
             RabbitFootAcc = false; // Always need to do apparently
+            LumpsuckerAcc = false;
         }
 
 
@@ -134,8 +137,8 @@ namespace Creaturia.Common.Players
             
             if (Player.whoAmI == Main.myPlayer)
             {
-                NetMessage.SendData(MessageID.Dodge, -1, -1, null, Player.whoAmI, 1f); // I'm gonna be honest, I have no idea what this does. It's what the vanilla dodges do though so I'll go with it
-                                                                                       // Edit: changed "62" to MessageID.Dodge so now I know what's going on
+                NetMessage.SendData(MessageID.Dodge, -1, -1, null, Player.whoAmI, 1f); 
+                                                                                       
                 
               
             }
@@ -167,7 +170,7 @@ namespace Creaturia.Common.Players
 
             if (Player.whoAmI == Main.myPlayer)
             {
-                NetMessage.SendData(62, -1, -1, null, Player.whoAmI, 1f); // I'm gonna be honest, I have no idea what this does. It's what the vanilla dodges do though so I'll go with it
+                NetMessage.SendData(MessageID.Dodge, -1, -1, null, Player.whoAmI, 1f); 
 
 
 
@@ -254,18 +257,18 @@ namespace Creaturia.Common.Players
                 npcLifeText = "Spectral Watchman: 8008135/8008135";
             }
             // Dungeon frog
-            for (int i = 0; i < Main.npc.Length; i++) // I cannot remember what Main.npc.Length does lol
+            for (int i = 0; i < Main.npc.Length; i++) // I cannot remember what Main.npc.Length does lol | edit from future: just runs through all NPC ids
             {
                NPC npc = Main.npc[i];
                if (npc.active && npc.type == ModContent.NPCType<DungeonFrog>() && npc.Hitbox.Contains(Main.MouseWorld.ToPoint())/* && !Player.dead*/)
                {
                    Player.cursorItemIconEnabled = true;
-                   Player.cursorItemIconID = ItemID.Worm;
+                   Player.cursorItemIconID = ItemID.LightningBug;
                    Player.cursorItemIconText = "";
                 
                 if (Main.mouseRight && Main.npcChatRelease)
                 {
-                    if (Player.HasItem(ItemID.Worm))
+                    if (Player.HasItem(ItemID.LightningBug))
                     {
 
                         Main.npcChatRelease = false;
@@ -280,11 +283,28 @@ namespace Creaturia.Common.Players
                             // Item.NewItem(npc.GetSource_Loot(), new Rectangle((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height), ItemID.Ectoplasm, Main.rand.Next(2, 5));
                             SoundEngine.PlaySound(SoundID.Item104);
                                 string persistentId = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<DungeonFrog>()];
-                                Main.BestiaryTracker.Kills.SetKillCountDirectly(persistentId, 50); // I wonder if kills will work for a critter?
-                                npc.Transform(NPCType<DungeonFrogEmpty>());
-                            Player.ConsumeItem(ItemID.Worm);
+                                //if (Main.netMode != NetmodeID.MultiplayerClient)
+                               // {
+                                    npc.Transform(NPCType<DungeonFrogEmpty>());
+                                if (Main.netMode != NetmodeID.SinglePlayer)
+                                {
 
-                            for (int j = 0; j < 12; j++)
+
+                                    ModPacket packet = Mod.GetPacket(); // use this instead of other
+                                    packet.Write((byte)Creaturia.MessageType.DungeonFrogMsg); // id
+                                    packet.Write((Int32)npc.whoAmI); // NPC identity
+
+                                    // packet.Write((byte)15);
+                                    //packet.Write((bool)true);
+                                    packet.Send();
+                                }
+                                // }
+                                Main.BestiaryTracker.Kills.SetKillCountDirectly(persistentId, 50); // I wonder if kills will work for a critter?
+                                
+                                
+                            Player.ConsumeItem(ItemID.LightningBug);
+                                Main.BestiaryTracker.Kills.RegisterKill(npc);
+                                for (int j = 0; j < 12; j++)
                             {
                                 Dust.NewDustDirect(npc.position + new Vector2(Main.rand.Next(-15, 15)), npc.width, npc.height, DustID.Clentaminator_Blue, npc.velocity.X + Main.rand.Next(-6, 6), npc.velocity.Y + Main.rand.Next(-6, 6));
                                     Dust.NewDustDirect(npc.position + new Vector2(Main.rand.Next(-15, 15)), npc.width, npc.height, DustID.TintableDustLighted, npc.velocity.X + Main.rand.Next(-6, 6), npc.velocity.Y + Main.rand.Next(-6, 6));
@@ -302,6 +322,21 @@ namespace Creaturia.Common.Players
                         Player.cursorItemIconText = npcLifeText;
 
                 }
+                if (npc.active && npc.type == ModContent.NPCType<FallenPixie>() && npc.Hitbox.Contains(Main.MouseWorld.ToPoint())/* && !Player.dead*/)
+                {
+                    Player.cursorItemIconEnabled = true;
+                    Player.cursorItemIconID = ItemID.HolyWater;
+                    
+                   Player.cursorItemIconText = "  Fallen Pixie: 5/5";
+                    
+                   
+                }
+            }
+        }
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright)
+        {
+            if (Player.HasBuff<DunkleBuff>())
+            {
             }
         }
     }

@@ -71,10 +71,12 @@ namespace Creaturia.Common.Systems
 
         public override void NetSend(BinaryWriter writer)
         {
-            var flags = new BitsByte();
-            flags[0] = downedHellborne;
-            writer.Write(flags);
+          //  var flags = new BitsByte();
+          //  flags[0] = downedHellborne;
+          //  writer.Write(flags);
             // new flag 0 would be here
+
+            // I keep getting read underflow so I'm gonna // these
         }
         public override void UpdateUI(GameTime gameTime)
         {
@@ -82,9 +84,14 @@ namespace Creaturia.Common.Systems
         }
         public override void NetReceive(BinaryReader reader)
         {
-            BitsByte flags = reader.ReadByte();
-            downedHellborne = flags[0]; // Don't forget that the max number of flags is 8; once you reach flag 7 you start from 0 again
-            flags = reader.ReadByte();
+            if (Main.netMode == NetmodeID.Server)
+            {
+
+        
+          //  BitsByte flags = reader.ReadByte();
+        //    downedHellborne = flags[0]; // Don't forget that the max number of flags is 8; once you reach flag 7 you start from 0 again
+         //   flags = reader.ReadByte();
+        }
             // new flag 0 would be here
         }
 

@@ -100,7 +100,7 @@ namespace Creaturia.Common.Players
 					{
 						 //itemDrop = -1 so terraria won't spawn the item
 						npcSpawn = corruptfishnpc;
-						Main.NewText("The creature that lies below hides until the next content update to Creaturia...", Color.DarkViolet);
+					//	Main.NewText("The creature that lies below hides until the next content update to Creaturia...", Color.DarkViolet);
 						itemDrop = -1;
 
 						sonar.Text = "Rot and plates pulsate below...";
@@ -154,8 +154,29 @@ namespace Creaturia.Common.Players
 					sonarPosition = new Vector2(Player.position.X, Player.position.Y - 64);
 				}
 			}
+            if (Player.ZoneBeach && attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<FishmanDevbait>())
+            {
 
-			if (Player.ZoneBeach && attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<GoldenFishDevBait>())
+
+                int fishmannpc = ModContent.NPCType<Fishman>();
+                {
+                    //if (Main.hardMode)
+                    //{
+                    // itemDrop = -1 so terraria won't spawn the item
+                    npcSpawn = fishmannpc;
+                    itemDrop = -1;
+
+                    sonar.Text = "Bubbles rise from below the bobber...";
+                    sonar.Color = Color.DarkSeaGreen;
+                    sonar.Velocity = Vector2.UnitY;
+                    sonar.DurationInFrames = 300;
+                    sonarPosition = new Vector2(Player.position.X, Player.position.Y - 64);
+
+                    //}
+
+                }
+            }
+            if (Player.ZoneBeach && attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<GoldenFishDevBait>())
 			{
 
 
@@ -177,6 +198,7 @@ namespace Creaturia.Common.Players
 
 				}
 			}
+
 			if (Main.hardMode && !attempt.inLava && Player.ZoneBeach && Main.rand.NextBool(450) && !NPC.AnyNPCs(ModContent.NPCType<GoldenFish>()))
 			{
 

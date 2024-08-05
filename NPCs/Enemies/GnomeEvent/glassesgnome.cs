@@ -55,9 +55,9 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                 Hide = true
             };
             }
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        public override void SetBestiary(BestiaryDatabase dataNPC, BestiaryEntry bestiaryEntry)
         {
-            database.Entries.Remove(bestiaryEntry);
+            dataNPC.Entries.Remove(bestiaryEntry);
         }
         public override void SetDefaults()
         {
@@ -86,7 +86,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                 int GlassesGnomeIdentity = (int)NPC.ai[0]; // Glasses gnome already set NPC.ai[0] as being that NPC, here we just turn it into something easier to read
                 Main.npc[GlassesGnomeIdentity].ai[0] = NPC.whoAmI; // Now we do the same for Sunglasses
 
-                if (Main.npc[GlassesGnomeIdentity].active && Main.npc[GlassesGnomeIdentity].type == ModContent.NPCType<glassesgnome>())
+                if (Main.npc[GlassesGnomeIdentity].active && (Main.npc[GlassesGnomeIdentity].type == ModContent.NPCType<glassesgnome>() || Main.npc[GlassesGnomeIdentity].type == ModContent.NPCType<strongerglassesgnome>()))
                 {
                     NPC.velocity = Vector2.Zero;
                     NPC.position = Main.npc[GlassesGnomeIdentity].Top + new Vector2(-5, -8);
@@ -94,7 +94,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                     NPC.ai[3] = Main.npc[GlassesGnomeIdentity].target;
                     return;
                 }
-                NPC.StrikeNPCNoInteraction(9999, 0f, 0); // it'll do this if it doesn't return above
+                NPC.StrikeNPCNoInteraction(9999, 0f, 0); // it'll do NPC if it doesn't return above
                     NPC.netUpdate = true;
                 
             }
@@ -150,15 +150,15 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
             
             AnimationType = NPCID.Gnome;
         }
-        int WhoIsThisGnome;
+        int WhoIsNPCGnome;
         public void spawnglasses()
         {
             if (NPC.localAI[0] == 0f)
             {
                 NPC.localAI[0] = 1f; // So we only spawn it once
-                WhoIsThisGnome = NPC.whoAmI;
-                newNPC = NPC.NewNPC(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<sunglasses>(), NPC.whoAmI);
-                Main.npc[newNPC].ai[0] = WhoIsThisGnome; // newNPC is the one we just spawned. ai[0] is a variable in it. We then set it as being this NPC, so it knows who its owner is.
+                WhoIsNPCGnome = NPC.whoAmI;
+                newNPC = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, NPCType<sunglasses>(), NPC.whoAmI);
+                Main.npc[newNPC].ai[0] = WhoIsNPCGnome; // newNPC is the one we just spawned. ai[0] is a variable in it. We then set it as being NPC NPC, so it knows who its owner is.
                 NPC.ai[0] = (int)Main.npc[newNPC].whoAmI;
 
                 // if (Main.netMode == NetmodeID.Server && newNPC < Main.maxNPCs)
@@ -177,15 +177,17 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
 
         int HealTime = 60;
         int StartingHealTime = 60;
+        bool IsWalking = false;
+        bool noXMovement = false;
         public override void AI()
         {
-            // I wish my skills were good enough to figure out what all this shit does. I get most of it, but there's so much 
+            // I wish my skills were good enough to figure out what all NPC shit does. I get most of it, but there's so much 
             // Originally transcribed from Fighter AI
             if (ExposedToDeadlySun == false)
             {
 
 
-                bool noXMovement = false;
+                
                 if (NPC.velocity.X == 0f)
                 {
                     noXMovement = true;
@@ -194,14 +196,13 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                 {
                     noXMovement = false;
                 }
-                bool isWalking = false;
-                bool unusedFlag = false;
+                
                 int backUpTimer = 60;
                 if (NPC.velocity.Y == 0f && ((NPC.velocity.X > 0f && NPC.direction < 0) || (NPC.velocity.X < 0f && NPC.direction > 0)))
                 {
-                    isWalking = true;
+                    IsWalking = true;
                 }
-                if ((NPC.position.X == NPC.oldPosition.X || NPC.ai[3] >= (float)backUpTimer) | isWalking)
+                if ((NPC.position.X == NPC.oldPosition.X || NPC.ai[3] >= (float)backUpTimer) | IsWalking)
                 {
                     NPC.ai[3] += 1f;
                     
@@ -240,7 +241,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                                 NPC.spriteDirection = NPC.direction;
                                 NPC.ai[0] = 0f;
 
-                                // This part is what makes the NPC run away when not able to reach the player. I think. 
+                                // NPC part is what makes the NPC run away when not able to reach the player. I think. 
                                 HealTime = 15;
                                 //NPC.active = false;
                             }
@@ -260,7 +261,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
 
                 
                 
-              if (Vector2.Distance(Main.player[NPC.target].Center, NPC.Center) < 18f)
+              if (Vector2.Distance(Main.player[NPC.target].Center, NPC.Center) < 16f)
                 {
                     NPC.ai[3] = 0f;
                     NPC.velocity.X = NPC.velocity.X * 0.9f;
@@ -268,7 +269,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                         NPC.velocity.X = 0f;
                     return;
                 }
-                float maxVelocity = 3f; // keep in mind I can change and multiply this super easy,
+                float maxVelocity = 3f; // keep in mind I can change and multiply NPC super easy,
                 float acceleration = 0.1f; // so if I make a gnome rallier or something I could have regular gnomes
                                            // speed up
                 if (NPC.velocity.X < -maxVelocity || NPC.velocity.X > maxVelocity)
@@ -357,9 +358,9 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                 {
                     int doorCheckX = (int)((NPC.position.X + (float)(NPC.width / 2) + (float)(15 * NPC.direction)) / 16f);
                     int doorCheckY = (int)((NPC.position.Y + (float)NPC.height - 15f) / 16f);
-                    if ((Main.tile[doorCheckX, doorCheckY - 1].HasUnactuatedTile && (Main.tile[doorCheckX, doorCheckY - 1].TileType == 10 || Main.tile[doorCheckX, doorCheckY - 1].TileType == 388)) & unusedFlag)
+                    if ((Main.tile[doorCheckX, doorCheckY - 1].HasUnactuatedTile && (Main.tile[doorCheckX, doorCheckY - 1].TileType == 10 || Main.tile[doorCheckX, doorCheckY - 1].TileType == 388)))
                     {
-                        NPC.ai[2] += 1f; // I have no idea what ai[2] is
+                        NPC.ai[2] += 1f; 
                         NPC.ai[3] = 0f;
                         if (NPC.ai[2] >= 60f)
                         {
@@ -443,11 +444,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                                 NPC.velocity.X = NPC.velocity.X * 1.5f;
                                 NPC.netUpdate = true;
                             }
-                            else if (unusedFlag)
-                            {
-                                NPC.ai[1] = 0f;
-                                NPC.ai[2] = 0f;
-                            }
+                            
                             if ((NPC.velocity.Y == 0f & noXMovement) && NPC.ai[3] == 1f)
                             {
                                 NPC.velocity.Y = -5f;
@@ -455,11 +452,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                         }
                     }
                 }
-                else if (unusedFlag)
-                {
-                    NPC.ai[1] = 0f;
-                    NPC.ai[2] = 0f;
-                }
+               
 
 
             }
@@ -514,7 +507,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                 }
                 else
                 {
-                    ExposedToDeadlySun = true; // In the case that the above doesn't return, this happens
+                    ExposedToDeadlySun = true; // In the case that the above doesn't return, NPC happens
                 }
                 
               
@@ -524,9 +517,9 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
             if (ExposedToDeadlySun)
             {
 
-                NPC.ai[0] = 101f; // The reason I'm doing this bullshit of assigning a random number is
-                //because otherwise this shit breaks. I have no idea why, and I've tried so long
-                //to fix it, but it keeps fucking bnreaking AND THIS IS ALL THAT WORKS
+                NPC.ai[0] = 101f; // The reason I'm doing NPC bullshit of assigning a random number is
+                //because otherwise NPC shit breaks. I have no idea why, and I've tried so long
+                //to fix it, but it keeps fucking bnreaking AND NPC IS ALL THAT WORKS
 
                 NPC.velocity.X *= 0;
                 NPC.velocity.Y = 2;
@@ -554,12 +547,13 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                 }
 
 
-                if (NPC.life <= 0) // All of this is here too because the NPC dying from its own damage
+                if (NPC.life <= 0) // All of NPC is here too because the NPC dying from its own damage
                                    // won't spawn the gore and dust like being hit
                 {
                     if (ExposedToDeadlySun == true)
                     {
-                        for (int i = 0; i < 15; i++)
+						Main.BestiaryTracker.Kills.RegisterKill(NPC);
+						for (int i = 0; i < 15; i++)
                         {
 
                             Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(-2, 2), Main.rand.Next(-2, 4)), NPC.velocity + new Vector2(Main.rand.Next(-2, 2), Main.rand.Next(-2, 2)), 202, Main.rand.NextFloat(0.4f, 0.7f));
@@ -595,6 +589,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
         }
         int shaderID = ContentSamples.ItemsByType[ItemID.SilverDye].dye;
        
+        
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
            /* Texture2D texture = TextureAssets.Npc[NPC.type].Value;
@@ -619,11 +614,11 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
             }
             
            
-            if (ExposedToDeadlySun && NPC.type == NPCType<glassesgnome>() && WhoIsThisGnome == NPC.whoAmI)
+            if (ExposedToDeadlySun && NPC.type == NPCType<glassesgnome>() && WhoIsNPCGnome == NPC.whoAmI)
             {
                   Main.instance.PrepareDrawnEntityDrawing(NPC, shaderID);  
-                  Main.EntitySpriteDraw(texture, NPC.position - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, NPC.rotation,// this shit broken. gotta fix this tmrw. 
-                      new Vector2(NPC.Center.X, NPC.Center.Y), NPC.scale, spriteEffects, 0);  // Well I guess this shit is gonna stay broken. idk how to get it to only do this NPC
+                  Main.EntitySpriteDraw(texture, NPC.position - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, NPC.rotation,// NPC shit broken. gotta fix NPC tmrw. 
+                      new Vector2(NPC.Center.X, NPC.Center.Y), NPC.scale, spriteEffects, 0);  // Well I guess NPC shit is gonna stay broken. idk how to get it to only do NPC NPC
                 spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos,
             NPC.frame, drawColor, NPC.rotation,
             new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.25f, TextureAssets.Npc[NPC.type].Value.Height * 0.055f), NPC.scale, spriteEffects, 0f);
@@ -653,7 +648,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
 
             }
 
-            if (ExposedToDeadlySun && NPC.type == NPCType<glassesgnome>() && WhoIsThisGnome == NPC.whoAmI)
+            if (ExposedToDeadlySun && NPC.type == NPCType<glassesgnome>() && WhoIsNPCGnome == NPC.whoAmI)
             {
                 
                     spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos,
@@ -727,7 +722,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
 
 
 
-        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        public override void SetBestiary(BestiaryDatabase dataNPC, BestiaryEntry bestiaryEntry)
         {
             // Use AddRange instead of calling Add multiple times
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -736,7 +731,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Sun,
                 new FlavorTextBestiaryInfoElement("The gnomes have finally become smart enough to start wearing glasses. \n" +
-                                                  "Too bad they aren't smart enough to invade when the sun isn't out")
+                                                  "Too bad they aren't smart enough to invade when the sun isn't out!")
             });
         }
     }

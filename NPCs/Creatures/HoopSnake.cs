@@ -27,8 +27,9 @@ namespace Creaturia.NPCs.Creatures
 		{
 			DisplayName.SetDefault("Hoop Snake");
 			Main.npcCatchable[NPC.type] = true;
+            NPCID.Sets.CountsAsCritter[Type] = true;
 
-			NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
 			{
 				Velocity = 1f,
 				//Direction = -1
@@ -116,8 +117,9 @@ namespace Creaturia.NPCs.Creatures
 			}
 			if (!Main.masterMode)
             {
-				NPC.friendly = true;
+				//NPC.friendly = true;
 			}
+
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
@@ -128,26 +130,25 @@ namespace Creaturia.NPCs.Creatures
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.WindyDay,
 				new FlavorTextBestiaryInfoElement("'Terrarians have long lived in fear of the dreaded Hoop Snake.' Despite its bad rep, " +
-				"the Hoop Snake just wants to enjoy your companionship as it rolls around. When rolling, it has a chance of reflecting projectiles right off it's scales.")
+				"the incredibly rare Hoop Snake just wants to enjoy your companionship as it rolls around. When rolling, it has a chance of reflecting projectiles right off it's scales.")
 			});
+			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type], quickUnlock: true);
 		}
 
 		
 
-		public override bool? CanBeHitByProjectile(Projectile projectile)
-		{
-			return true;
-		}
+		
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
 			
 			if (Main.IsItAHappyWindyDay)
 			{
-				return SpawnCondition.OverworldDayDesert.Chance * 0.2f;
+				//return SpawnCondition.OverworldDayDesert.Chance * 0.2f; Disabled for now
+				return SpawnCondition.OverworldDayDesert.Chance * 0.0005f; // Since I'm still having it as the mod icon for the Bestiary, I'm just gonna have it be ultra rare.
 			}
 			else
-				return SpawnCondition.OverworldDayDesert.Chance * 0.0f;
+				return SpawnCondition.OverworldDayDesert.Chance * 0.0001f;
 			
 		}
 
@@ -159,7 +160,7 @@ namespace Creaturia.NPCs.Creatures
 				int PoopSnakeGore1 = Mod.Find<ModGore>("PoopSnakeGore1").Type;
 				int PoopSnakeGore2 = Mod.Find<ModGore>("PoopSnakeGore2").Type;
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, PoopSnakeGore1);
-				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, PoopSnakeGore1);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, PoopSnakeGore2);
 			}
 
 
@@ -183,9 +184,10 @@ namespace Creaturia.NPCs.Creatures
 				return;
 			}
 		}
+		
 	}
         
-
+	
 	internal class HoopSnakeItem : ModItem
 	{
 		public override void SetStaticDefaults()

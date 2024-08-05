@@ -75,7 +75,7 @@ namespace Creaturia.NPCs.Enemies
 			NPC.immortal = true;
 			NPC.aiStyle = 3;
 			NPC.timeLeft = 200;
-			NPC.rarity = 1;
+			NPC.rarity = 5;
 			//NPC.stepSpeed = 200f;
 			AnimationType = NPCID.SolarDrakomire;
 			AIType = NPCID.DesertBeast;

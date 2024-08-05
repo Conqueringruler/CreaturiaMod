@@ -25,7 +25,7 @@ namespace Creaturia.Items.Consumables.Fishing
 			Item.maxStack = 9;
 			Item.consumable = true;
 			Item.value = Item.sellPrice(0, 15, 0, 0);
-			Item.bait = -1;
+			Item.bait = 1;
 			
 		}
        

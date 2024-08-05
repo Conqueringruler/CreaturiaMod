@@ -20,6 +20,7 @@ using System;
 using Terraria.GameContent.ItemDropRules;
 
 using System.Collections.Generic;
+using Terraria.Graphics.Shaders;
 
 namespace Creaturia.Items.Tools
 {
@@ -91,9 +92,10 @@ namespace Creaturia.Items.Tools
                 {
 					var dust = Dust.NewDustDirect(Projectile.Center, Projectile.width + Main.rand.Next(-5, 5), Projectile.height + Main.rand.Next(-5, 5), DustID.Water, Projectile.velocity.X, Projectile.velocity.Y, 100, Color.DarkGray, 1);
 					dust.velocity.Y /= 20;
-					dust.color = new Color(180, 180, 180);
+					//dust.color = new Color(180, 180, 180);
 					dust.noGravity = true;
-				}
+                    dust.shader = GameShaders.Armor.GetSecondaryShader(55, Main.LocalPlayer);
+                }
 				
 			}
 		}

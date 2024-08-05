@@ -45,9 +45,9 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			NPC.aiStyle = 44;
 			NPC.width = 34;
 			NPC.height = 66;
-			NPC.damage = 45;
-			NPC.defense = 20;
-			NPC.lifeMax = 1200;
+			NPC.damage = 30;
+			NPC.defense = 6;
+			NPC.lifeMax = 400;
 			NPC.HitSound = SoundID.NPCHit22;
 			NPC.DeathSound = SoundID.NPCDeath55;
 			NPC.value = 0f;
@@ -86,6 +86,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			NPC.lifeMax = 1400;
 			NPC.defense = 25;
 		}
+	
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			Texture2D texture = TextureAssets.Npc[NPC.type].Value;
@@ -161,31 +162,31 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 					int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), ProjectileID.GoldenShowerHostile, 25, 0);
 
 
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), ProjectileID.GoldenShowerHostile, 25, 0);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), ProjectileID.GoldenShowerHostile, 25, 0);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), ProjectileID.GoldenShowerHostile, 25, 0);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), ProjectileID.GoldenShowerHostile, 25, 0);
-					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-4, 4), Main.rand.Next(-4, 4)), ProjectileID.GoldenShowerHostile, 25, 0);
+					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5)), ProjectileID.GoldenShowerHostile, 25, 0);
+					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5)), ProjectileID.GoldenShowerHostile, 25, 0);
+					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5)), ProjectileID.GoldenShowerHostile, 25, 0);
+					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5)), ProjectileID.GoldenShowerHostile, 25, 0);
+					projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-4, 5), Main.rand.Next(-4, 5)), ProjectileID.GoldenShowerHostile, 25, 0);
 					if (Main.expertMode)
 					{
-						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5)), ProjectileID.GoldenShowerHostile, 25, 0);
-						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5)), ProjectileID.GoldenShowerHostile, 25, 0);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-5, 6), Main.rand.Next(-5, 6)), ProjectileID.GoldenShowerHostile, 25, 0);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-5, 6), Main.rand.Next(-5, 6)), ProjectileID.GoldenShowerHostile, 25, 0);
 					}
 					if (Main.masterMode)
 					{
-						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-6, 6), Main.rand.Next(-6, 6)), ProjectileID.GoldenShowerHostile, 25, 0);
-						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-6, 6), Main.rand.Next(-6, 6)), ProjectileID.GoldenShowerHostile, 25, 0);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), ProjectileID.GoldenShowerHostile, 25, 0);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, new Vector2(Main.rand.Next(-6, 7), Main.rand.Next(-6, 7)), ProjectileID.GoldenShowerHostile, 25, 0);
 					}
 				}
-				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-15, 15)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-7, 7), Main.rand.Next(-7, 7));
+				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-15, 16)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-7, 7), Main.rand.Next(-7, 7));
 				
-				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 5), Main.rand.Next(-5, 5));
-				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 5), Main.rand.Next(-5, 5));
-				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 5), Main.rand.Next(-5, 5));
-				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 5), Main.rand.Next(-5, 5));
-				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 5), Main.rand.Next(-5, 5));
-				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 5), Main.rand.Next(-5, 5));
-				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 5), Main.rand.Next(-5, 5));
+				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 6)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6));
+				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 6)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6));
+				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 6)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6));
+				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 6)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6));
+				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 6)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6));
+				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 6)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6));
+				Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-5, 6)), NPC.width, NPC.height, DustID.Blood, Main.rand.Next(-5, 6), Main.rand.Next(-5, 6));
 
 
 				SoundEngine.PlaySound(SoundID.DD2_KoboldExplosion, NPC.position);
