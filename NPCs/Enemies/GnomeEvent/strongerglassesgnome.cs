@@ -519,7 +519,9 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
 
                 NPC.ai[0] = 101f; // The reason I'm doing this bullshit of assigning a random number is
                 //because otherwise this shit breaks. I have no idea why, and I've tried so long
-                //to fix it, but it keeps fucking bnreaking AND THIS IS ALL THAT WORKS
+                //to fix it, but it keeps fecking bnreaking AND THIS IS ALL THAT WORKS // Future me here: I'm more chill now I promise
+
+                
 
                 NPC.velocity.X *= 0;
                 NPC.velocity.Y = 2;

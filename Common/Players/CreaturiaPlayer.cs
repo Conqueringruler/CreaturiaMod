@@ -100,7 +100,7 @@ namespace Creaturia.Common.Players
             }
             if (Main.rand.NextBool(100))
             {
-                if (RabbitFootAcc) // Might want to use this instead of localPlayer, still need to see if it works in multiplayer though
+                if (RabbitFootAcc)
                 {
                     if (Player.whoAmI == Main.myPlayer)
                     {
@@ -227,7 +227,7 @@ namespace Creaturia.Common.Players
                 npcLifeText = "Spectral Watchman: 8008135/8008135";
             }
             // Dungeon frog
-            for (int i = 0; i < Main.npc.Length; i++) // I cannot remember what Main.npc.Length does lol | edit from future: just runs through all NPC ids
+            for (int i = 0; i < Main.npc.Length; i++)
             {
                NPC npc = Main.npc[i];
                if (npc.active && npc.type == ModContent.NPCType<DungeonFrog>() && npc.Hitbox.Contains(Main.MouseWorld.ToPoint())/* && !Player.dead*/)

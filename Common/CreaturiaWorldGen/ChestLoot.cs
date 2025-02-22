@@ -22,7 +22,7 @@ public class ChestLoot : ModSystem
                 (Main.tile[chest.x, chest.y].TileType == TileID.Containers && // https: //terraria.wiki.gg/wiki/Tile_IDs
                 (Main.tile[chest.x, chest.y].TileFrameX == 17 * 36 ||          // Each chest is seperated by 36 pixels. Therefore, 0 would be Chest 0, aka Wooden, 13 would be Web, 17 would be Water, etc.
                 Main.tile[chest.x, chest.y].TileFrameX == 13 * 36)))
-                {  // I have literally no idea what the difference between Containers and Containers2 is so I won't touch that. I think containers2 is trapped chests but idk
+                {  // I'm not sure what the difference between Containers and Containers2 is so I won't touch that. I think containers2 is trapped chests but idk
                     for (int inventoryIndex = 0; inventoryIndex < 40; inventoryIndex++) // This just tries the first 40 slots of the chest, looking for an empty one.
                     {
                         if (chest.item[inventoryIndex].type == ItemID.None)

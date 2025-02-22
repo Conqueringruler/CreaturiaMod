@@ -137,7 +137,7 @@ namespace Creaturia
                     {
                         wishingfish.ChoosedWishes = reader.ReadBoolean();
                         wishingfish.WishGranted = reader.ReadBoolean();
-                        wishingfish.EvilCalculator = reader.ReadInt32(); // fuck I hope this isn't too much data
+                        wishingfish.EvilCalculator = reader.ReadInt32(); // I hope this isn't too much data
                         wishingfish.PunishmentChooser = reader.ReadInt32();
                         wishingfish.RichesWish = reader.ReadInt32();
                         wishingfish.WishesWish = reader.ReadInt32(); // CHANGE ALL THIS TO MATCH PACKET!!!
@@ -325,7 +325,7 @@ namespace Creaturia
                     {
                         wisherfish.ChoosedWishes = reader.ReadBoolean();
                         wisherfish.WishGranted = reader.ReadBoolean();
-                        wisherfish.EvilCalculator = reader.ReadInt32(); // fuck I hope this isn't too much data
+                        wisherfish.EvilCalculator = reader.ReadInt32(); // I really hope this isn't too much data
                         wisherfish.PunishmentChooser = reader.ReadInt32();
                         wisherfish.Button1IsRiches = reader.ReadBoolean();
                         wisherfish.Button1IsWishes = reader.ReadBoolean(); // CHANGE ALL THIS TO MATCH PACKET!!!

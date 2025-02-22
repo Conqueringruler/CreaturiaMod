@@ -44,8 +44,9 @@ namespace Creaturia.NPCs.Town
 
         public bool ChoosedWishes = false;
 
-        public int RichesWish; // holy carp louis i fricking love long strings of similar looking text
-                               // fuck you peter i made it more legible
+        public int RichesWish; 
+                               
+                               
         public int FishesWish;
         public int WishesWish;
 
@@ -465,7 +466,7 @@ namespace Creaturia.NPCs.Town
         }
         /*  public override bool CanTownNPCSpawn(int numTownNPCs, int money)
           {
-              for (int k = 0; k < 255; k++) // I wish I knew what the fuck this does
+              for (int k = 0; k < 255; k++)
               {
                   Player player = Main.player[k];
                   if (!player.active)
@@ -556,7 +557,7 @@ namespace Creaturia.NPCs.Town
         {
 
 
-            // Fuck I wish I had real C# coding knowledge to know how to make this clean, I guess I could just use the notes
+            // F I wish I had real C# coding knowledge to know how to make this clean, I guess I could just use the notes
             // Edit from the future: holy shit I can't believe I made this, I mean I guess it works LOL
             if (FourthButton1 != true)
             {

@@ -61,7 +61,7 @@ namespace Creaturia.NPCs.Creatures
 		public bool FairyIsActivatedByPacket = false;
 
 		public bool SyncSpawn = false;
-		public void Activate() // hopefully activating the function with a packet will work. if it doesn't I'm fucked
+		public void Activate() // hopefully activating the function with a packet will work. if it doesn't I'm doomed
 		{
 			FairyIsActivatedByPacket = true;
             NPC.lifeMax = 15;

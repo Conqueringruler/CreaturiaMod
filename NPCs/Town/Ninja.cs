@@ -383,7 +383,7 @@ namespace Creaturia.NPCs.Town
 
         
 
-        //fuck you spawn conditions 
+        //f you spawn conditions 
         public override bool CheckConditions(int left, int right, int top, int bottom)
         {
 

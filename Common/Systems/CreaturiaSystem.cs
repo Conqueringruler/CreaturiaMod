@@ -49,7 +49,7 @@ namespace Creaturia.Common.Systems
 
 
 
-        public static bool downedHellborne = false; // This is my first time saving whether bosses have been downed and stuff so I hope it all works right
+        public static bool downedHellborne = false; // This is my first time saving whether bosses have been downed and stuff so I hope it all works right // Edit from 3 years later: Good thing I scrapped that boss lol
 
         UserInterface spectralInterface = ModContent.GetInstance<Creaturia>().SpectralWatchmanUserInterface;
       //  public override void OnWorldLoad()
