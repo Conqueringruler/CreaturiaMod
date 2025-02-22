@@ -127,29 +127,29 @@ public class SpectralWatchmanUIwithMoney : UIState
 
 			if (_vanillaItemSlot.Item.rare is ItemRarityID.Blue or ItemRarityID.Green or ItemRarityID.Orange or ItemRarityID.LightRed)
             {
-				if (Main.time > 900)
+				if (_vanillaItemSlot.Item.value % 2 == 1)
                 {
 					PurchasingItem = ItemID.CrystalShard;
-					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 1000));
+					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 1150));
 				}
                 else
                 {
 					PurchasingItem = ItemID.PixieDust;
-					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 1000));
+					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 1150));
 				}
 				
             }
 			if (_vanillaItemSlot.Item.rare is ItemRarityID.Pink or ItemRarityID.LightPurple)
 			{
-				if (Main.time > 900)
-				{
-					PurchasingItem = ItemID.SoulofLight;
-					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 1000));
+                if (_vanillaItemSlot.Item.value % 2 == 1)
+                {
+                    PurchasingItem = ItemID.SoulofLight;
+					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 1150));
 				}
 				else
 				{
 					PurchasingItem = ItemID.SoulofNight;
-					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 1000));
+					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 1150));
 				}
 			}
 			if (_vanillaItemSlot.Item.rare is ItemRarityID.Lime)
@@ -160,17 +160,17 @@ public class SpectralWatchmanUIwithMoney : UIState
 			if (_vanillaItemSlot.Item.rare is ItemRarityID.Yellow)
 			{
 				PurchasingItem = ItemID.Ectoplasm;
-				PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 1000));
+				PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 1150));
 			}
 			if (_vanillaItemSlot.Item.rare is ItemRarityID.Cyan)
 			{
 				PurchasingItem = ItemID.Ectoplasm; // but have it be more
-				PurchasingAmount = (15 + (int)(_vanillaItemSlot.Item.value / 900));
+				PurchasingAmount = (15 + (int)(_vanillaItemSlot.Item.value / 950));
 			}
 			if (_vanillaItemSlot.Item.rare is ItemRarityID.Red)
 			{
 				PurchasingItem = ItemID.Ectoplasm; // but have it be even more
-				PurchasingAmount = (15 + (int)(_vanillaItemSlot.Item.value / 800));
+				PurchasingAmount = (15 + (int)(_vanillaItemSlot.Item.value / 850));
 			}
 			if (_vanillaItemSlot.Item.rare is ItemRarityID.Purple)
 			{

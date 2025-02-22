@@ -40,6 +40,12 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Gnome];
             
         }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            database.Entries.Remove(bestiaryEntry);
+        }
+
         private NPC Body = null;
         private int newNPC;
         private int HealTimer;
@@ -50,9 +56,9 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
             
             NPC.width = 30;
             NPC.height = 28;
-            NPC.damage = 10;
+            NPC.damage = 20;
             NPC.defense = 5;
-            NPC.lifeMax = 80;
+            NPC.lifeMax = 120;
             NPC.knockBackResist = 0.6f;
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
@@ -90,290 +96,363 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
         //  float NPCai0Replacement;
 
         int HealTime = 60;
+        bool IsWalking = false;
         int StartingHealTime = 60;
         public override void AI()
         {
             // I wish my skills were good enough to figure out what all this shit does. I get most of it, but there's so much 
-            // Originally transcribed from Fighter AI
+            // Originally transcribed from Fighter AI 
             if (ExposedToDeadlySun == false)
             {
+                if (ExposedToDeadlySun == false)
+                {
+
+                    int BackUpTimer = 60;
+                    bool flag3 = false;
+                    if (!(NPC.ai[2] > 0f))
+                    {
+                        if (NPC.velocity.Y == 0f && ((NPC.velocity.X > 0f && NPC.direction < 0) || (NPC.velocity.X < 0f && NPC.direction > 0)))
+                        {
+                            IsWalking = true;
+                        }
+                        if (NPC.position.X == NPC.oldPosition.X || NPC.ai[3] >= (float)BackUpTimer || IsWalking)
+                        {
+                            NPC.ai[3] += 1f;
+                        }
+                        else if ((double)Math.Abs(NPC.velocity.X) > 0.9 && NPC.ai[3] > 0f)
+                        {
+                            NPC.ai[3] -= 1f;
+                        }
+                        if (NPC.ai[3] > (float)(BackUpTimer * 10))
+                        {
+                            NPC.ai[3] = 0f;
+                        }
+                        if (NPC.justHit)
+                        {
+                            NPC.ai[3] = 0f; // When hit resets the NPC to attacking the player I think, meaning ai[3] is the counter for running away
+                            HealTime = StartingHealTime;
+                        }
+                        if (NPC.ai[3] == (float)BackUpTimer)
+                        {
+                            NPC.netUpdate = true;
+                        }
+                        if (NPC.ai[3] < (float)BackUpTimer)
+                        {
+                            NPC.TargetClosest(true);
+                        }
+                    }
+                    if (Vector2.Distance(Main.player[NPC.target].Center, NPC.Center) < 16f)
+                    {
+                        NPC.ai[3] = 0f;
+                        //NPC.velocity.X = NPC.velocity.X * 0.9f; Undo this if I want it to stop on the player again
+                        if ((double)NPC.velocity.X > -0.1 && (double)NPC.velocity.X < 0.1)
+                            // NPC.velocity.X = 0f;Undo this if I want it to stop on the player again
+                            return;
+                    }
 
 
-                bool noXMovement = false;
-                if (NPC.velocity.X == 0f)
-                {
-                    noXMovement = true;
-                }
-                if (NPC.justHit)
-                {
-                    noXMovement = false;
-                }
-                bool isWalking = false;
-                bool unusedFlag = false;
-                int backUpTimer = 60;
-                if (NPC.velocity.Y == 0f && ((NPC.velocity.X > 0f && NPC.direction < 0) || (NPC.velocity.X < 0f && NPC.direction > 0)))
-                {
-                    isWalking = true;
-                }
-                if ((NPC.position.X == NPC.oldPosition.X || NPC.ai[3] >= (float)backUpTimer) | isWalking)
-                {
-                    NPC.ai[3] += 1f;
-                    
-                }
-                else if ((double)Math.Abs(NPC.velocity.X) > 0.9 && NPC.ai[3] > 0f)
-                {
-                    NPC.ai[3] -= 1f;
-                }
-                if (NPC.ai[3] > (float)(backUpTimer * 10))
-                {
-                    NPC.ai[3] = 0f;
-                }
-                if (NPC.justHit)
-                {
-                    NPC.ai[3] = 0f; // When hit resets the NPC to attacking the player I think, meaning ai[3] is the counter for running away
-                    HealTime = StartingHealTime;
-                }
-                if (NPC.ai[3] == (float)backUpTimer)
-                {
-                    NPC.netUpdate = true;
-                }
-                if (NPC.ai[3] < (float)backUpTimer)
-                {
-                    NPC.TargetClosest(true);
-                }
-                else if (NPC.ai[2] <= 0f)
-                {
-                    if (NPC.velocity.X == 0f)
+
+                    if (NPC.velocity.X < -2.5f || NPC.velocity.X > 2.5f)
                     {
                         if (NPC.velocity.Y == 0f)
                         {
-                            NPC.ai[0] += 1f;
-                            if (NPC.ai[0] >= 2f)
-                            {
-                                NPC.direction *= -1;
-                                NPC.spriteDirection = NPC.direction;
-                                NPC.ai[0] = 0f;
-
-                                // This part is what makes the NPC run away when not able to reach the player. I think. 
-                                HealTime = 15;
-                                //NPC.active = false;
-                            }
+                            NPC.velocity *= 0.8f;
                         }
                     }
-                    else
+                    else if (NPC.velocity.X < 2.5f && NPC.direction == 1)
                     {
-                        NPC.ai[0] = 0f;
-                        
-                    }
-                    if (NPC.direction == 0)
-                    {
-                        NPC.direction = 1;
-                        HealTime = StartingHealTime;
-                    }
-                }
 
-                
-                
-              if (Vector2.Distance(Main.player[NPC.target].Center, NPC.Center) < 18f)
-                {
-                    NPC.ai[3] = 0f;
-                    NPC.velocity.X = NPC.velocity.X * 0.9f;
-                    if ((double)NPC.velocity.X > -0.1 && (double)NPC.velocity.X < 0.1)
-                        NPC.velocity.X = 0f;
-                    return;
-                }
-                float maxVelocity = 3f; // keep in mind I can change and multiply this super easy,
-                float acceleration = 0.1f; // so if I make a gnome rallier or something I could have regular gnomes
-                                           // speed up
-                if (NPC.velocity.X < -maxVelocity || NPC.velocity.X > maxVelocity)
-                {
+                        NPC.velocity.X += 0.07f;
+                        if (NPC.velocity.X > 2.5f)
+                        {
+                            NPC.velocity.X = 2.5f;
+                        }
+                    }
+                    else if (NPC.velocity.X > -2.5f && NPC.direction == -1)
+                    {
+
+                        NPC.velocity.X -= 0.07f;
+                        if (NPC.velocity.X < -2.5f)
+                        {
+                            NPC.velocity.X = -2.5f;
+                        }
+                    }
+
+
+
+
+                    bool OnSolidTile = false;
                     if (NPC.velocity.Y == 0f)
-                        NPC.velocity *= 0.7f;
-                }
-                else if (NPC.velocity.X < maxVelocity && NPC.direction == 1)
-                {
-                    NPC.velocity.X = NPC.velocity.X + acceleration;
-                    if (NPC.velocity.X > maxVelocity)
-                        NPC.velocity.X = maxVelocity;
-                }
-                else if (NPC.velocity.X > -maxVelocity && NPC.direction == -1)
-                {
-                    NPC.velocity.X = NPC.velocity.X - acceleration;
-                    if (NPC.velocity.X < -maxVelocity)
-                        NPC.velocity.X = -maxVelocity;
-                }
-                bool isOnSolidTile = false;
-                if (NPC.velocity.Y == 0f)
-                {
-                    int yTile = (int)(NPC.position.Y + (float)NPC.height + 7f) / 16;
-                    int initialXTile = (int)NPC.position.X / 16;
-                    int maxXTile = (int)(NPC.position.X + (float)NPC.width) / 16;
-                    for (int xTile = initialXTile; xTile <= maxXTile; xTile++)
                     {
-                        if (Main.tile[xTile, yTile] == null)
+                        int num29 = (int)(NPC.position.Y + (float)NPC.height + 8f) / 16;
+                        int num30 = (int)NPC.position.X / 16;
+                        int num31 = (int)(NPC.position.X + (float)NPC.width) / 16;
+                        for (int l = num30; l <= num31; l++)
                         {
-                            return;
-                        }
-                        if (Main.tile[xTile, yTile].HasUnactuatedTile && Main.tileSolid[(int)Main.tile[xTile, yTile].TileType])
-                        {
-                            isOnSolidTile = true;
-                            break;
-                        }
-                    }
-                }
-                if (NPC.velocity.Y >= 0f)
-                {
-                    int fallFaceDirection = 0;
-                    if (NPC.velocity.X < 0f)
-                    {
-                        fallFaceDirection = -1;
-                    }
-                    if (NPC.velocity.X > 0f)
-                    {
-                        fallFaceDirection = 1;
-                    }
-                    Vector2 npcPosition = NPC.position;
-                    npcPosition.X += NPC.velocity.X;
-                    int xTileBelow = (int)((npcPosition.X + (float)(NPC.width / 2) + (float)((NPC.width / 2 + 1) * fallFaceDirection)) / 16f);
-                    int yTileBelow = (int)((npcPosition.Y + (float)NPC.height - 1f) / 16f);
-                    if ((float)(xTileBelow * 16) < npcPosition.X + (float)NPC.width && (float)(xTileBelow * 16 + 16) > npcPosition.X && ((Main.tile[xTileBelow, yTileBelow].HasUnactuatedTile && !Main.tile[xTileBelow, yTileBelow].TopSlope && !Main.tile[xTileBelow, yTileBelow - 1].TopSlope && Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow].TileType] && !Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow].TileType]) || (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock && Main.tile[xTileBelow, yTileBelow - 1].HasUnactuatedTile)) && (!Main.tile[xTileBelow, yTileBelow - 1].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 1].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 1].TileType] || (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock && (!Main.tile[xTileBelow, yTileBelow - 4].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 4].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 4].TileType]))) && (!Main.tile[xTileBelow, yTileBelow - 2].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 2].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 2].TileType]) && (!Main.tile[xTileBelow, yTileBelow - 3].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 3].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 3].TileType]) && (!Main.tile[xTileBelow - fallFaceDirection, yTileBelow - 3].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow - fallFaceDirection, yTileBelow - 3].TileType]))
-                    {
-                        float yPixelDistance = (float)(yTileBelow * 16);
-                        if (Main.tile[xTileBelow, yTileBelow].IsHalfBlock)
-                        {
-                            yPixelDistance += 8f;
-                        }
-                        if (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock)
-                        {
-                            yPixelDistance -= 8f;
-                        }
-                        if (yPixelDistance < npcPosition.Y + (float)NPC.height)
-                        {
-                            float percentageTileRisen = npcPosition.Y + (float)NPC.height - yPixelDistance;
-                            float fullTileAmt = 16.1f;
-                            if (percentageTileRisen <= fullTileAmt)
+                            if (Main.tile[l, num29] == null)
                             {
-                                NPC.gfxOffY += NPC.position.Y + (float)NPC.height - yPixelDistance;
-                                NPC.position.Y = yPixelDistance - (float)NPC.height;
-                                if (percentageTileRisen < 9f)
+                                return;
+                            }
+                            if (Main.tile[l, num29].HasUnactuatedTile && Main.tileSolid[Main.tile[l, num29].TileType])
+                            {
+                                OnSolidTile = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (OnSolidTile)
+                    {
+                        int DoorCheckX = (int)((NPC.position.X + (float)(NPC.width / 2) + (float)(15 * NPC.direction)) / 16f);
+                        int DoorCheckY = (int)((NPC.position.Y + (float)NPC.height - 15f) / 16f);
+
+                        /* if (Main.tile[DoorCheckX, DoorCheckY] == null)
+                         {
+                             Main.tile[DoorCheckX, DoorCheckY] = new Tile();
+                         }
+                         if (Main.tile[DoorCheckX, DoorCheckY - 1] == null)
+                         {
+                             Main.tile[DoorCheckX, DoorCheckY - 1] = new Tile();
+                         }
+                         if (Main.tile[DoorCheckX, DoorCheckY - 2] == null)
+                         {
+                             Main.tile[DoorCheckX, DoorCheckY - 2] = new Tile();
+                         }
+                         if (Main.tile[DoorCheckX, DoorCheckY - 3] == null)
+                         {
+                             Main.tile[DoorCheckX, DoorCheckY - 3] = new Tile();
+                         }
+                         if (Main.tile[DoorCheckX, DoorCheckY + 1] == null)
+                         {
+                             Main.tile[DoorCheckX, DoorCheckY + 1] = new Tile();
+                         }
+                         if (Main.tile[DoorCheckX + NPC.direction, DoorCheckY - 1] == null)
+                         {
+                             Main.tile[DoorCheckX + NPC.direction, DoorCheckY - 1] = new Tile();
+                         }
+                         if (Main.tile[DoorCheckX + NPC.direction, DoorCheckY + 1] == null)
+                         {
+                             Main.tile[DoorCheckX + NPC.direction, DoorCheckY + 1] = new Tile();
+                         } */
+
+                        // What do I do with the above?
+
+                        if (Main.tile[DoorCheckX, DoorCheckY - 1].HasUnactuatedTile && Main.tile[DoorCheckX, DoorCheckY - 1].TileType == 10 && flag3)
+                        {
+                            NPC.ai[2] += 1f;
+                            NPC.ai[3] = 0f;
+                            if (NPC.ai[2] >= 60f)
+                            {
+
+                                NPC.velocity.X = 0.5f * (float)(-NPC.direction);
+                                NPC.ai[1] += 1f;
+                                /*if (NPC.type == NPCID.GoblinThief)
                                 {
-                                    NPC.stepSpeed = 1f;
+                                    NPC.ai[1] += 1f;
                                 }
-                                else
+                                if (NPC.type == NPCID.AngryBones)
                                 {
-                                    NPC.stepSpeed = 2f;
+                                    NPC.ai[1] += 6f;
+                                } */
+                                NPC.ai[2] = 0f;
+                                bool flag5 = false;
+                                if (NPC.ai[1] >= 10f)
+                                {
+                                    flag5 = true;
+                                    NPC.ai[1] = 10f;
                                 }
-                            }
-                        }
-                    }
-                }
-                if (isOnSolidTile)
-                {
-                    int doorCheckX = (int)((NPC.position.X + (float)(NPC.width / 2) + (float)(15 * NPC.direction)) / 16f);
-                    int doorCheckY = (int)((NPC.position.Y + (float)NPC.height - 15f) / 16f);
-                    if ((Main.tile[doorCheckX, doorCheckY - 1].HasUnactuatedTile && (Main.tile[doorCheckX, doorCheckY - 1].TileType == 10 || Main.tile[doorCheckX, doorCheckY - 1].TileType == 388)) & unusedFlag)
-                    {
-                        NPC.ai[2] += 1f; 
-                        NPC.ai[3] = 0f;
-                        if (NPC.ai[2] >= 60f)
-                        {
-                            NPC.velocity.X = 0.5f * (float)-(float)NPC.direction;
-                            int doorOpenInc = 5;
-                            if (Main.tile[doorCheckX, doorCheckY - 1].TileType == 388)
-                            {
-                                doorOpenInc = 2;
-                            }
-                            NPC.ai[1] += (float)doorOpenInc;
-                            NPC.ai[2] = 0f;
-                            bool letMeIn = false;
-                            if (NPC.ai[1] >= 10f)
-                            {
-                                letMeIn = true;
-                                NPC.ai[1] = 10f;
-                            }
-                            WorldGen.KillTile(doorCheckX, doorCheckY - 1, true, false, false);
-                            if ((Main.netMode != NetmodeID.MultiplayerClient || !letMeIn) && letMeIn && Main.netMode != NetmodeID.MultiplayerClient)
-                            {
-                                if (Main.tile[doorCheckX, doorCheckY - 1].TileType == 10)
+                                WorldGen.KillTile(DoorCheckX, DoorCheckY - 1, fail: true);
+                                if ((Main.netMode != 1 || !flag5) && flag5 && Main.netMode != 1)
                                 {
-                                    bool canOpenDoor = WorldGen.OpenDoor(doorCheckX, doorCheckY - 1, NPC.direction);
-                                    if (!canOpenDoor)
+                                    if (NPC.type == 26)
                                     {
-                                        NPC.ai[3] = (float)backUpTimer;
+                                        WorldGen.KillTile(DoorCheckX, DoorCheckY - 1);
+                                        if (Main.netMode == NetmodeID.Server)
+                                        {
+                                            NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, DoorCheckX, DoorCheckY - 1);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        bool flag6 = WorldGen.OpenDoor(DoorCheckX, DoorCheckY, NPC.direction);
+                                        if (!flag6)
+                                        {
+                                            NPC.ai[3] = BackUpTimer;
+                                            NPC.netUpdate = true;
+                                        }
+                                        if (Main.netMode == 2 && flag6)
+                                        {
+                                            NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, null, 0, DoorCheckX, DoorCheckY, NPC.direction);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if ((NPC.velocity.X < 0f && NPC.spriteDirection == -1) || (NPC.velocity.X > 0f && NPC.spriteDirection == 1))
+                            {
+                                if (Main.tile[DoorCheckX, DoorCheckY - 2].HasUnactuatedTile && Main.tileSolid[Main.tile[DoorCheckX, DoorCheckY - 2].TileType])
+                                {
+                                    if (Main.tile[DoorCheckX, DoorCheckY - 3].HasUnactuatedTile && Main.tileSolid[Main.tile[DoorCheckX, DoorCheckY - 3].TileType])
+                                    {
+                                        NPC.velocity.Y = -8f;
                                         NPC.netUpdate = true;
                                     }
-                                    if (Main.netMode == NetmodeID.Server & canOpenDoor)
+                                    else
                                     {
-                                        NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, null, 0, (float)doorCheckX, (float)(doorCheckY - 1), (float)NPC.direction, 0, 0, 0);
-                                    }
-                                }
-                                if (Main.tile[doorCheckX, doorCheckY - 1].TileType == 388)
-                                {
-                                    bool canOpenTallGate = WorldGen.ShiftTallGate(doorCheckX, doorCheckY - 1, false);
-                                    if (!canOpenTallGate)
-                                    {
-                                        NPC.ai[3] = (float)backUpTimer;
+                                        NPC.velocity.Y = -7f;
                                         NPC.netUpdate = true;
                                     }
-                                    if (Main.netMode == NetmodeID.Server & canOpenTallGate)
-                                    {
-                                        NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, null, 4, (float)doorCheckX, (float)(doorCheckY - 1), 0f, 0, 0, 0);
-                                    }
                                 }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        int faceDirection = NPC.spriteDirection;
-                        if ((NPC.velocity.X < 0f && faceDirection == -1) || (NPC.velocity.X > 0f && faceDirection == 1))
-                        {
-                            if (NPC.height >= 32 && Main.tile[doorCheckX, doorCheckY - 2].HasUnactuatedTile && Main.tileSolid[(int)Main.tile[doorCheckX, doorCheckY - 2].TileType])
-                            {
-                                if (Main.tile[doorCheckX, doorCheckY - 3].HasUnactuatedTile && Main.tileSolid[(int)Main.tile[doorCheckX, doorCheckY - 3].TileType])
+                                else if (Main.tile[DoorCheckX, DoorCheckY - 1].HasUnactuatedTile && Main.tileSolid[Main.tile[DoorCheckX, DoorCheckY - 1].TileType])
                                 {
                                     NPC.velocity.Y = -8f;
+                                    int num198 = (int)(NPC.position.Y + (float)NPC.height) / 16; // Taken directly from Gnome special movement
+                                    if (WorldGen.SolidTile((int)NPC.Center.X / 16, num198 - 8))
+                                    {
+                                        NPC.direction *= -1;
+                                        NPC.spriteDirection = NPC.direction;
+                                        NPC.velocity.X = 3 * NPC.direction;
+                                    }
                                     NPC.netUpdate = true;
                                 }
-                                else
+                                else if (Main.tile[DoorCheckX, DoorCheckY].HasUnactuatedTile && Main.tileSolid[Main.tile[DoorCheckX, DoorCheckY].TileType])
                                 {
-                                    NPC.velocity.Y = -7f;
+                                    NPC.velocity.Y = -5f;
                                     NPC.netUpdate = true;
                                 }
+                                else if (NPC.directionY < 0 && NPC.type != 67 && (!Main.tile[DoorCheckX, DoorCheckY + 1].HasUnactuatedTile || !Main.tileSolid[Main.tile[DoorCheckX, DoorCheckY + 1].TileType]) && (!Main.tile[DoorCheckX + NPC.direction, DoorCheckY + 1].HasUnactuatedTile || !Main.tileSolid[Main.tile[DoorCheckX + NPC.direction, DoorCheckY + 1].TileType]))
+                                {
+                                    NPC.velocity.Y = -8f;
+                                    NPC.velocity.X *= 1.5f;
+                                    NPC.netUpdate = true;
+                                }
+                                else if (flag3)
+                                {
+                                    NPC.ai[1] = 0f;
+                                    NPC.ai[2] = 0f;
+                                }
                             }
-                            else if (Main.tile[doorCheckX, doorCheckY - 1].HasUnactuatedTile && Main.tileSolid[(int)Main.tile[doorCheckX, doorCheckY - 1].TileType])
+                            float PlayerXDistance = Math.Abs(NPC.position.X + (float)(NPC.width / 2) - (Main.player[NPC.target].position.X + (float)(Main.player[NPC.target].width / 2)));
+                            float PlayerYDistance = Math.Abs(NPC.position.Y + (float)(NPC.height / 2) - (Main.player[NPC.target].position.Y + (float)(Main.player[NPC.target].height / 2)));
+
+                            if (NPC.velocity.Y == 0f && PlayerXDistance < 70f && PlayerYDistance < 140f && PlayerYDistance > 40f && ((NPC.direction > 0 && NPC.velocity.X >= 1f) || (NPC.direction < 0 && NPC.velocity.X <= -1f)))
                             {
-                                NPC.velocity.Y = -6f;
+
+                                NPC.velocity.Y = -8f; // Jumps here!
                                 NPC.netUpdate = true;
                             }
-                            else if (NPC.position.Y + (float)NPC.height - (float)(doorCheckY * 16) > 20f && Main.tile[doorCheckX, doorCheckY].HasUnactuatedTile && !Main.tile[doorCheckX, doorCheckY].TopSlope && Main.tileSolid[(int)Main.tile[doorCheckX, doorCheckY].TileType])
+                            if (NPC.type == 120 && NPC.velocity.Y < 0f)
                             {
-                                NPC.velocity.Y = -5f;
-                                NPC.netUpdate = true;
-                            }
-                            else if (NPC.directionY < 0 && (!Main.tile[doorCheckX, doorCheckY + 1].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[doorCheckX, doorCheckY + 1].TileType]) && (!Main.tile[doorCheckX + NPC.direction, doorCheckY + 1].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[doorCheckX + NPC.direction, doorCheckY + 1].TileType]))
-                            {
-                                NPC.velocity.Y = -12f;
-                                NPC.velocity.X = NPC.velocity.X * 1.5f;
-                                NPC.netUpdate = true;
-                            }
-                            else if (unusedFlag)
-                            {
-                                NPC.ai[1] = 0f;
-                                NPC.ai[2] = 0f;
-                            }
-                            if ((NPC.velocity.Y == 0f & noXMovement) && NPC.ai[3] == 1f)
-                            {
-                                NPC.velocity.Y = -5f;
+                                NPC.velocity.Y *= 1.1f;
                             }
                         }
                     }
+                    else if (flag3)
+                    {
+                        NPC.ai[1] = 0f;
+                        NPC.ai[2] = 0f;
+                    }
+
+                    // How Chaos Elemental Teleports
+                    /*
+                    if (Main.netMode != NetmodeID.MultiplayerClient || NPC.type == NPCID.ChaosElemental || (NPC.ai[3] >= (float)BackUpTimer))
+                    {
+                        int num34 = (int)Main.player[NPC.target].position.X / 16;
+                        int num35 = (int)Main.player[NPC.target].position.Y / 16;
+                        int num36 = (int)NPC.position.X / 16;
+                        int num37 = (int)NPC.position.Y / 16;
+                        int num38 = 20;
+                        int num39 = 0;
+                        bool flag7 = false;
+
+                        if (Math.Abs(NPC.position.X - Main.player[NPC.target].position.X) + Math.Abs(NPC.position.Y - Main.player[NPC.target].position.Y) > 2000f)
+                        {
+                            num39 = 100;
+                            flag7 = true;
+                        }
+
+                        while (!flag7 && num39 < 100)
+                        {
+                            num39++;
+                            int num40 = Main.rand.Next(num34 - num38, num34 + num38);
+                            int num41 = Main.rand.Next(num35 - num38, num35 + num38);
+                            for (int m = num41; m < num35 + num38; m++)
+                            {
+                                if ((m < num35 - 4 || m > num35 + 4 || num40 < num34 - 4 || num40 > num34 + 4) && (m < num37 - 1 || m > num37 + 1 || num40 < num36 - 1 || num40 > num36 + 1) && Main.tile[num40, m].HasUnactuatedTile)
+                                {
+                                    bool flag8 = true;
+                                    if (NPC.type == 32 && Main.tile[num40, m - 1].WallType == 0)
+                                    {
+                                        flag8 = false;
+                                    }
+
+                                    if (flag8 && Main.tileSolid[Main.tile[num40, m].TileType] && !Collision.SolidTiles(num40 - 1, num40 + 1, m - 4, m - 1))
+                                    {
+                                        NPC.position.X = num40 * 16 - NPC.width / 2;
+                                        NPC.position.Y = m * 16 - NPC.height;
+                                        NPC.netUpdate = true;
+                                        NPC.ai[3] = -120f;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (NPC.velocity.Y >= 0f)
+                        {
+                            int FallDirection = 0;
+                            if (NPC.velocity.X < 0f)
+                            {
+                                FallDirection = -1;
+                            }
+                            if (NPC.velocity.X > 0f)
+                            {
+                                FallDirection = 1;
+                            }
+                            Vector2 npcPosition = NPC.position;
+                            npcPosition.X += NPC.velocity.X;
+                            int xTileBelow = (int)((npcPosition.X + (float)(NPC.width / 2) + (float)((NPC.width / 2 + 1) * FallDirection)) / 16f);
+                            int yTileBelow = (int)((npcPosition.Y + (float)NPC.height - 1f) / 16f);
+                            if ((float)(xTileBelow * 16) < npcPosition.X + (float)NPC.width && (float)(xTileBelow * 16 + 16) > npcPosition.X && ((Main.tile[xTileBelow, yTileBelow].HasUnactuatedTile && !Main.tile[xTileBelow, yTileBelow].TopSlope && !Main.tile[xTileBelow, yTileBelow - 1].TopSlope && Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow].TileType] && !Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow].TileType]) || (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock && Main.tile[xTileBelow, yTileBelow - 1].HasUnactuatedTile)) && (!Main.tile[xTileBelow, yTileBelow - 1].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 1].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 1].TileType] || (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock && (!Main.tile[xTileBelow, yTileBelow - 4].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 4].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 4].TileType]))) && (!Main.tile[xTileBelow, yTileBelow - 2].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 2].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 2].TileType]) && (!Main.tile[xTileBelow, yTileBelow - 3].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 3].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 3].TileType]) && (!Main.tile[xTileBelow - FallDirection, yTileBelow - 3].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow - FallDirection, yTileBelow - 3].TileType]))
+                            {
+                                float PixelDistanceY = (float)(yTileBelow * 16);
+                                if (Main.tile[xTileBelow, yTileBelow].IsHalfBlock)
+                                {
+                                    PixelDistanceY += 8f;
+                                }
+                                if (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock)
+                                {
+                                    PixelDistanceY -= 8f;
+                                }
+                                if (PixelDistanceY < npcPosition.Y + (float)NPC.height)
+                                {
+                                    float num192 = npcPosition.Y + (float)NPC.height - PixelDistanceY;
+                                    float num193 = 16.1f;
+                                    if (num192 <= num193)
+                                    {
+                                        NPC.gfxOffY += NPC.position.Y + (float)NPC.height - PixelDistanceY;
+                                        NPC.position.Y = PixelDistanceY - (float)NPC.height;
+                                        if (num192 < 9f)
+                                        {
+                                            NPC.stepSpeed = 1f;
+                                        }
+                                        else
+                                        {
+                                            NPC.stepSpeed = 2f;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                  */
+
+
+
                 }
-                else if (unusedFlag)
-                {
-                    NPC.ai[1] = 0f;
-                    NPC.ai[2] = 0f;
-                }
+
+
 
 
             }
@@ -641,7 +720,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
 
 
 
-
+        /*
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
             // Use AddRange instead of calling Add multiple times
@@ -654,6 +733,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                                                   "Too bad they aren't smart enough to invade when the sun isn't out")
             });
         }
+        */
     }
 }
 	

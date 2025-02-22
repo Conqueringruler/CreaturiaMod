@@ -39,6 +39,7 @@ namespace Creaturia.Items.Tools
 		{
 									// Amethyst Hook has the worst stats in the game, so I should use that as a base to upgrade off of
 			Item.CloneDefaults(ItemID.AmethystHook);
+			Item.value = Item.sellPrice(0, 2, 50, 0);
 			Item.shootSpeed = 11.5f; //how quickly the hook is shot
 			Item.shoot = ModContent.ProjectileType<SlipperyHookProj>(); 
 		}

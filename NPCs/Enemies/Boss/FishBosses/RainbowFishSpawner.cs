@@ -27,7 +27,14 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 
 
 		}
-		private int FishSpawning;
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		{
+            database.Entries.Remove(bestiaryEntry);
+        }
+
+
+
+        private int FishSpawning;
 		private bool spawnspot = true;
 		public override void SetDefaults()
 		{

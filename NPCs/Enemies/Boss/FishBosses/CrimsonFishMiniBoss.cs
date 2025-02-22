@@ -48,7 +48,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 				}
 			};
 
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				CustomTexturePath = "Creaturia/NPCs/Enemies/Boss/FishBosses/Lumpsucker_Bestiary",
 				//Velocity = -1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
@@ -161,7 +161,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Rain,
 				//BestiaryDatabaseNPCsPopulator.CrownosIconIndexes.
 				new FlavorTextBestiaryInfoElement("The great ichorous beast of the Crimson waters," +
-												  " vicious and unforgiving. The babies of the Lumpsucker are often so devoted to their mothers that they're more than happy to blow themselves up for her.")
+												  " vicious and unforgiving.")
 				
 			});
 		}
@@ -377,21 +377,21 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 					NPC.velocity.Y -= 8;
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
-						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
+						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 30, 0);
+						projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 30, 0);
 					}
 					if (Main.expertMode)
 					{
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
+						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 30, 0);
 					}
 					}
 					if (Main.masterMode)
 					{
 					if (Main.netMode != NetmodeID.MultiplayerClient)
 					{
-						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 35, 0);
+						int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot * (float)Main.rand.Next(1, 10), ProjectileID.GoldenShowerHostile, 30, 0);
 					}
 					}
 					sprayingtime = 0;

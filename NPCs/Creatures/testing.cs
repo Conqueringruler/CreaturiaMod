@@ -31,9 +31,13 @@ namespace Creaturia.NPCs.Creatures
 			Main.npcCatchable[NPC.type] = true;
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.FlyingFish];
 		}
-	
 
-		public override void SetDefaults()
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+		{
+			database.Entries.Remove(bestiaryEntry);
+		}
+
+        public override void SetDefaults()
 		{
 			NPC.width = 30;
 			NPC.height = 28;

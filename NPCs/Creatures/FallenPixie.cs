@@ -299,11 +299,11 @@ namespace Creaturia.NPCs.Creatures
 				{
 					if (TileID.Sets.Conversion.Stone[spawnInfo.SpawnTileType]) // What's the difference here between Sets.Conversion.Stone and Sets.Stone?
 					{
-						return 0.135f;
+						return 0.185f;
 					}
 					else return 0f;
 				}
-				return SpawnCondition.OverworldHallow.Chance * 0.001f; // Ultra-rare surface spawning cause why not
+				return SpawnCondition.OverworldHallow.Chance * 0.005f; // Ultra-rare surface spawning cause why not
 			}
 			else return 0f;
 		}

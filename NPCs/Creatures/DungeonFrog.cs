@@ -29,10 +29,10 @@ namespace Creaturia.NPCs.Creatures
 			Main.npcFrameCount[NPC.type] = 12;
 			NPCID.Sets.CountsAsCritter[Type] = true;
 
-			
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
             NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, value);
         }
-        NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+        NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
         { // frog runs now in bestiary!! yay :D
             Velocity = -1f
         };

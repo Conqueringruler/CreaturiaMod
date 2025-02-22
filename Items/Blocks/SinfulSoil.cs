@@ -35,7 +35,6 @@ namespace Creaturia.Items.Blocks
 			Item.createTile = ModContent.TileType<SinfulDirt>();
 			Item.width = 12;
 			Item.height = 12;
-			Item.value = 3000;
-		}
+        }
 	}
 }

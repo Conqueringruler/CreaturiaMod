@@ -12,6 +12,7 @@ namespace Creaturia.Items
 		{
 			// DisplayName.SetDefault("Summon Fallen Fairy"); 
 			// Tooltip.SetDefault("'Hey, this is for the devs only!'");
+            
 		}
 
 		public override void SetDefaults()
@@ -19,8 +20,8 @@ namespace Creaturia.Items
 
 			Item.width = 20;
 			Item.height = 18;
-			Item.value = 840;
-			Item.rare = ItemRarityID.Pink;
+            Item.value = Item.sellPrice(0, 0, 0, 0);
+            Item.rare = ItemRarityID.Pink;
 			Item.maxStack = 999;
             Item.useAnimation = 5;
             Item.useTime = 5;
@@ -31,6 +32,9 @@ namespace Creaturia.Items
 			
 
         }
+
+        // A remnant of an unreleased 1.3 mod, that who shall not be named, long forgotten and whos influence rests in the smallest corners of Creaturia
+
         public override bool? UseItem(Player player)
         {
             if (player.whoAmI == Main.myPlayer)

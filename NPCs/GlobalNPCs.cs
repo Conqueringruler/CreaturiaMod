@@ -36,6 +36,7 @@ using Creaturia.Common;
 using Creaturia.Common.Systems;
 using Creaturia.Items;
 using Creaturia.Items.Weapon;
+using Creaturia.Configs;
 
 namespace Creaturia.NPCs
 {
@@ -106,7 +107,7 @@ namespace Creaturia.NPCs
         public override void AI(NPC npc)
         {
 
-
+         
             
 
             if (npc.type is NPCID.UndeadViking or NPCID.ArmoredViking)
@@ -262,29 +263,51 @@ namespace Creaturia.NPCs
                 if (npc.type == NPCID.Bunny || npc.type == NPCID.Duck || npc.type == NPCID.DuckWhite || npc.type == NPCID.BunnySlimed || npc.type == NPCID.BunnyXmas || npc.type == NPCID.Squirrel ||
                 npc.type == NPCID.Penguin || npc.type == NPCID.PenguinBlack)
                 {
-
-                    if (Main.rand.NextBool(6000))
+                    if (npc.active)
                     {
-                        npc.Transform(NPCType<SkinWalker>());
+                        if (!Main.bloodMoon)
+                            if (Main.rand.NextBool(6000))
+                            {
+                                npc.Transform(NPCType<SkinWalker>());
+                                npc.netUpdate = true;
+                            }
+                        if (Main.bloodMoon)
+                        {
+                            if (Main.rand.NextBool(1000))
+                            {
+                                npc.Transform(NPCType<SkinWalker>());
+                                npc.netUpdate = true;
+                            }
+                        }
                     }
 
                 }
             }
             if (!npc.SpawnedFromStatue)
                 {
-            if (npc.type == NPCID.Bunny || npc.type == NPCID.Duck || npc.type == NPCID.DuckWhite || npc.type == NPCID.Salamander || npc.type == NPCID.BunnySlimed || npc.type == NPCID.BunnyXmas || 
+            if (npc.type == NPCID.Bunny || npc.type == NPCID.Duck || npc.type == NPCID.DuckWhite || npc.type == NPCID.Clown || npc.type == NPCID.BunnySlimed || npc.type == NPCID.BunnyXmas || 
                 npc.type == NPCID.Squirrel || npc.type == NPCID.Penguin || npc.type == NPCID.PenguinBlack || npc.type == NPCID.Unicorn || npc.type == NPCID.WalkingAntlion || npc.type == NPCID.Owl)
             {
-               
-                    if (Main.rand.NextBool(40000))
+               if (npc.active)
+                    {
+                    if (Main.rand.NextBool(35000) && npc.active)
                     {
                         npc.Transform(NPCType<SkinWalker>());
                         npc.netUpdate = true;
                     }
+                    if (Main.bloodMoon && npc.active)
+                    {
+                        if (Main.rand.NextBool(18000))
+                        {
+                            npc.Transform(NPCType<SkinWalker>());
+                            npc.netUpdate = true;
+                        }
+                    }
                 }
             }
+            }
         }
-        
+        public bool GolemFists = ModContent.GetInstance<CreaturiaSettings>().GolemFists.Contains("Enabled");
         public override void OnKill(NPC npc)
         {
           
@@ -297,14 +320,25 @@ namespace Creaturia.NPCs
             }
             if (!npc.SpawnedFromStatue)
             {
-                if (npc.type == NPCID.Bunny || npc.type == NPCID.Duck || npc.type == NPCID.DuckWhite || npc.type == NPCID.Salamander || npc.type == NPCID.BunnySlimed || npc.type == NPCID.BunnyXmas || npc.type == NPCID.Squirrel || npc.type == NPCID.Penguin || npc.type == NPCID.PenguinBlack || npc.type == NPCID.Unicorn || npc.type == NPCID.WalkingAntlion)
+                if (npc.type == NPCID.Bunny || npc.type == NPCID.Duck || npc.type == NPCID.DuckWhite || npc.type == NPCID.Clown || npc.type == NPCID.BunnySlimed || npc.type == NPCID.BunnyXmas
+                    || npc.type == NPCID.Squirrel || npc.type == NPCID.Penguin || npc.type == NPCID.PenguinBlack || npc.type == NPCID.Unicorn || npc.type == NPCID.WalkingAntlion)
                 {
+                    if (npc.active)
+                    {
                     if (Main.rand.NextBool(10000))
                     {
                         NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<SkinWalker>());
                     }
-
+                    if (Main.bloodMoon)
+                    {
+                        if (Main.rand.NextBool(4500))
+                        {
+                            npc.Transform(NPCType<SkinWalker>());
+                            npc.netUpdate = true;
+                        }
+                    }
                 }
+            }
             }
             if (npc.type == NPCID.KingSlime && npc.AnyInteractions())
             {
@@ -316,17 +350,26 @@ namespace Creaturia.NPCs
             }
             if (npc.type == NPCID.GolemFistLeft && npc.AnyInteractions())
             {
+                if (GolemFists)
+                {
                 NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<GolemFistL>());
             }
+        }
 
             if (npc.type == NPCID.GolemFistRight && npc.AnyInteractions())
             {
-                NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<GolemFistR>());
+                if (GolemFists)
+                {
+                    NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<GolemFistR>());
+                }
             }
-          
+          if (npc.type is NPCID.GolemFistLeft or NPCID.GolemFistRight)
+            {
+                Main.BestiaryTracker.Kills.RegisterKill(npc);
+            }
         }
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
+        {/*
             if (npc.type == NPCID.Golem)
             {
                 Color color = new Color(255, 255, 255, 0);
@@ -339,26 +382,42 @@ namespace Creaturia.NPCs
                 
 
             }
+            */
             return base.PreDraw(npc, spriteBatch, screenPos, drawColor);
         }
-        
-      /*  public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+      //  bool EnableHummingbirdBestiary = false;
+        public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            
-            
-           if (npc.type == NPCID.Golem)
+        /*    
+            if (npc.type == ModContent.NPCType<HummingBird1>())
             {
-                Color color = new Color(255, 255, 255, 0);
-                SpriteEffects spriteEffects = SpriteEffects.None;
-                Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Enemies/golemhellbornecrest").Value;
-                spriteBatch.Draw(texture, npc.Center - screenPos,
-            npc.frame, color, npc.rotation, // reminder for later; the sprite is there, just under the other stuff
-            new Vector2(TextureAssets.Npc[npc.type].Value.Width * 0.5f, TextureAssets.Npc[npc.type].Value.Height * 0.098f), npc.scale, spriteEffects, 0f);
+                if (bestiaryEntry.UIInfoProvider.GetEntryUICollectionInfo().UnlockState == BestiaryEntryUnlockState.CanShowDropsWithDropRates_4)
+                {
+                    EnableHummingbirdBestiary = true;
+                }
+            }
+            if (npc.type == ModContent.NPCType<HummingbirdBestiary>() && EnableHummingbirdBestiary)
+            {
+                bestiaryEntry.UIInfoProvider
+            } */
+        }
+        /*  public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+          {
 
-            
 
-            } 
-        } */
+             if (npc.type == NPCID.Golem)
+              {
+                  Color color = new Color(255, 255, 255, 0);
+                  SpriteEffects spriteEffects = SpriteEffects.None;
+                  Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Enemies/golemhellbornecrest").Value;
+                  spriteBatch.Draw(texture, npc.Center - screenPos,
+              npc.frame, color, npc.rotation, // reminder for later; the sprite is there, just under the other stuff
+              new Vector2(TextureAssets.Npc[npc.type].Value.Width * 0.5f, TextureAssets.Npc[npc.type].Value.Height * 0.098f), npc.scale, spriteEffects, 0f);
+
+
+
+              } 
+          } */
 
 
     }

@@ -28,8 +28,8 @@ namespace Creaturia.NPCs.Creatures
 			// DisplayName.SetDefault("Hoop Snake");
 			Main.npcCatchable[NPC.type] = true;
             NPCID.Sets.CountsAsCritter[Type] = true;
-
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				Velocity = 1f,
 				//Direction = -1
@@ -130,7 +130,7 @@ namespace Creaturia.NPCs.Creatures
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.WindyDay,
 				new FlavorTextBestiaryInfoElement("'Terrarians have long lived in fear of the dreaded Hoop Snake.' Despite its bad rep, " +
-				"the incredibly rare Hoop Snake just wants to enjoy your companionship as it rolls around. When rolling, it has a chance of reflecting projectiles right off it's scales.")
+				"the incredibly rare Hoop Snake just wants to enjoy your companionship as it rolls around.")
 			});
 			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type], quickUnlock: true);
 		}
@@ -145,10 +145,11 @@ namespace Creaturia.NPCs.Creatures
 			if (Main.IsItAHappyWindyDay)
 			{
 				//return SpawnCondition.OverworldDayDesert.Chance * 0.2f; Disabled for now
-				return SpawnCondition.OverworldDayDesert.Chance * 0.0005f; // Since I'm still having it as the mod icon for the Bestiary, I'm just gonna have it be ultra rare.
-			}
+				// Since I'm still having it as the mod icon for the Bestiary, I'm just gonna have it be ultra rare.
+                return (Main.remixWorld ? SpawnCondition.DesertCave.Chance : SpawnCondition.OverworldDayDesert.Chance) * 0.005f;
+            }
 			else
-				return SpawnCondition.OverworldDayDesert.Chance * 0.0001f;
+                return (Main.remixWorld ? SpawnCondition.DesertCave.Chance : SpawnCondition.OverworldDayDesert.Chance) * 0.001f;
 			
 		}
 
@@ -198,20 +199,21 @@ namespace Creaturia.NPCs.Creatures
 
 		public override void SetDefaults()
 		{
-			//item.useStyle = 1;
-			//item.autoReuse = true;
-			//item.useTurn = true;
-			//item.useAnimation = 15;
-			//item.useTime = 10;
-			//item.maxStack = 999;
-			//item.consumable = true;
-			Item.width = 30;
+            Item.CloneDefaults(ItemID.GlowingSnail);
+            //item.useStyle = 1;
+            //item.autoReuse = true;
+            //item.useTurn = true;
+            //item.useAnimation = 15;
+            //item.useTime = 10;
+            //item.maxStack = 999;
+            //item.consumable = true;
+            Item.width = 30;
 			Item.height = 28;
 			//item.makeNPC = 360;
 			//item.noUseGraphic = true;
 			//item.bait = 15;
 
-			Item.CloneDefaults(ItemID.GlowingSnail);
+			
 			Item.makeNPC = (short)NPCType<HoopSnake>();
 		}
 	}

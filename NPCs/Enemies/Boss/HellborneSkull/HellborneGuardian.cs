@@ -15,7 +15,7 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 		{
 			// DisplayName.SetDefault("Hellborne Guardian");
 
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				//Velocity = -1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
 				//Direction = 1, // -1 is left and 1 is right. NPCs are drawn facing the left by default but ExamplePerson will be drawn facing the right
@@ -50,7 +50,8 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Moon,
 				new FlavorTextBestiaryInfoElement("Some few Lihzahrds were chosen by their deity to enter a higher state of existence, given the task of protecting him for eternity.")
 			});
-		}
+            database.Entries.Remove(bestiaryEntry);
+        }
         public TheHellborneSkull Boss
 		{
 			get

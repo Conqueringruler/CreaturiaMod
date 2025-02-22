@@ -45,6 +45,7 @@ namespace Creaturia.Common.Players
         //}
         public bool RabbitFootAcc;
         public bool LumpsuckerAcc;
+
         public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item)
         {
             if (vendor.type == ModContent.NPCType<Fishman>())
@@ -71,26 +72,7 @@ namespace Creaturia.Common.Players
             {
                 info.DamageSource = PlayerDeathReason.ByCustomReason(Player.name + " was torn to shreds");
             }
-            if (info.DamageSource.SourceNPCIndex >= 0 && Main.npc[info.DamageSource.SourceNPCIndex].type == NPCID.GreenSlime && Main.hardMode)
-            {
-                if (Main.LocalPlayer.name == "Ripple" || Player.name == "Ripplio" || Player.name == "Jesus" || Player.name == "Rio")
-                {
-                    info.DamageSource = PlayerDeathReason.ByCustomReason("Rio just died to a green slime in hardmode. Embarrassing. ");
-                }
-                //info.DamageSource = PlayerDeathReason.ByCustomReason("Rio just died to a green slime in hardmode. Embarrassing. ");
-            }
-            if (info.DamageSource.SourceNPCIndex >= 0 && (Main.npc[info.DamageSource.SourceNPCIndex].type == NPCID.GreenSlime) && Main.hardMode && (Main.LocalPlayer.name is "Marlilo" or "Merlm" or "Marlon" or "1.4 Alpha Tmodloader"))
-            {
-                info.DamageSource = PlayerDeathReason.ByCustomReason("Marlon just died to a green slime in hardmode. Embarrassing. ");
-            }
-            if (info.DamageSource.SourceNPCIndex >= 0 && Main.npc[info.DamageSource.SourceNPCIndex].type == NPCID.GreenSlime && Main.hardMode && (Main.LocalPlayer.name is "Kadoons" or "Kirk" or "Kirg"))
-            {
-                info.DamageSource = PlayerDeathReason.ByCustomReason("Kirk just died to a green slime in hardmode. Embarrassing. ");
-            }
-            if (info.DamageSource.SourceNPCIndex >= 0 && Main.npc[info.DamageSource.SourceNPCIndex].type == NPCID.GreenSlime && Main.hardMode && (Main.LocalPlayer.name is "Oceanosity" or "Ron Weasel" or "Andrew"))
-            {
-                info.DamageSource = PlayerDeathReason.ByCustomReason("Andrew just died to a green slime in hardmode. Embarrassing.");
-            }
+           
         }
         public override bool FreeDodge(Player.HurtInfo info)
         {
@@ -287,10 +269,10 @@ namespace Creaturia.Common.Players
                                     packet.Send();
                                 }
                                 // }
-                                Main.BestiaryTracker.Kills.SetKillCountDirectly(persistentId, 50); // I wonder if kills will work for a critter?
-                                
-                                
-                            Player.ConsumeItem(ItemID.LightningBug);
+                                //Main.BestiaryTracker.Kills.SetKillCountDirectly(persistentId, 50); // I wonder if kills will work for a critter?
+                                // don't need
+
+                                Player.ConsumeItem(ItemID.LightningBug);
                                 Main.BestiaryTracker.Kills.RegisterKill(npc);
                                 for (int j = 0; j < 12; j++)
                             {

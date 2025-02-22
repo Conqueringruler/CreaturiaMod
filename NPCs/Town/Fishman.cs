@@ -24,6 +24,7 @@ using Creaturia.Items.Weapon;
 using Creaturia.Common.Players;
 using Creaturia.Items.Ammo;
 using Creaturia.Currencies.FishCurrencies;
+using static Terraria.GameContent.Animations.IL_Actions.NPCs;
 
 namespace Creaturia.NPCs.Town
 {
@@ -54,13 +55,13 @@ namespace Creaturia.NPCs.Town
             NPCID.Sets.DangerDetectRange[NPC.type] = 70;
             NPCID.Sets.AttackType[NPC.type] = 5;
             NPCID.Sets.AttackTime[NPC.type] = 15;
-            NPCID.Sets.AttackAverageChance[NPC.type] = 2;
+            NPCID.Sets.AttackAverageChance[NPC.type] = 0;
             NPCID.Sets.HatOffsetY[NPC.type] = 4;
-
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.SpawnsWithCustomName[Type] = true; // So it chooses a name like a townnpc since it isnt actually one
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
             { 
                 Velocity = 1f,
                 //Direction = -1
@@ -79,6 +80,8 @@ namespace Creaturia.NPCs.Town
             });
         }
         public override bool CanGoToStatue(bool toKingStatue) => true;
+
+        
         public override void SetDefaults()
         {
             NPC.friendly = true;
@@ -228,7 +231,6 @@ namespace Creaturia.NPCs.Town
                 PriceDet3 = Main.rand.Next(1, 3); // Also the reason I'm doing this is because GetShop() resets every time you open it, so before the prices were changing each time I opened the shop
                 OnetoThreePriceDet = Main.rand.Next(1, 4);
                 OnetoFourPriceDet = Main.rand.Next(1, 5);
-
                 DetPrices = true;
             }
             if (CreaturiaPlayer.playeatinganimation == true)
@@ -350,16 +352,29 @@ namespace Creaturia.NPCs.Town
 
         public override string GetChat()
         {
+            WeightedRandom<string> chat = new WeightedRandom<string>();
             int angler = NPC.FindFirstNPC(NPCID.Angler);
             int pirate = NPC.FindFirstNPC(NPCID.Pirate);
-            if (angler >= 0 && Main.rand.NextBool(7))
+            if (angler > 0)
             {
-                return "Havve you seen *snort* " + Main.npc[angler].GivenName + " around? Ivv so, give 'im no quarter. ";
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Fishman.AnglerDia", Main.npc[angler].GivenName));
             }
-            if (pirate >= 0 && Main.rand.NextBool(7))
+            if (pirate > 0)
             {
-                return "Me hearty " + Main.npc[pirate].GivenName + " and I go way back, although he've always been a bit 'loaded to the gunwales', ivv you knows what I mean.";
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Fishman.PirateDia", Main.npc[pirate].GivenName));
             }
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Fishman.StandardDialogue1")); // So glad ExampleMod has localization tutorials, would have never figured this out
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Fishman.StandardDialogue2"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Fishman.StandardDialogue3"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Fishman.StandardDialogue4"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Fishman.StandardDialogue5"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Fishman.StandardDialogue6"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Fishman.StandardDialogue7"));
+
+            string chosenChat = chat;
+
+            return chosenChat;
+            /*
             if (Main.hardMode && Main.rand.NextBool(4))
             {
                 return "Yous seems like the adventurin' type, so maybees you'll be interested in my *Snort* magicals bait. Theys only work in powerful places, so I hear.";
@@ -383,7 +398,7 @@ namespace Creaturia.NPCs.Town
                     
                 default:
                     return "*Snort* whats havve ye pulled meself up for?";
-            }
+            } */
         }
 
         public override void SetChatButtons(ref string button, ref string button2)
@@ -408,170 +423,193 @@ namespace Creaturia.NPCs.Town
         public override void AddShops()
         {
             NPCShop npcShop = new NPCShop(Type)
+            .Add(new Item(ModContent.ItemType<TridentoftheFishman>())
+            {
+                shopCustomPrice = 3,
+                shopSpecialCurrency = Creaturia.GoldenCarpId
 
+            }, Condition.Hardmode)
+             
              .Add(new Item(ModContent.ItemType<ElectricEel>())
              {
                  shopCustomPrice = 1,
                  shopSpecialCurrency = Creaturia.GoldenCarpId
 
              })
+             .Add(new Item(ModContent.ItemType<TroutCannon>())
+             {
+                 shopCustomPrice = 1,
+                 shopSpecialCurrency = Creaturia.GoldenCarpId
+
+             })
+
+
               .Add(new Item(ModContent.ItemType<BundleOfFishBullets>())
               {
                   shopCustomPrice = 1,
                   shopSpecialCurrency = Creaturia.BassId
 
-              })
+              }, Condition.MoonPhasesHalf0)
+              .Add(new Item(ModContent.ItemType<BundleOfFishBullets>())
+              {
+                  shopCustomPrice = 1,
+                  shopSpecialCurrency = Creaturia.BassId
+
+              }, Condition.MoonPhasesHalf1)
+
+
+
                .Add(new Item(ModContent.ItemType<BundleOfCoral>())
                {
                    shopCustomPrice = 5,
                    shopSpecialCurrency = Creaturia.BassId
 
-               })
+               }, Condition.MoonPhasesHalf0)
             .Add(new Item(ModContent.ItemType<BundleOfCoral>())
-             {
-                 shopCustomPrice = 2,
-                 shopSpecialCurrency = Creaturia.VariegatedLardfishId
-
-             });
-            if (PriceDet1 == 1)
             {
-                npcShop.Add(new Item(ItemID.ApprenticeBait)
+                shopCustomPrice = 5,
+                shopSpecialCurrency = Creaturia.BassId
+
+            }, Condition.MoonPhasesHalf1)
+                // if (PriceDet1 == 1)
+                // {
+                .Add(new Item(ItemID.ApprenticeBait)
                 {
-                    shopCustomPrice = Main.rand.Next(3, 5), 
+                    shopCustomPrice = Main.rand.Next(1, 3), // 3 is not included btw
                     shopSpecialCurrency = Creaturia.FrostMinnowId
 
-                });
-            }
-              else
-            {
-                npcShop.Add(new Item(ItemID.ApprenticeBait)
+                }, Condition.MoonPhasesEven)
+                // }
+                //   else
+                //  {
+                .Add(new Item(ItemID.ApprenticeBait)
                 {
-                    shopCustomPrice = Main.rand.Next(3, 5), 
+                    shopCustomPrice = Main.rand.Next(1, 3),
                     shopSpecialCurrency = Creaturia.VariegatedLardfishId
 
-                });
-            };
-            if (OnetoThreePriceDet == 1)
-            {
-                npcShop.Add(new Item(ItemID.JourneymanBait)
+                }, Condition.MoonPhasesOdd)
+                // }
+                //  if (OnetoThreePriceDet == 1)
+                //  {
+                .Add(new Item(ItemID.JourneymanBait)
                 {
-                    shopCustomPrice = 2, 
+                    shopCustomPrice = 1,
                     shopSpecialCurrency = Creaturia.FlarefinKoiId
 
-                });
-            }
-            if (OnetoFourPriceDet == 1)
-            {
-                npcShop.Add(new Item(ItemID.MasterBait)
+                }, Condition.MoonPhaseWaningGibbous)
+                //  }
+                //if (OnetoFourPriceDet == 1)
+                //{
+                .Add(new Item(ItemID.MasterBait)
                 {
-                    shopCustomPrice = 7, 
+                    shopCustomPrice = 3,
                     shopSpecialCurrency = Creaturia.HoneyFishId
 
-                });
-            }
-            if (PriceDet2 == 1)
-            {
-                npcShop.Add(new Item(ItemID.SonarPotion)
+                }, Condition.MoonPhaseFull)
+            //}
+            //if (PriceDet2 == 1)
+            //{
+                .Add(new Item(ItemID.SonarPotion)
                 {
-                    shopCustomPrice = 5, 
+                    shopCustomPrice = 4,
                     shopSpecialCurrency = Creaturia.HoneyFishId
 
-                });
-            }
-            else
-            {
-                npcShop.Add(new Item(ItemID.FishingPotion)
+                }, Condition.MoonPhases04)
+                //}
+                // else
+                //{
+                .Add(new Item(ItemID.FishingPotion)
                 {
-                    shopCustomPrice = 5, 
+                    shopCustomPrice = 3,
                     shopSpecialCurrency = Creaturia.FrostMinnowId
 
-                });
-            }
-            if (Main.moonPhase == 5)
-            {
+                }, Condition.MoonPhases26)
+                //}
 
-                npcShop.Add(new Item(ItemID.AnglerEarring)
+
+                .Add(new Item(ItemID.AnglerEarring)
                 {
-                    shopCustomPrice = 1, 
+                    shopCustomPrice = 1,
                     shopSpecialCurrency = Creaturia.GoldenCarpId
 
-                });
-            }
-            if (Main.moonPhase > 6)
-            {
-                npcShop.Add(new Item(ItemID.HighTestFishingLine)
+                }, Condition.MoonPhasesNearNew)
+
+
+                .Add(new Item(ItemID.HighTestFishingLine)
                 {
-                    shopCustomPrice = 10,   
+                    shopCustomPrice = 10,
                     shopSpecialCurrency = Creaturia.ChaosFishId
 
-                });
-                npcShop.Add(new Item(ItemID.HighTestFishingLine)
+                }, Condition.MoonPhaseNew, Condition.Hardmode)
+
+                .Add(new Item(ItemID.HighTestFishingLine)
                 {
-                    shopCustomPrice = 20, 
+                    shopCustomPrice = 20,
                     shopSpecialCurrency = Creaturia.VariegatedLardfishId
 
-                });
-            }
-            if (Main.hardMode)
-            {
-                npcShop.Add(new Item(ModContent.ItemType<TridentoftheFishman>())
-                {
-                    shopCustomPrice = 3, 
-                    shopSpecialCurrency = Creaturia.GoldenCarpId
+                }, Condition.MoonPhaseNew)
+                 .Add(new Item(ItemID.Trout)
+                 {
+                     shopCustomPrice = 1,
+                     shopSpecialCurrency = Creaturia.BassId
 
-                });
-             /*   npcShop.Add(new Item(ModContent.ItemType<TridentoftheFishman>())
-                {
-                    shopCustomPrice = 15,
-                    shopSpecialCurrency = Creaturia.RainbowScaleId
-             
-                }); */
-
-                checkwhichbait = Main.rand.Next(1, 5);
-
-               /* shop.item[nextSlot].SetDefaults(ItemID.PixelBox);
-                shop.item[nextSlot].shopCustomPrice = 2;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.BassId;
-                nextSlot++;
-                shop.item[nextSlot].SetDefaults(ItemID.BoringBow);
-                shop.item[nextSlot].shopCustomPrice = 20;
-                shop.item[nextSlot].shopSpecialCurrency = Creaturia.ChaosFishId;
-                nextSlot++; */
+                 }, Condition.MoonPhaseNew)
 
 
-                if (checkwhichbait == 1)
-                {
-                    npcShop.Add(new Item(ModContent.ItemType<HallowBait>())
+
+                    /*   npcShop.Add(new Item(ModContent.ItemType<TridentoftheFishman>())
+                       {
+                           shopCustomPrice = 15,
+                           shopSpecialCurrency = Creaturia.RainbowScaleId
+
+                       }); */
+
+                    // checkwhichbait = Main.rand.Next(1, 5);
+
+                    /* shop.item[nextSlot].SetDefaults(ItemID.PixelBox);
+                     shop.item[nextSlot].shopCustomPrice = 2;
+                     shop.item[nextSlot].shopSpecialCurrency = Creaturia.BassId;
+                     nextSlot++;
+                     shop.item[nextSlot].SetDefaults(ItemID.BoringBow);
+                     shop.item[nextSlot].shopCustomPrice = 20;
+                     shop.item[nextSlot].shopSpecialCurrency = Creaturia.ChaosFishId;
+                     nextSlot++; */
+
+
+                    //  if (checkwhichbait == 1)
+                    //  {
+                    .Add(new Item(ModContent.ItemType<HallowBait>())
                     {
                         shopCustomPrice = 6,
                         shopSpecialCurrency = MediumExpensiveFish1
 
-                    });
-                }
-                else if (checkwhichbait == 2)
-                {
-                    npcShop.Add(new Item(ModContent.ItemType<CrimsonBait>())
+                    }, Condition.Hardmode, Condition.MoonPhases37)
+                    //  }
+                    // else if (checkwhichbait == 2)
+                    // {
+                    .Add(new Item(ModContent.ItemType<CrimsonBait>())
                     {
                         shopCustomPrice = 6,
                         shopSpecialCurrency = MediumExpensiveFish2
 
-                    });
-                   
-                }
-                else if (checkwhichbait == 3)
-                {
-                    npcShop.Add(new Item(ModContent.ItemType<CorruptBait>())
+                    }, Condition.Hardmode, Condition.MoonPhasesEvenQuarters)
+
+                    //  }
+                    // else if (checkwhichbait == 3)
+                    // {
+                    .Add(new Item(ModContent.ItemType<CorruptBait>())
                     {
                         shopCustomPrice = 4,
                         shopSpecialCurrency = Creaturia.FlarefinKoiId
 
-                    });
-                }
-                else if (checkwhichbait == 4)
-                {
+                    }, Condition.Hardmode, Condition.MoonPhasesOddQuarters);
+               // }
+               // else if (checkwhichbait == 4)
+               // {
                     
-                }
-            }
+              //  }
+            //}
+            npcShop.Register();
             /*
              
               
@@ -695,7 +733,7 @@ namespace Creaturia.NPCs.Town
                 } */
 
         }
-
+       
 
 
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)

@@ -17,6 +17,7 @@ using Terraria.Graphics;
 using Terraria.GameContent;
 using Terraria.GameContent.Shaders;
 using Terraria.Graphics.Shaders;
+using Creaturia.Items;
 
 
 namespace Creaturia.NPCs.Enemies.GnomeEvent
@@ -50,14 +51,14 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                     BuffID.OnFire3
                 }
             };
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 Hide = true
             };
             }
         public override void SetBestiary(BestiaryDatabase dataNPC, BestiaryEntry bestiaryEntry)
         {
-            dataNPC.Entries.Remove(bestiaryEntry);
+            dataNPC.Entries.Remove(bestiaryEntry); // until implemented and code replaced
         }
         public override void SetDefaults()
         {
@@ -74,6 +75,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
             NPC.aiStyle = -1;
             NPC.friendly = false;
             
+            
         }
         public bool idk = true;
         
@@ -89,7 +91,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                 if (Main.npc[GlassesGnomeIdentity].active && (Main.npc[GlassesGnomeIdentity].type == ModContent.NPCType<glassesgnome>() || Main.npc[GlassesGnomeIdentity].type == ModContent.NPCType<strongerglassesgnome>()))
                 {
                     NPC.velocity = Vector2.Zero;
-                    NPC.position = Main.npc[GlassesGnomeIdentity].Top + new Vector2(-5, -8);
+                    NPC.position = Main.npc[GlassesGnomeIdentity].Top + new Vector2(Main.npc[GlassesGnomeIdentity].spriteDirection == 1 ? -4 : -8, -4); // incase I forget; after a ? the first is if true, the second is if false
                     NPC.spriteDirection = Main.npc[GlassesGnomeIdentity].direction;
                     NPC.ai[3] = Main.npc[GlassesGnomeIdentity].target;
                     return;
@@ -127,8 +129,15 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
         {
             // DisplayName.SetDefault("Gnome");
             Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Gnome];
-            
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                Velocity = 2.5f,
+                //Direction = -1
+
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
         }
+
         private NPC Body = null;
         private int newNPC;
         private int HealTimer;
@@ -184,230 +193,186 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
         bool noXMovement = false;
         public override void AI()
         {
-            // I wish my skills were good enough to figure out what all NPC shit does. I get most of it, but there's so much 
+           
             // Originally transcribed from Fighter AI
             if (ExposedToDeadlySun == false)
             {
-
-
                 
-                if (NPC.velocity.X == 0f)
+                int BackUpTimer = 60;
+                bool flag3 = false;
+                if (!(NPC.ai[2] > 0f))
                 {
-                    noXMovement = true;
-                }
-                if (NPC.justHit)
-                {
-                    noXMovement = false;
-                }
-                
-                int backUpTimer = 60;
-                if (NPC.velocity.Y == 0f && ((NPC.velocity.X > 0f && NPC.direction < 0) || (NPC.velocity.X < 0f && NPC.direction > 0)))
-                {
-                    IsWalking = true;
-                }
-                if ((NPC.position.X == NPC.oldPosition.X || NPC.ai[3] >= (float)backUpTimer) | IsWalking)
-                {
-                    NPC.ai[3] += 1f;
-                    
-                }
-                else if ((double)Math.Abs(NPC.velocity.X) > 0.9 && NPC.ai[3] > 0f)
-                {
-                    NPC.ai[3] -= 1f;
-                }
-                if (NPC.ai[3] > (float)(backUpTimer * 10))
-                {
-                    NPC.ai[3] = 0f;
-                }
-                if (NPC.justHit)
-                {
-                    NPC.ai[3] = 0f; // When hit resets the NPC to attacking the player I think, meaning ai[3] is the counter for running away
-                    HealTime = StartingHealTime;
-                }
-                if (NPC.ai[3] == (float)backUpTimer)
-                {
-                    NPC.netUpdate = true;
-                }
-                if (NPC.ai[3] < (float)backUpTimer)
-                {
-                    NPC.TargetClosest(true);
-                }
-                else if (NPC.ai[2] <= 0f)
-                {
-                    if (NPC.velocity.X == 0f)
+                    if (NPC.velocity.Y == 0f && ((NPC.velocity.X > 0f && NPC.direction < 0) || (NPC.velocity.X < 0f && NPC.direction > 0)))
                     {
-                        if (NPC.velocity.Y == 0f)
-                        {
-                            NPC.ai[0] += 1f;
-                            if (NPC.ai[0] >= 2f)
-                            {
-                                NPC.direction *= -1;
-                                NPC.spriteDirection = NPC.direction;
-                                NPC.ai[0] = 0f;
-
-                                // NPC part is what makes the NPC run away when not able to reach the player. I think. 
-                                HealTime = 15;
-                                //NPC.active = false;
-                            }
-                        }
+                        IsWalking = true;
                     }
-                    else
+                    if (NPC.position.X == NPC.oldPosition.X || NPC.ai[3] >= (float)BackUpTimer || IsWalking)
                     {
-                        NPC.ai[0] = 0f;
-                        
+                        NPC.ai[3] += 1f;
                     }
-                    if (NPC.direction == 0)
+                    else if ((double)Math.Abs(NPC.velocity.X) > 0.9 && NPC.ai[3] > 0f)
                     {
-                        NPC.direction = 1;
+                        NPC.ai[3] -= 1f;
+                    }
+                    if (NPC.ai[3] > (float)(BackUpTimer * 10))
+                    {
+                        NPC.ai[3] = 0f;
+                    }
+                    if (NPC.justHit)
+                    {
+                        NPC.ai[3] = 0f; // When hit resets the NPC to attacking the player I think, meaning ai[3] is the counter for running away
                         HealTime = StartingHealTime;
                     }
+                    if (NPC.ai[3] == (float)BackUpTimer)
+                    {
+                        NPC.netUpdate = true;
+                    }
+                    if (NPC.ai[3] < (float)BackUpTimer)
+                    {
+                        NPC.TargetClosest(true);
+                    }
                 }
-
-                
-                
-              if (Vector2.Distance(Main.player[NPC.target].Center, NPC.Center) < 16f)
+                if (Vector2.Distance(Main.player[NPC.target].Center, NPC.Center) < 16f)
                 {
                     NPC.ai[3] = 0f;
-                    NPC.velocity.X = NPC.velocity.X * 0.9f;
+                    //NPC.velocity.X = NPC.velocity.X * 0.9f; Undo this if I want it to stop on the player again
                     if ((double)NPC.velocity.X > -0.1 && (double)NPC.velocity.X < 0.1)
-                        NPC.velocity.X = 0f;
-                    return;
+                        // NPC.velocity.X = 0f;Undo this if I want it to stop on the player again
+                        return;
                 }
-                float maxVelocity = 3f; // keep in mind I can change and multiply NPC super easy,
-                float acceleration = 0.1f; // so if I make a gnome rallier or something I could have regular gnomes
-                                           // speed up
-                if (NPC.velocity.X < -maxVelocity || NPC.velocity.X > maxVelocity)
+                
+
+
+                if (NPC.velocity.X < -2.5f || NPC.velocity.X > 2.5f)
                 {
                     if (NPC.velocity.Y == 0f)
-                        NPC.velocity *= 0.7f;
+                    {
+                        NPC.velocity *= 0.8f;
+                    }
                 }
-                else if (NPC.velocity.X < maxVelocity && NPC.direction == 1)
+                else if (NPC.velocity.X < 2.5f && NPC.direction == 1)
                 {
-                    NPC.velocity.X = NPC.velocity.X + acceleration;
-                    if (NPC.velocity.X > maxVelocity)
-                        NPC.velocity.X = maxVelocity;
+
+                    NPC.velocity.X += 0.07f;
+                    if (NPC.velocity.X > 2.5f)
+                    {
+                        NPC.velocity.X = 2.5f;
+                    }
                 }
-                else if (NPC.velocity.X > -maxVelocity && NPC.direction == -1)
+                else if (NPC.velocity.X > -2.5f && NPC.direction == -1)
                 {
-                    NPC.velocity.X = NPC.velocity.X - acceleration;
-                    if (NPC.velocity.X < -maxVelocity)
-                        NPC.velocity.X = -maxVelocity;
+
+                    NPC.velocity.X -= 0.07f;
+                    if (NPC.velocity.X < -2.5f)
+                    {
+                        NPC.velocity.X = -2.5f;
+                    }
                 }
-                bool isOnSolidTile = false;
+
+
+
+
+                bool OnSolidTile = false;
                 if (NPC.velocity.Y == 0f)
                 {
-                    int yTile = (int)(NPC.position.Y + (float)NPC.height + 7f) / 16;
-                    int initialXTile = (int)NPC.position.X / 16;
-                    int maxXTile = (int)(NPC.position.X + (float)NPC.width) / 16;
-                    for (int xTile = initialXTile; xTile <= maxXTile; xTile++)
+                    int num29 = (int)(NPC.position.Y + (float)NPC.height + 8f) / 16;
+                    int num30 = (int)NPC.position.X / 16;
+                    int num31 = (int)(NPC.position.X + (float)NPC.width) / 16;
+                    for (int l = num30; l <= num31; l++)
                     {
-                        if (Main.tile[xTile, yTile] == null)
+                        if (Main.tile[l, num29] == null)
                         {
                             return;
                         }
-                        if (Main.tile[xTile, yTile].HasUnactuatedTile && Main.tileSolid[(int)Main.tile[xTile, yTile].TileType])
+                        if (Main.tile[l, num29].HasUnactuatedTile && Main.tileSolid[Main.tile[l, num29].TileType])
                         {
-                            isOnSolidTile = true;
+                            OnSolidTile = true;
                             break;
                         }
                     }
                 }
-                if (NPC.velocity.Y >= 0f)
+                if (OnSolidTile)
                 {
-                    int fallFaceDirection = 0;
-                    if (NPC.velocity.X < 0f)
+                    int DoorCheckX = (int)((NPC.position.X + (float)(NPC.width / 2) + (float)(15 * NPC.direction)) / 16f);
+                    int DoorCheckY = (int)((NPC.position.Y + (float)NPC.height - 15f) / 16f);
+
+                    /* if (Main.tile[DoorCheckX, DoorCheckY] == null)
+                     {
+                         Main.tile[DoorCheckX, DoorCheckY] = new Tile();
+                     }
+                     if (Main.tile[DoorCheckX, DoorCheckY - 1] == null)
+                     {
+                         Main.tile[DoorCheckX, DoorCheckY - 1] = new Tile();
+                     }
+                     if (Main.tile[DoorCheckX, DoorCheckY - 2] == null)
+                     {
+                         Main.tile[DoorCheckX, DoorCheckY - 2] = new Tile();
+                     }
+                     if (Main.tile[DoorCheckX, DoorCheckY - 3] == null)
+                     {
+                         Main.tile[DoorCheckX, DoorCheckY - 3] = new Tile();
+                     }
+                     if (Main.tile[DoorCheckX, DoorCheckY + 1] == null)
+                     {
+                         Main.tile[DoorCheckX, DoorCheckY + 1] = new Tile();
+                     }
+                     if (Main.tile[DoorCheckX + NPC.direction, DoorCheckY - 1] == null)
+                     {
+                         Main.tile[DoorCheckX + NPC.direction, DoorCheckY - 1] = new Tile();
+                     }
+                     if (Main.tile[DoorCheckX + NPC.direction, DoorCheckY + 1] == null)
+                     {
+                         Main.tile[DoorCheckX + NPC.direction, DoorCheckY + 1] = new Tile();
+                     } */
+
+                    // What do I do with the above?
+
+                    if (Main.tile[DoorCheckX, DoorCheckY - 1].HasUnactuatedTile && Main.tile[DoorCheckX, DoorCheckY - 1].TileType == 10 && flag3)
                     {
-                        fallFaceDirection = -1;
-                    }
-                    if (NPC.velocity.X > 0f)
-                    {
-                        fallFaceDirection = 1;
-                    }
-                    Vector2 npcPosition = NPC.position;
-                    npcPosition.X += NPC.velocity.X;
-                    int xTileBelow = (int)((npcPosition.X + (float)(NPC.width / 2) + (float)((NPC.width / 2 + 1) * fallFaceDirection)) / 16f);
-                    int yTileBelow = (int)((npcPosition.Y + (float)NPC.height - 1f) / 16f);
-                    if ((float)(xTileBelow * 16) < npcPosition.X + (float)NPC.width && (float)(xTileBelow * 16 + 16) > npcPosition.X && ((Main.tile[xTileBelow, yTileBelow].HasUnactuatedTile && !Main.tile[xTileBelow, yTileBelow].TopSlope && !Main.tile[xTileBelow, yTileBelow - 1].TopSlope && Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow].TileType] && !Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow].TileType]) || (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock && Main.tile[xTileBelow, yTileBelow - 1].HasUnactuatedTile)) && (!Main.tile[xTileBelow, yTileBelow - 1].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 1].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 1].TileType] || (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock && (!Main.tile[xTileBelow, yTileBelow - 4].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 4].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 4].TileType]))) && (!Main.tile[xTileBelow, yTileBelow - 2].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 2].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 2].TileType]) && (!Main.tile[xTileBelow, yTileBelow - 3].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 3].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 3].TileType]) && (!Main.tile[xTileBelow - fallFaceDirection, yTileBelow - 3].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow - fallFaceDirection, yTileBelow - 3].TileType]))
-                    {
-                        float yPixelDistance = (float)(yTileBelow * 16);
-                        if (Main.tile[xTileBelow, yTileBelow].IsHalfBlock)
-                        {
-                            yPixelDistance += 8f;
-                        }
-                        if (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock)
-                        {
-                            yPixelDistance -= 8f;
-                        }
-                        if (yPixelDistance < npcPosition.Y + (float)NPC.height)
-                        {
-                            float percentageTileRisen = npcPosition.Y + (float)NPC.height - yPixelDistance;
-                            float fullTileAmt = 16.1f;
-                            if (percentageTileRisen <= fullTileAmt)
-                            {
-                                NPC.gfxOffY += NPC.position.Y + (float)NPC.height - yPixelDistance;
-                                NPC.position.Y = yPixelDistance - (float)NPC.height;
-                                if (percentageTileRisen < 9f)
-                                {
-                                    NPC.stepSpeed = 1f;
-                                }
-                                else
-                                {
-                                    NPC.stepSpeed = 2f;
-                                }
-                            }
-                        }
-                    }
-                }
-                if (isOnSolidTile)
-                {
-                    int doorCheckX = (int)((NPC.position.X + (float)(NPC.width / 2) + (float)(15 * NPC.direction)) / 16f);
-                    int doorCheckY = (int)((NPC.position.Y + (float)NPC.height - 15f) / 16f);
-                    if ((Main.tile[doorCheckX, doorCheckY - 1].HasUnactuatedTile && (Main.tile[doorCheckX, doorCheckY - 1].TileType == 10 || Main.tile[doorCheckX, doorCheckY - 1].TileType == 388)))
-                    {
-                        NPC.ai[2] += 1f; 
+                        NPC.ai[2] += 1f;
                         NPC.ai[3] = 0f;
                         if (NPC.ai[2] >= 60f)
                         {
-                            NPC.velocity.X = 0.5f * (float)-(float)NPC.direction;
-                            int doorOpenInc = 5;
-                            if (Main.tile[doorCheckX, doorCheckY - 1].TileType == 388)
+
+                            NPC.velocity.X = 0.5f * (float)(-NPC.direction);
+                            NPC.ai[1] += 1f;
+                            /*if (NPC.type == NPCID.GoblinThief)
                             {
-                                doorOpenInc = 2;
+                                NPC.ai[1] += 1f;
                             }
-                            NPC.ai[1] += (float)doorOpenInc;
+                            if (NPC.type == NPCID.AngryBones)
+                            {
+                                NPC.ai[1] += 6f;
+                            } */
                             NPC.ai[2] = 0f;
-                            bool letMeIn = false;
+                            bool flag5 = false;
                             if (NPC.ai[1] >= 10f)
                             {
-                                letMeIn = true;
+                                flag5 = true;
                                 NPC.ai[1] = 10f;
                             }
-                            WorldGen.KillTile(doorCheckX, doorCheckY - 1, true, false, false);
-                            if ((Main.netMode != NetmodeID.MultiplayerClient || !letMeIn) && letMeIn && Main.netMode != NetmodeID.MultiplayerClient)
+                            WorldGen.KillTile(DoorCheckX, DoorCheckY - 1, fail: true);
+                            if ((Main.netMode != 1 || !flag5) && flag5 && Main.netMode != 1)
                             {
-                                if (Main.tile[doorCheckX, doorCheckY - 1].TileType == 10)
+                                if (NPC.type == 26)
                                 {
-                                    bool canOpenDoor = WorldGen.OpenDoor(doorCheckX, doorCheckY - 1, NPC.direction);
-                                    if (!canOpenDoor)
+                                    WorldGen.KillTile(DoorCheckX, DoorCheckY - 1);
+                                    if (Main.netMode == NetmodeID.Server)
                                     {
-                                        NPC.ai[3] = (float)backUpTimer;
-                                        NPC.netUpdate = true;
-                                    }
-                                    if (Main.netMode == NetmodeID.Server & canOpenDoor)
-                                    {
-                                        NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, null, 0, (float)doorCheckX, (float)(doorCheckY - 1), (float)NPC.direction, 0, 0, 0);
+                                        NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, DoorCheckX, DoorCheckY - 1);
                                     }
                                 }
-                                if (Main.tile[doorCheckX, doorCheckY - 1].TileType == 388)
+                                else
                                 {
-                                    bool canOpenTallGate = WorldGen.ShiftTallGate(doorCheckX, doorCheckY - 1, false);
-                                    if (!canOpenTallGate)
+                                    bool flag6 = WorldGen.OpenDoor(DoorCheckX, DoorCheckY, NPC.direction);
+                                    if (!flag6)
                                     {
-                                        NPC.ai[3] = (float)backUpTimer;
+                                        NPC.ai[3] = BackUpTimer;
                                         NPC.netUpdate = true;
                                     }
-                                    if (Main.netMode == NetmodeID.Server & canOpenTallGate)
+                                    if (Main.netMode == 2 && flag6)
                                     {
-                                        NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, null, 4, (float)doorCheckX, (float)(doorCheckY - 1), 0f, 0, 0, 0);
+                                        NetMessage.SendData(MessageID.ToggleDoorState, -1, -1, null, 0, DoorCheckX, DoorCheckY, NPC.direction);
                                     }
                                 }
                             }
@@ -415,12 +380,11 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                     }
                     else
                     {
-                        int faceDirection = NPC.spriteDirection;
-                        if ((NPC.velocity.X < 0f && faceDirection == -1) || (NPC.velocity.X > 0f && faceDirection == 1))
+                        if ((NPC.velocity.X < 0f && NPC.spriteDirection == -1) || (NPC.velocity.X > 0f && NPC.spriteDirection == 1))
                         {
-                            if (NPC.height >= 32 && Main.tile[doorCheckX, doorCheckY - 2].HasUnactuatedTile && Main.tileSolid[(int)Main.tile[doorCheckX, doorCheckY - 2].TileType])
+                            if (Main.tile[DoorCheckX, DoorCheckY - 2].HasUnactuatedTile && Main.tileSolid[Main.tile[DoorCheckX, DoorCheckY - 2].TileType])
                             {
-                                if (Main.tile[doorCheckX, doorCheckY - 3].HasUnactuatedTile && Main.tileSolid[(int)Main.tile[doorCheckX, doorCheckY - 3].TileType])
+                                if (Main.tile[DoorCheckX, DoorCheckY - 3].HasUnactuatedTile && Main.tileSolid[Main.tile[DoorCheckX, DoorCheckY - 3].TileType])
                                 {
                                     NPC.velocity.Y = -8f;
                                     NPC.netUpdate = true;
@@ -431,31 +395,150 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                                     NPC.netUpdate = true;
                                 }
                             }
-                            else if (Main.tile[doorCheckX, doorCheckY - 1].HasUnactuatedTile && Main.tileSolid[(int)Main.tile[doorCheckX, doorCheckY - 1].TileType])
+                            else if (Main.tile[DoorCheckX, DoorCheckY - 1].HasUnactuatedTile && Main.tileSolid[Main.tile[DoorCheckX, DoorCheckY - 1].TileType])
                             {
-                                NPC.velocity.Y = -6f;
+                                NPC.velocity.Y = -8f;
+                                int num198 = (int)(NPC.position.Y + (float)NPC.height) / 16; // Taken directly from Gnome special movement
+                                if (WorldGen.SolidTile((int)NPC.Center.X / 16, num198 - 8))
+                                {
+                                    NPC.direction *= -1;
+                                    NPC.spriteDirection = NPC.direction;
+                                    NPC.velocity.X = 3 * NPC.direction;
+                                }
                                 NPC.netUpdate = true;
                             }
-                            else if (NPC.position.Y + (float)NPC.height - (float)(doorCheckY * 16) > 20f && Main.tile[doorCheckX, doorCheckY].HasUnactuatedTile && !Main.tile[doorCheckX, doorCheckY].TopSlope && Main.tileSolid[(int)Main.tile[doorCheckX, doorCheckY].TileType])
+                            else if (Main.tile[DoorCheckX, DoorCheckY].HasUnactuatedTile && Main.tileSolid[Main.tile[DoorCheckX, DoorCheckY].TileType])
                             {
                                 NPC.velocity.Y = -5f;
                                 NPC.netUpdate = true;
                             }
-                            else if (NPC.directionY < 0 && (!Main.tile[doorCheckX, doorCheckY + 1].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[doorCheckX, doorCheckY + 1].TileType]) && (!Main.tile[doorCheckX + NPC.direction, doorCheckY + 1].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[doorCheckX + NPC.direction, doorCheckY + 1].TileType]))
+                            else if (NPC.directionY < 0 && NPC.type != 67 && (!Main.tile[DoorCheckX, DoorCheckY + 1].HasUnactuatedTile || !Main.tileSolid[Main.tile[DoorCheckX, DoorCheckY + 1].TileType]) && (!Main.tile[DoorCheckX + NPC.direction, DoorCheckY + 1].HasUnactuatedTile || !Main.tileSolid[Main.tile[DoorCheckX + NPC.direction, DoorCheckY + 1].TileType]))
                             {
-                                NPC.velocity.Y = -12f;
-                                NPC.velocity.X = NPC.velocity.X * 1.5f;
+                                NPC.velocity.Y = -8f;
+                                NPC.velocity.X *= 1.5f;
                                 NPC.netUpdate = true;
                             }
-                            
-                            if ((NPC.velocity.Y == 0f & noXMovement) && NPC.ai[3] == 1f)
+                            else if (flag3)
                             {
-                                NPC.velocity.Y = -5f;
+                                NPC.ai[1] = 0f;
+                                NPC.ai[2] = 0f;
+                            }
+                        }
+                        float PlayerXDistance = Math.Abs(NPC.position.X + (float)(NPC.width / 2) - (Main.player[NPC.target].position.X + (float)(Main.player[NPC.target].width / 2)));
+                        float PlayerYDistance = Math.Abs(NPC.position.Y + (float)(NPC.height / 2) - (Main.player[NPC.target].position.Y + (float)(Main.player[NPC.target].height / 2)));
+
+                        if (NPC.velocity.Y == 0f && PlayerXDistance < 70f && PlayerYDistance < 140f && PlayerYDistance > 40f && ((NPC.direction > 0 && NPC.velocity.X >= 1f) || (NPC.direction < 0 && NPC.velocity.X <= -1f)))
+                        {
+
+                            NPC.velocity.Y = -8f; // Jumps here!
+                            NPC.netUpdate = true;
+                        }
+                        if (NPC.type == 120 && NPC.velocity.Y < 0f)
+                        {
+                            NPC.velocity.Y *= 1.1f;
+                        }
+                    }
+                }
+                else if (flag3)
+                {
+                    NPC.ai[1] = 0f;
+                    NPC.ai[2] = 0f;
+                }
+
+                // How Chaos Elemental Teleports
+                /*
+                if (Main.netMode != NetmodeID.MultiplayerClient || NPC.type == NPCID.ChaosElemental || (NPC.ai[3] >= (float)BackUpTimer))
+                {
+                    int num34 = (int)Main.player[NPC.target].position.X / 16;
+                    int num35 = (int)Main.player[NPC.target].position.Y / 16;
+                    int num36 = (int)NPC.position.X / 16;
+                    int num37 = (int)NPC.position.Y / 16;
+                    int num38 = 20;
+                    int num39 = 0;
+                    bool flag7 = false;
+
+                    if (Math.Abs(NPC.position.X - Main.player[NPC.target].position.X) + Math.Abs(NPC.position.Y - Main.player[NPC.target].position.Y) > 2000f)
+                    {
+                        num39 = 100;
+                        flag7 = true;
+                    }
+
+                    while (!flag7 && num39 < 100)
+                    {
+                        num39++;
+                        int num40 = Main.rand.Next(num34 - num38, num34 + num38);
+                        int num41 = Main.rand.Next(num35 - num38, num35 + num38);
+                        for (int m = num41; m < num35 + num38; m++)
+                        {
+                            if ((m < num35 - 4 || m > num35 + 4 || num40 < num34 - 4 || num40 > num34 + 4) && (m < num37 - 1 || m > num37 + 1 || num40 < num36 - 1 || num40 > num36 + 1) && Main.tile[num40, m].HasUnactuatedTile)
+                            {
+                                bool flag8 = true;
+                                if (NPC.type == 32 && Main.tile[num40, m - 1].WallType == 0)
+                                {
+                                    flag8 = false;
+                                }
+
+                                if (flag8 && Main.tileSolid[Main.tile[num40, m].TileType] && !Collision.SolidTiles(num40 - 1, num40 + 1, m - 4, m - 1))
+                                {
+                                    NPC.position.X = num40 * 16 - NPC.width / 2;
+                                    NPC.position.Y = m * 16 - NPC.height;
+                                    NPC.netUpdate = true;
+                                    NPC.ai[3] = -120f;
+                                }
+                            }
+                        }
+                    }
+
+                    if (NPC.velocity.Y >= 0f)
+                    {
+                        int FallDirection = 0;
+                        if (NPC.velocity.X < 0f)
+                        {
+                            FallDirection = -1;
+                        }
+                        if (NPC.velocity.X > 0f)
+                        {
+                            FallDirection = 1;
+                        }
+                        Vector2 npcPosition = NPC.position;
+                        npcPosition.X += NPC.velocity.X;
+                        int xTileBelow = (int)((npcPosition.X + (float)(NPC.width / 2) + (float)((NPC.width / 2 + 1) * FallDirection)) / 16f);
+                        int yTileBelow = (int)((npcPosition.Y + (float)NPC.height - 1f) / 16f);
+                        if ((float)(xTileBelow * 16) < npcPosition.X + (float)NPC.width && (float)(xTileBelow * 16 + 16) > npcPosition.X && ((Main.tile[xTileBelow, yTileBelow].HasUnactuatedTile && !Main.tile[xTileBelow, yTileBelow].TopSlope && !Main.tile[xTileBelow, yTileBelow - 1].TopSlope && Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow].TileType] && !Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow].TileType]) || (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock && Main.tile[xTileBelow, yTileBelow - 1].HasUnactuatedTile)) && (!Main.tile[xTileBelow, yTileBelow - 1].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 1].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 1].TileType] || (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock && (!Main.tile[xTileBelow, yTileBelow - 4].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 4].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 4].TileType]))) && (!Main.tile[xTileBelow, yTileBelow - 2].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 2].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 2].TileType]) && (!Main.tile[xTileBelow, yTileBelow - 3].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow, yTileBelow - 3].TileType] || Main.tileSolidTop[(int)Main.tile[xTileBelow, yTileBelow - 3].TileType]) && (!Main.tile[xTileBelow - FallDirection, yTileBelow - 3].HasUnactuatedTile || !Main.tileSolid[(int)Main.tile[xTileBelow - FallDirection, yTileBelow - 3].TileType]))
+                        {
+                            float PixelDistanceY = (float)(yTileBelow * 16);
+                            if (Main.tile[xTileBelow, yTileBelow].IsHalfBlock)
+                            {
+                                PixelDistanceY += 8f;
+                            }
+                            if (Main.tile[xTileBelow, yTileBelow - 1].IsHalfBlock)
+                            {
+                                PixelDistanceY -= 8f;
+                            }
+                            if (PixelDistanceY < npcPosition.Y + (float)NPC.height)
+                            {
+                                float num192 = npcPosition.Y + (float)NPC.height - PixelDistanceY;
+                                float num193 = 16.1f;
+                                if (num192 <= num193)
+                                {
+                                    NPC.gfxOffY += NPC.position.Y + (float)NPC.height - PixelDistanceY;
+                                    NPC.position.Y = PixelDistanceY - (float)NPC.height;
+                                    if (num192 < 9f)
+                                    {
+                                        NPC.stepSpeed = 1f;
+                                    }
+                                    else
+                                    {
+                                        NPC.stepSpeed = 2f;
+                                    }
+                                }
                             }
                         }
                     }
                 }
-               
+
+              */
+                
 
 
             }
@@ -492,8 +575,12 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                     HealTimer = 0;
                     if (NPC.life < NPC.lifeMax)
                     {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
                         NPC.life += 5;
+                        }
                         NPC.HealEffect(5, true);
+                        NetMessage.SendData(MessageID.DamageNPC);
                     }
 
                 }
@@ -521,8 +608,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
             {
 
                 NPC.ai[0] = 101f; // The reason I'm doing NPC bullshit of assigning a random number is
-                //because otherwise NPC shit breaks. I have no idea why, and I've tried so long
-                //to fix it, but it keeps fucking bnreaking AND NPC IS ALL THAT WORKS
+                //because otherwise NPC shit breaks. I have no idea why
 
                 NPC.velocity.X *= 0;
                 NPC.velocity.Y = 2;
@@ -565,7 +651,7 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                         //Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/"), 2f);
                         //	Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/"), 1f);
                     }
-                    else
+                    else 
                     {
                         for (int i = 0; i < 25; i++)
                         {
@@ -595,44 +681,56 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
         
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-           /* Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             SpriteEffects spriteEffects = SpriteEffects.None;
+          
+            /* Texture2D texture = TextureAssets.Npc[NPC.type].Value;
+             SpriteEffects spriteEffects = SpriteEffects.None;
 
-            if (NPC.spriteDirection == 1)
-            {
-                //spriteEffects = SpriteEffects.FlipHorizontally;
-                //spriteEffects = SpriteEffects.FlipHorizontally;
-                //NPC.spriteDirection = -1;
+             if (NPC.spriteDirection == 1)
+             {
+                 //spriteEffects = SpriteEffects.FlipHorizontally;
+                 //spriteEffects = SpriteEffects.FlipHorizontally;
+                 //NPC.spriteDirection = -1;
 
-                spriteEffects = SpriteEffects.None | SpriteEffects.FlipHorizontally;
-            }
+                 spriteEffects = SpriteEffects.None | SpriteEffects.FlipHorizontally;
+             }
 
-            if (NPC.spriteDirection == 0)
-            {
-                //NPC.spriteDirection = 1;
-                spriteEffects = SpriteEffects.None | SpriteEffects.FlipHorizontally;
+             if (NPC.spriteDirection == 0)
+             {
+                 //NPC.spriteDirection = 1;
+                 spriteEffects = SpriteEffects.None | SpriteEffects.FlipHorizontally;
 
-                //SpriteEffects direction = NPC.spriteDirection == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None;
+                 //SpriteEffects direction = NPC.spriteDirection == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None;
 
-            }
-            
-           
-            if (ExposedToDeadlySun && NPC.type == NPCType<glassesgnome>() && WhoIsNPCGnome == NPC.whoAmI)
-            {
-                  Main.instance.PrepareDrawnEntityDrawing(NPC, shaderID);  
-                  Main.EntitySpriteDraw(texture, NPC.position - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, NPC.rotation,// NPC shit broken. gotta fix NPC tmrw. 
-                      new Vector2(NPC.Center.X, NPC.Center.Y), NPC.scale, spriteEffects, 0);  // Well I guess NPC shit is gonna stay broken. idk how to get it to only do NPC NPC
-                spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos,
-            NPC.frame, drawColor, NPC.rotation,
-            new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.25f, TextureAssets.Npc[NPC.type].Value.Height * 0.055f), NPC.scale, spriteEffects, 0f);
-            }
-           */
+             }
+
+
+             if (ExposedToDeadlySun && NPC.type == NPCType<glassesgnome>() && WhoIsNPCGnome == NPC.whoAmI)
+             {
+                   Main.instance.PrepareDrawnEntityDrawing(NPC, shaderID);  
+                   Main.EntitySpriteDraw(texture, NPC.position - Main.screenPosition, new Rectangle(0, 0, texture.Width, texture.Height), Color.White, NPC.rotation,// NPC shit broken. gotta fix NPC tmrw. 
+                       new Vector2(NPC.Center.X, NPC.Center.Y), NPC.scale, spriteEffects, 0);  // Well I guess NPC shit is gonna stay broken. idk how to get it to only do NPC NPC
+                 spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center - screenPos,
+             NPC.frame, drawColor, NPC.rotation,
+             new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.25f, TextureAssets.Npc[NPC.type].Value.Height * 0.055f), NPC.scale, spriteEffects, 0f);
+             }
+            */
             return true;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = TextureAssets.Npc[NPC.type].Value;
             SpriteEffects spriteEffects = SpriteEffects.None;
+
+            if (NPC.IsABestiaryIconDummy)
+            {  
+                spriteBatch.Draw(Request<Texture2D>("Creaturia/NPCs/Enemies/GnomeEvent/sunglasses").Value, (NPC.Center + new Vector2(8f, 217.5f)) - screenPos,
+         new Rectangle(0, 0, 20, 30), drawColor, NPC.rotation,
+         new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.5f, TextureAssets.Npc[NPC.type].Value.Height * 0.5f), NPC.scale, spriteEffects, 0f);
+
+
+                          }
+        
             if (NPC.spriteDirection == 1)
             {
                 //spriteEffects = SpriteEffects.FlipHorizontally;
@@ -666,8 +764,8 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
            new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.5f, TextureAssets.Npc[NPC.type].Value.Height * 0.05f), NPC.scale, spriteEffects, 0f);
                 } */
             }
-
-            }
+           
+        }
         
         
         public override bool? CanBeHitByItem(Player player, Item item)
@@ -721,7 +819,31 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
             
             
         }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            //npcLoot.Add(ItemDropRule.Common(ItemID.HallowedKey, 15, 1, 1));
 
+            npcLoot.Add(ItemDropRule.Common(ItemID.BlinkrootSeeds, 1, 0, 2));
+            npcLoot.Add(ItemDropRule.Common(ItemID.MoonglowSeeds, 1, 0, 2));
+            npcLoot.Add(ItemDropRule.Common(ItemID.DaybloomSeeds, 1, 0, 2));
+            npcLoot.Add(ItemDropRule.Common(ItemID.GrassSeeds, 1, 0, 2));
+            npcLoot.Add(ItemDropRule.Common(ItemID.Acorn, 1, 0, 2));
+
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RainbowScale2>(), 50 , 0, 7)); //\This new method is cock and balls, don't forget to use terraria.lootshit so stuff can drop and also 1 = 100% chance of dropping, 100 = 1% chance of dropping for some stupid reason
+            //npcLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 50, 1, 2));
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+           if (Math.Abs(spawnInfo.SpawnTileX - Main.spawnTileX) > Main.maxTilesX / 2) // spawns in outer 1/2 of the world... or maybe outer 1/4th of the world? Think it's 1/4th
+            {
+                return (Main.remixWorld ? SpawnCondition.Cavern.Chance : SpawnCondition.OverworldDaySlime.Chance) * (Main.hardMode ? 0.05f : 0.15f);
+            }
+           else
+            {
+                return 0f;
+            }
+        }
 
 
 

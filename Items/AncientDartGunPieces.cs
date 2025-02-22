@@ -21,8 +21,8 @@ namespace Creaturia.Items
 			
 			Item.width = 44;
 			Item.height = 24;
-			Item.value = 2000;
-			Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(0, 0, 80, 50);
+            Item.rare = ItemRarityID.Green;
 			Item.material = true;
 			Item.maxStack = 1;
 			

@@ -42,9 +42,9 @@ namespace Creaturia.Projectiles
 				dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Projectile.velocity.X * 0 + 5, Projectile.velocity.Y * 0, 60, Color.LightGray, 1f);
 				dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Projectile.velocity.X * 0.1f - 2, Projectile.velocity.Y * 0.1f + 8, 60, Color.LightGray, 1f);
 				dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Smoke, Projectile.velocity.X * 0, Projectile.velocity.Y * 0 - 10, 60, Color.LightGray, 1f);
-				int projectile = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.position, Projectile.velocity, ProjectileID.Shuriken, 10, Projectile.knockBack, Projectile.owner);
-				projectile = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.position, Projectile.velocity * 1.3f, ProjectileID.Shuriken, 10, Projectile.knockBack, Projectile.owner);
-				projectile = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.position, Projectile.velocity * 0.8f, ProjectileID.Shuriken, 10, Projectile.knockBack, Projectile.owner);
+				int projectile = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.position, Projectile.velocity, ProjectileID.Shuriken, Projectile.damage, Projectile.knockBack, Projectile.owner);
+				projectile = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.position, Projectile.velocity * 1.3f, ProjectileID.Shuriken, Projectile.damage, Projectile.knockBack, Projectile.owner);
+				projectile = Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.position, Projectile.velocity * 0.8f, ProjectileID.Shuriken, Projectile.damage, Projectile.knockBack, Projectile.owner);
 				ExplodeTimer = 0;
 				Projectile.active = false;
 				

@@ -37,7 +37,7 @@ namespace Creaturia.NPCs.Enemies.Boss
 
 
 
-		int IceProjectileTimer;
+		int IceProjectileTimer; 
 
 		int UpwardPunchStartTimer;
 		bool UpwardPunchStart;
@@ -55,7 +55,7 @@ namespace Creaturia.NPCs.Enemies.Boss
             {
 				// DisplayName.SetDefault("Fist of Frost");
 			}
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				Hide = true
 			};
@@ -65,7 +65,7 @@ namespace Creaturia.NPCs.Enemies.Boss
 			
 			NPC.width = 48;
 			NPC.height = 40;
-			NPC.damage = 80;
+			NPC.damage = 40;
 			NPC.defense = 12;
 			NPC.lifeMax = 1;
 			NPC.HitSound = SoundID.NPCHit22;
@@ -78,6 +78,8 @@ namespace Creaturia.NPCs.Enemies.Boss
 			NPC.noTileCollide = true;
 			NPC.dontTakeDamage = true;
 		}
+		
+		
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			database.Entries.Remove(bestiaryEntry);
@@ -137,16 +139,16 @@ new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.5f, TextureAssets.Npc[NP
 				{
 					if (Main.rand.NextBool(3))
 					{
-						Dust dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
-						dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
-						dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
-						dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
-						dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
-						dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
-						dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
-						dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
-						dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
-						dust.noGravity = true;
+					//	Dust dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
+					//	dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
+					//	dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
+					//	dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
+					//	dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
+					//	dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
+					//	dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
+					//	dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
+					//	dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1.5f);
+					//	dust.noGravity = true;
 						UpwardPunchStart = true;
 					}
 					UpwardPunchStartTimer = 0;
@@ -405,15 +407,15 @@ new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.5f, TextureAssets.Npc[NP
 
 			if (!Main.expertMode && !Main.masterMode)
             {
-				NPC.damage = 80;
+				NPC.damage = 30;
 			}
 			if (Main.expertMode)
             {
-				NPC.damage = 110;
+				NPC.damage = 40;
 			}
 			if (Main.masterMode)
             {
-				NPC.damage = 140;
+				NPC.damage = 65;
             }
 			if (NPC.AnyNPCs(NPCID.Golem) == false)
 			{

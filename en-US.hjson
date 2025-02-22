@@ -1,0 +1,359 @@
+Mods: {
+	Creaturia: {
+		Buffs: {
+			BabyLumpsuckerBuff: {
+				DisplayName: Lumpling
+				Description: A Baby Lumpsucker fights for you!
+			}
+
+			DunkleBuff: {
+				DisplayName: Dunkle Spirit
+				Description:
+					'''
+					Huge increase in physical strength, but items cannot be used
+					Defense increased by 50, Endurance increased by 5%, Movement Speed increased by 10%
+					'''
+			}
+
+			FishmanBuff: {
+				DisplayName: Blessing of the Fishman
+				Description: Huge increase in movement and melee speed, and amplifies your senses!
+			}
+
+			SlipperyBuff: {
+				DisplayName: Slippery
+				Description: 50% chance to dodge attacks while slippery!
+			}
+		}
+
+		Items: {
+			RabbitsFoot: {
+				DisplayName: Rabbit's Foot
+				Tooltip:
+					'''
+					'They say this is lucky... I say it's creepy.' 
+					Increases luck by a small amount.
+					1% chance to dodge attacks
+					'''
+			}
+
+			SpinyNecklace: {
+				DisplayName: Spiney Necklace
+				Tooltip:
+					'''
+					Increases your max number of minions by 1
+					A Lumpling has mistaken you for its mother
+					'''
+			}
+
+			FishBullet: {
+				DisplayName: Fish Bullet
+				Tooltip:
+					'''
+					Transforms into a fish when in water or rain! 
+					When transformed +5% chance to critical hit 
+					When transformed has much higher knockback 
+					When transformed targets enemies 
+					'''
+			}
+
+			AncientDartGunPieces.DisplayName: Ancient Dart Gun Pieces
+			SinfulSoil.DisplayName: Sinful Soil
+
+			BundleOfCoral: {
+				DisplayName: Bundle of Coral
+				Tooltip:
+					'''
+					Lots of seashells and thingamabobs are stuck inside! 
+					{$CommonItemTooltip.RightClickToOpen}
+					'''
+			}
+
+			BundleOfFishBullets: {
+				DisplayName: Bundle of Fish Bullets
+				Tooltip:
+					'''
+					Contains 10-20 Fish Bullets 
+					{$CommonItemTooltip.RightClickToOpen}
+					'''
+			}
+
+			CorruptBait: {
+				DisplayName: Rotted Bait
+				Tooltip:
+					'''
+					'!'
+					Use in the Corruption
+					'''
+			}
+
+			CrimsonBait: {
+				DisplayName: Ichorous Steak
+				Tooltip:
+					'''
+					'!'
+					Use in the Crimson
+					'''
+			}
+
+			FishmanDevbait: {
+				DisplayName: Fishy Worm
+				Tooltip:
+					'''
+					'For Devs Only!' 
+					Use in the Ocean
+					'''
+			}
+
+			GoldenFishDevBait: {
+				DisplayName: Magic Worm
+				Tooltip:
+					'''
+					'An aura of power radiates, but not in an intimidating way' 
+					Use in the Ocean
+					'''
+			}
+
+			HallowBait: {
+				DisplayName: Glistening Lolly
+				Tooltip:
+					'''
+					'!' 
+					Use in the Hallow
+					'''
+			}
+
+			DunkleVertebrae: {
+				DisplayName: Dunkle Vertebrae
+				Tooltip: "'The density of the bone makes it nearly unbreakable'"
+			}
+
+			ExampleSword: {
+				DisplayName: Example Sword
+				Tooltip: Every mod needs to start with the Example Sword.
+			}
+
+			HellborneIcon: {
+				DisplayName: Hellborne Skull & Golem are weak to this weapon!
+				Tooltip: "erm... you shouldn't be seeing this tooltip! "
+			}
+
+			LumpsuckerHeart: {
+				DisplayName: Ichorous Spines
+				Tooltip: "'Even though the spine is razor clean, the smell is still atrocious'"
+			}
+
+			MoltenBone.DisplayName: Molten Bone
+
+			RainbowScale2: {
+				DisplayName: Rainbow Scales
+				Tooltip: The prismatic colors are mesmerizing!
+			}
+
+			SummonFallen: {
+				DisplayName: Summon Fallen Fairy
+				Tooltip: "'Hey, this is for the devs only!' UNOBTAINABLE"
+			}
+
+			SlipperyHook: {
+				DisplayName: Slippery Hook
+				Tooltip:
+					'''
+					50% chance to dodge attacks while being dragged by the hook'
+					'There's slime everywhere!'
+					'''
+			}
+
+			AncientDartRifle: {
+				DisplayName: Ancient Dart Rifle
+				Tooltip:
+					'''
+					'Antique' 
+					Highly accurate, but slow
+					'''
+			}
+
+			AncientStoneShortsword: {
+				DisplayName: Ancient Stone Shortsword
+				Tooltip: "'Looks like it will crumble in a single hit'"
+			}
+
+			ElectricEel: {
+				DisplayName: Electric Eel
+				Tooltip:
+					'''
+					Your summons will focus struck enemies
+					100% chance to electrify enemies for 2.5 seconds minimum, up to 5 seconds when charged 
+					Charging the whip will increase whip length up to 2x
+					'''
+			}
+
+			FlagrantEyeball: {
+				DisplayName: Flagrant Eye
+				Tooltip:
+					'''
+					"'It's the Eye of the luuumpfiish'"
+					'A very early prototype of a scrapped weapon.'
+					'''
+			}
+
+			RainbowFocus: {
+				DisplayName: Rainbow Focus
+				Tooltip:
+					'''
+					'Only blesses those of great strength' 
+					Converts Mana to HP based on strength of magical items equipped
+					Right Click to use 400 Mana for a great heal, recharges after 6 normal heals
+					'''
+			}
+
+			ScaledLamp: {
+				DisplayName: Vertebral Lamp
+				Tooltip:
+					'''
+					'The bone makes the lamp nearly unbreakable' 
+					Hold to summon the ghost and power of the Dunkle
+					Items and summons cannot be used during this
+					'''
+			}
+
+			TridentoftheFishman: {
+				DisplayName: Trident of the Fishman
+				Tooltip:
+					'''
+					Chance of summoning ghostly tridents on hitting an enemy
+					 Right-click to activate his blessing. 
+					Stats increased while wet 
+					'with goodly trident'
+					'''
+			}
+
+			HoopSnakeItem: {
+				DisplayName: Hoop Snake
+				Tooltip: "'Terrarians have long lived in fear of the dreaded Hoop Snake.'"
+			}
+
+			HummingBird1Item: {
+				DisplayName: Ruby-Throated Hummingbird
+				Tooltip: "'Pretty!'"
+			}
+
+			JackrabbitItem.DisplayName: Jackrabbit
+
+			SlipperySlugItem: {
+				DisplayName: Slippery Sluggy
+				Tooltip: "'Be careful not to drop it!'"
+			}
+
+			BlankItem.Tooltip: Lore on this item: basically I just needed an item with a blank sprite for rendering certain things in the mod
+
+			HummingBird2Item: {
+				DisplayName: Foresty Hummingbird
+				Tooltip: "'Blends in with the forest'"
+			}
+
+			VioletSapphireHummingbirdItem: {
+				DisplayName: Twilight Hummingbird
+				Tooltip: "'Could get lost in the sparkling patterns...'"
+			}
+
+			HummingBirdFeederItem: {
+				DisplayName: Hummingbird Feeder
+				Tooltip: "'Attracts hummingbirds!'"
+			}
+
+			TroutCannon: {
+				DisplayName: Trout Cannon
+				Tooltip: ""
+			}
+		}
+
+		Projectiles: {
+			FishBulletProj.DisplayName: Fish Bullet
+			SlipperyHookProj.DisplayName: Slippery Hook
+			EelWhipProjectile.DisplayName: Eel Whip
+			LumpEye.DisplayName: Flagrant Eye
+			TridentProjectile.DisplayName: Trident of the Fishman
+			TridentGhostProjectile.DisplayName: Trident of the Fishman
+			HellborneFireball.DisplayName: Hellborne Skull Fireball
+			HellborneSkullProj.DisplayName: Flaming Skull
+			BabyLumpsucker.DisplayName: Lumpling
+			DunkleGhost.DisplayName: Dunkle Ghost
+			BrainofCthulhuHit.DisplayName: Brain of Cthulhu
+			EaterofWorldsHit.DisplayName: Eater of Worlds
+			EmpressofLightHit.DisplayName: Empress of Light
+			PlanteraHit.DisplayName: Plantera
+			QueenSlimeHit.DisplayName: Queen Slime
+			VileSpitHit.DisplayName: Vile Spit
+			GravityGloop.DisplayName: Gravity Gloop
+			HoopSnakePoison.DisplayName: Hoop Snake Poison
+			NinjasShuriken.DisplayName: The Ninja's Shuriken
+			RainbowBall.DisplayName: Rainbow Dust
+			RainbowDust.DisplayName: Rainbow Dust
+			SmallRainbowDust.DisplayName: Rainbow Dust
+			TestingProj.DisplayName: Testing
+			TunaProj.DisplayName: Tuna Proj
+			TroutProj.DisplayName: Trout Proj
+		}
+
+		NPCs: {
+			DungeonFrog.DisplayName: Ectoad
+			DungeonFrogEmpty.DisplayName: Ectoad
+			FallenPixie.DisplayName: Fallen Pixie
+			HoopSnake.DisplayName: Hoop Snake
+			HummingBird1.DisplayName: Ruby-Throated Hummingbird
+			Jackrabbit.DisplayName: Jackrabbit
+			MantisShrimp.DisplayName: Mantis Shrimp
+			Plubee.DisplayName: Plubee
+			SlipperySlug.DisplayName: Slippery Sluggy
+			testing.DisplayName: Fae
+			BabyLumpFish.DisplayName: Baby Lumpsucker
+			CrimsonFishMiniBoss.DisplayName: The Lumpsucker
+			DunklerFish.DisplayName: Dunkle
+			RainbowFish.DisplayName: Rainbow Fish
+			GolemFistL.DisplayName: Fist of Fright
+			GolemFistR.DisplayName: Fist of Frost
+			HellborneGuardian.DisplayName: Hellborne Guardian
+			HellborneSkullMinion.DisplayName: Hellborne Skull Minion
+			TheHellborneSkull.DisplayName: The Hellborne Skull
+			ExampleFlutterSlime.DisplayName: ExampleSlimeTesting
+			glassesgnome.DisplayName: Gnome
+			strongerglassesgnome.DisplayName: Stronger Gnome
+			sunglasses.DisplayName: sunglasses
+			GreatPixie.DisplayName: Great Pixie
+			HyperrealisticEyeball.DisplayName: The Eye
+			SkinWalker.DisplayName: Skinwalker
+			GravPlant.DisplayName: Gravity Flower
+			DuckMaiden.DisplayName: Duck Maiden
+			Fishman.DisplayName: Fishman
+			GoldenFish.DisplayName: Mysterious Golden Fish
+
+			Ninja: {
+				DisplayName: Ninja
+				Census.SpawnCondition: Conditions unknown
+			}
+
+			SpectralWatchman.DisplayName: Spectral Mirrorman
+			HummingBird2.DisplayName: Foresty Hummingbird
+			HummingbirdBestiary.DisplayName: Hummingbirds
+			VioletSapphireHummingbird.DisplayName: Twilight Hummingbird
+		}
+
+		Tiles: {
+			AshwoodSapling.MapEntry: Ashwood Sapling
+			SinfulDirt.MapEntry: Sinful Soil
+		}
+
+		Configs: {
+			CreaturiaSettings: {
+				DisplayName: Creaturia Settings
+				Headers.Settings: Settings Header
+
+				GolemFists: {
+					Label: Golem Fists
+					Tooltip: ""
+				}
+			}
+		}
+	}
+}

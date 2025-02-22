@@ -22,7 +22,7 @@ namespace Creaturia.Items.Weapon
 			Item.height = 32; 
 			Item.damage = 25; 
 			Item.noUseGraphic = true; 
-			Item.shoot = ModContent.ProjectileType<LumpEye>(); 
+			//Item.shoot = ModContent.ProjectileType<LumpEye>(); 
 			Item.shootSpeed = 12f; // The speed of the projectile measured in pixels per frame.
 			Item.UseSound = SoundID.Item1; // The sound that this item makes when used
 			Item.rare = ItemRarityID.Green; // The color of the name of your item

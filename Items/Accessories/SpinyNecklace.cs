@@ -42,9 +42,9 @@ namespace Creaturia.Items.Accessories
 			Item.maxStack = 1;
 			Item.accessory = true;
 			Item.consumable = true;
-			//Item.knockBack = 0.2f;
-			Item.value = 2000;
-			Item.rare = ItemRarityID.Green;
+            //Item.knockBack = 0.2f;
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.rare = ItemRarityID.Green;
 			//
 			//Item.shoot = ModContent.ProjectileType<FishBulletProj>();
 			//Item.shootSpeed = 7f;

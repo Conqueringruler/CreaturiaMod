@@ -11,6 +11,7 @@ using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Creaturia.Currencies;
 using Creaturia.NPCs.Creatures;
+using Creaturia.Common.Systems;
 
 namespace Creaturia.Items.GlobalItems
 {
@@ -106,17 +107,17 @@ namespace Creaturia.Items.GlobalItems
 
 			recipe = Recipe.Create(ItemID.BunnyStew);
 
-			recipe.AddIngredient(ModContent.ItemType<JackrabbitItem>(), 1);
-			recipe.AddTile(TileID.CookingPots);
+            recipe.AddIngredient(ModContent.ItemType<JackrabbitItem>(), 10);
+            recipe.AddTile(TileID.CookingPots);
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.RoastedBird);
 
-			recipe.AddIngredient(ModContent.ItemType<HummingBird1Item>(), 1);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
+            recipe.AddRecipeGroup("Hummingbirds", 1);
+            recipe.AddTile(TileID.CookingPots);
+            recipe.Register();
 
-			/*	recipe = Recipe.Create(ItemID.CorruptionKey);
+            /*	recipe = Recipe.Create(ItemID.CorruptionKey);
 
 				recipe.AddIngredient(ModContent.ItemType<>(), 10);
 				recipe.AddIngredient(ItemID.SoulofLight, 5);
@@ -124,7 +125,7 @@ namespace Creaturia.Items.GlobalItems
 				recipe.AddTile(TileID.MythrilAnvil);
 				recipe.Register(); */
 
-			/*
+            /*
 			 * 
 			recipe = Recipe.Create(ItemID.SoulofLight, 1);
 			
@@ -139,7 +140,7 @@ namespace Creaturia.Items.GlobalItems
 			recipe.AddTile(TileID.CrystalBall);
 			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register(); */
-		}
+        }
 
 			
 				

@@ -6,6 +6,28 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="changelog.txt" />
+    <None Remove="description_workshop.txt" />
+    <None Remove="Gores\HummingbirdGore.png" />
+    <None Remove="Items\Blocks\Furniture\HummingbirdFeederItem.png" />
+    <None Remove="Items\Weapon\TroutCannon.png" />
+    <None Remove="NPCs\Creatures\Butter1Hummingbird.png" />
+    <None Remove="NPCs\Creatures\ButterHummingbirdItem.png" />
+    <None Remove="NPCs\Creatures\HummingBird2.png" />
+    <None Remove="NPCs\Creatures\HummingBird2Item.png" />
+    <None Remove="NPCs\Creatures\LeafyHummingbird.png" />
+    <None Remove="NPCs\Creatures\LeafyHummingBirdItem.png" />
+    <None Remove="NPCs\Creatures\PurpleHeadedHummingbird.png" />
+    <None Remove="NPCs\Creatures\PurpleHeadedHummingbirdItem.png" />
+    <None Remove="NPCs\Creatures\TorchwoodHummingbird.png" />
+    <None Remove="NPCs\Creatures\TorchwoodHummingbirdItem.png" />
+    <None Remove="NPCs\Creatures\VioletSapphireHummingBird.png" />
+    <None Remove="NPCs\Creatures\VioletSapphireHummingbirdItem.png" />
+    <None Remove="NPCs\Enemies\Boss\GolemFists_Bestiary.png" />
+    <None Remove="NPCs\Enemies\Boss\GolemFists_Bestiary_Alt.png" />
+    <None Remove="NPCs\Enemies\Boss\GolemFists_Bestiary_Alt2.png" />
+    <None Remove="NPCs\Enemies\Boss\GolemFists_Bestiary_Alt3.png" />
+    <None Remove="Tiles\Furniture\HummingbirdFeederTile.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Items\Armor\Vanity\" />

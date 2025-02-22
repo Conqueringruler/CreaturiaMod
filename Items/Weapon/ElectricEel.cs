@@ -178,6 +178,7 @@ Dust dust = Dust.NewDustDirect(new Vector2(owner.position.X + 20 + Main.rand.Nex
 		{
 			target.AddBuff(BuffID.Electrified, 150 + ((int)ChargeTime * 2));
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
+			Projectile.damage = (int)(Projectile.damage * 0.6f); // 30% multihit penalty 
 		}
 
 		// This method draws a line between all points of the whip, in case there's empty space between the sprites.

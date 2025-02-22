@@ -47,18 +47,30 @@ namespace Creaturia.NPCs.Enemies.Boss
             {
 				// DisplayName.SetDefault("Fist of Fright");
 			}
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
-			{
-				Hide = true
-			};
-		}
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                CustomTexturePath = "Creaturia/NPCs/Enemies/Boss/GolemFists_Bestiary",
+                //Velocity = -1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
+                //Direction = 1, // -1 is left and 1 is right. NPCs are drawn facing the left by default but ExamplePerson will be drawn facing the right
+                //SpriteDirection = 1
 
-		public override void SetDefaults()
+                PortraitScale = 0.30f,
+                Scale = 0.15f
+				
+				
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifiers);
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            database.Entries.Remove(bestiaryEntry);
+        }
+        public override void SetDefaults()
 		{
 			
 			NPC.width = 48;
 			NPC.height = 40;
-			NPC.damage = 80;
+			NPC.damage = 40;
 			NPC.defense = 12;
 			NPC.lifeMax = 1;
 			NPC.HitSound = SoundID.NPCHit22;
@@ -71,10 +83,7 @@ namespace Creaturia.NPCs.Enemies.Boss
 			NPC.noTileCollide = true;
 			NPC.dontTakeDamage = true;
 		}
-		public override void SetBestiary(BestiaryDatabase dataNPC, BestiaryEntry bestiaryEntry)
-		{
-			dataNPC.Entries.Remove(bestiaryEntry);
-		}
+		
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			Texture2D texture = TextureAssets.Npc[NPC.type].Value;
@@ -127,10 +136,10 @@ namespace Creaturia.NPCs.Enemies.Boss
 				{
 					if (Main.rand.NextBool(3))
 					{
-						Dust dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Firefly, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.Orange, 1.5f);
+						//Dust dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Firefly, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.Orange, 1.5f);
 						for (int i = 0; i < 8; i++)
                         {
-							dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Firefly, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.Orange, 1.5f);
+							//dust = Dust.NewDustDirect(NPC.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), NPC.width, NPC.height, DustID.Firefly, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.Orange, 1.5f);
 
 						}
 
@@ -336,7 +345,7 @@ namespace Creaturia.NPCs.Enemies.Boss
                         {
 							if (Main.netMode != NetmodeID.MultiplayerClient)
 							{
-								int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot, ProjectileID.FlamingScythe, 95, 1f);
+								int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, directionshoot, ProjectileID.FlamingScythe, 30, 1f);
 							}
 							PumpkinProjectileTimer = 0;
 						}
@@ -403,15 +412,15 @@ namespace Creaturia.NPCs.Enemies.Boss
 			//Dust.NewDustPerfect(NPC.Center + PolarVector(30, NPC.rotation), DustID.HeatRay, NPC.velocity, 0, default, 1);
 			if (!Main.expertMode && !Main.masterMode)
             {
-				NPC.damage = 80;
+				NPC.damage = 30;
 			}
 			if (Main.expertMode)
             {
-				NPC.damage = 110;
+				NPC.damage = 40;
 			}
 			if (Main.masterMode)
             {
-				NPC.damage = 140;
+				NPC.damage = 65;
             }
 			if (NPC.AnyNPCs(NPCID.Golem) == false)
 			{
@@ -423,6 +432,9 @@ namespace Creaturia.NPCs.Enemies.Boss
 
 
 		}
+
+      
+
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
 			

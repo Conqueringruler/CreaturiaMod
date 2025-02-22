@@ -24,6 +24,7 @@ using System.IO;
 using Creaturia;
 using Terraria.UI;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.Localization;
 
 namespace Creaturia.Common.Systems
 {
@@ -68,6 +69,14 @@ namespace Creaturia.Common.Systems
         {
             downedHellborne = tag.ContainsKey("downedHellborne");
         }
+        public override void AddRecipeGroups()
+        {
+            RecipeGroup hummingbirdGroup = new RecipeGroup(() => "Hummingbirds", ModContent.ItemType<HummingBird1Item>(),
+                ModContent.ItemType<HummingBird2Item>(), ModContent.ItemType<ButterHummingbirdItem>(), ModContent.ItemType<LeafyHummingbirdItem>(),
+                ModContent.ItemType<PurpleHeadedHummingbirdItem>(), ModContent.ItemType<TorchwoodHummingbirdItem>(), ModContent.ItemType<VioletSapphireHummingbirdItem>());
+            RecipeGroup.RegisterGroup("Hummingbirds", hummingbirdGroup);
+        }
+    
 
         public override void NetSend(BinaryWriter writer)
         {

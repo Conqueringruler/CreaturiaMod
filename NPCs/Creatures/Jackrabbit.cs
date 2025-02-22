@@ -24,12 +24,13 @@ namespace Creaturia.NPCs.Creatures
 			Main.npcCatchable[NPC.type] = true;
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Bunny];
 			NPCID.Sets.CountsAsCritter[NPC.type] = true;
-			NPCID.Sets.DangerDetectRange[NPC.type] = 450;
-			NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[NPC.type] = true;
+			//NPCID.Sets.DangerDetectRange[NPC.type] = 450;
+			//NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[NPC.type] = true;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
 
-			NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
-				Velocity = 1f,
+				Velocity = 1.5f,
 				//Direction = -1
 
 			};
@@ -38,20 +39,20 @@ namespace Creaturia.NPCs.Creatures
 
 		public override void SetDefaults()
 		{
-
-			NPC.width = 8;
+           // NPC.CloneDefaults(NPCID.Bunny);
+            NPC.width = 8;
 			NPC.height = 28;
-			NPC.damage = 10;
+			NPC.damage = 0;
 			NPC.defense = 0;
 			NPC.friendly = true;
-			NPC.CloneDefaults(NPCID.Bunny);
+			
 			NPC.lifeMax = 5;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.stepSpeed = 500;
 			NPC.catchItem = (short)ItemType<JackrabbitItem>();
 			NPC.lavaImmune = false;
-			NPC.aiStyle = 7;
+			NPC.aiStyle = NPCAIStyleID.Passive;
 			AnimationType = NPCID.Bunny;
 		}
 		int JumpTimer;
@@ -167,9 +168,9 @@ namespace Creaturia.NPCs.Creatures
 
 
 
-
-			return SpawnCondition.OverworldDayDesert.Chance * 0.2f;
-		}
+			return (Main.remixWorld ? SpawnCondition.DesertCave.Chance : SpawnCondition.OverworldDayDesert.Chance) * 0.2f;
+            //return SpawnCondition.OverworldDayDesert.Chance * 0.2f;
+        }
 
 		public override void HitEffect(NPC.HitInfo hit)
 		{
@@ -187,15 +188,41 @@ namespace Creaturia.NPCs.Creatures
 				//	Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/"), 1f);
 			}
 		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot)
-		{
-			if (Main.rand.NextBool(5))
-			{
-				//	Item.NewItem(NPC.getRect(), ItemID.Leather);
-			}
-		}
+	
+        public override bool? CanBeHitByItem(Player player, Item item)
+        {
 
-		public override void OnCaughtBy(Player player, Item item, bool failed)
+            if (player.dontHurtCritters)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public override bool? CanBeHitByProjectile(Projectile projectile)
+        {
+            Player owner = Main.player[projectile.owner];
+
+            if (owner != null)
+            {
+                if (owner.dontHurtCritters)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+        public override void OnCaughtBy(Player player, Item item, bool failed)
 		{
 			item.stack = 1;
 
@@ -223,7 +250,7 @@ namespace Creaturia.NPCs.Creatures
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Sun,
-				new FlavorTextBestiaryInfoElement("This wiry rabbit thrives in the desert dunes," +
+				new FlavorTextBestiaryInfoElement("This wiry rabbit thrives in the desert dunes, " +
 												  "always on the search for snacks.")
 			});
 		}
@@ -238,21 +265,22 @@ namespace Creaturia.NPCs.Creatures
 
 		public override void SetDefaults()
 		{
-			//item.useStyle = 1;
-			//item.autoReuse = true;
-			//item.useTurn = true;
-			//item.useAnimation = 15;
-			//item.useTime = 10;
-			//item.maxStack = 999;
-			//item.consumable = true;
-			Item.width = 28;
+            Item.CloneDefaults(ItemID.Bunny);
+            //item.useStyle = 1;
+            //item.autoReuse = true;
+            //item.useTurn = true;
+            //item.useAnimation = 15;
+            //item.useTime = 10;
+            //item.maxStack = 999;
+            //item.consumable = true;
+            Item.width = 28;
 			Item.height = 36;
-			//item.makeNPC = 360;
-			//item.noUseGraphic = true;
-			//item.bait = 15;
+            //item.makeNPC = 360;
+            //item.noUseGraphic = true;
+            //item.bait = 15;
 
-			Item.CloneDefaults(ItemID.GlowingSnail);
-			Item.makeNPC = (short)NPCType<Jackrabbit>();
+            Item.value = Item.sellPrice(0, 0, 18, 0);
+            Item.makeNPC = (short)NPCType<Jackrabbit>();
 		}
         public override void AddRecipes()
         {

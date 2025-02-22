@@ -23,9 +23,9 @@ namespace Creaturia.Items.Consumables.Fishing
 		{
 			Item.width = Item.height = 20;
 			Item.rare = ItemRarityID.LightRed;
-			Item.maxStack = 9;
+			Item.maxStack = 99;
 			Item.consumable = true;
-			Item.value = Item.sellPrice(0, 15, 0, 0);
+			Item.value = Item.sellPrice(0, 5, 0, 0);
 			Item.bait = 1;
 			
 		}

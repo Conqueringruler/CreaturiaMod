@@ -29,14 +29,15 @@ namespace Creaturia.NPCs.Creatures
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.GemBunnyDiamond];
 			ContentSamples.NpcBestiaryRarityStars[ModContent.NPCType<Plubee>()] = 5;
 
-			NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				Velocity = 2f,
 				//Direction = -1
 
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
-		}
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
+        }
 		int spawndust;
 		public override void SetDefaults()
 		{
@@ -380,10 +381,7 @@ namespace Creaturia.NPCs.Creatures
 						return;
 					}
 						int num24 = NPC.spriteDirection;
-						if (NPC.type == 423 || NPC.type == 410 || NPC.type == 546)
-						{
-							num24 *= -1;
-						}
+						
 						if ((NPC.velocity.X < 0f && num24 == -1) || (NPC.velocity.X > 0f && num24 == 1))
 						{
 						//bool flag7 = NPC.type == 410 || NPC.type == 423;
@@ -425,7 +423,7 @@ namespace Creaturia.NPCs.Creatures
 					Rectangle hitbox = NPC.Hitbox;
 					for (int n = 0; n < 2; n++)
 					{
-						if (Main.rand.Next(3) == 0)
+                    if (Main.rand.NextBool(3))
 						{
 							Dust obj3 = Main.dust[Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, 242)];
 							obj3.velocity = Vector2.Zero;
@@ -435,11 +433,7 @@ namespace Creaturia.NPCs.Creatures
 						}
 					}
 				}
-				if (NPC.type == 546)
-				{
-					NPC.rotation += NPC.velocity.X * 0.05f;
-					NPC.spriteDirection = -NPC.direction;
-				}
+				
 			
 
 			/**
@@ -480,11 +474,11 @@ namespace Creaturia.NPCs.Creatures
 		{
 		if (Main.hardMode)
             {
-				return SpawnCondition.OverworldNight.Chance * 0.002f;
+				return SpawnCondition.OverworldNight.Chance * 0.008f;
 			}
 		else
             {
-				return SpawnCondition.OverworldNight.Chance * 0.005f;
+				return SpawnCondition.OverworldNight.Chance * 0.015f;
 			}
 			
 		}
@@ -582,7 +576,7 @@ namespace Creaturia.NPCs.Creatures
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Moon,
-				new FlavorTextBestiaryInfoElement("A mischevious being known for taking the form of rabbits, awarding those lucky enough to kill it with treasures")
+				new FlavorTextBestiaryInfoElement("A mischevious being known for taking the form of rabbits, awarding those lucky enough to hit it with treasures!")
 			});
 		}
 	}

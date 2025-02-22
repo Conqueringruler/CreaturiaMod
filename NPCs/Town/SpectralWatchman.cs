@@ -21,6 +21,7 @@ using Creaturia.Projectiles;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader.Utilities;
 using System.IO;
+using Ionic.Zlib;
 
 namespace Creaturia.NPCs.Town
 {
@@ -51,8 +52,8 @@ namespace Creaturia.NPCs.Town
             // DisplayName.SetDefault("Spectral Mirrorman");
            // NPCID.Sets.SpawnsWithCustomName[Type] = false; // So it chooses a name like a townnpc since it isnt actually one. I want to try this with a hostile NPC and see what happens
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
 
-           
         }
         // After done debugging remove velocity to the left
         public override void SetDefaults()
@@ -148,7 +149,7 @@ namespace Creaturia.NPCs.Town
                 {
                     
                     
-                   
+                     
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         
@@ -197,53 +198,39 @@ namespace Creaturia.NPCs.Town
         public override List<string> SetNPCNameList()
         {
             return new List<string>() {
-                "Spectral Mirrorman",
+                "Spectral Mirrorman"
             };
         }
-        int ChatsHad;
+     //   int ChatsHad; // scrapping that line, it sucks
         public override string GetChat()
         {
-            ChatsHad += 1;
+            //  ChatsHad += 1;
+            WeightedRandom<string> chat = new WeightedRandom<string>();
             int guide = NPC.FindFirstNPC(NPCID.Guide);
             int wizard = NPC.FindFirstNPC(NPCID.Wizard);
-            if (guide > 0 && Main.rand.NextBool(7))
+            if (guide > 0)
             {
-                return "Judgyyng by myyy, for lack of a better word, 'freedom', I find it safe to assume you've learned the truth about '" + Main.npc[NPC.FindFirstNPC(NPCID.Guide)].GivenName + "', haven't you?";
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.SpectralMirrorman.GuideDia", Main.npc[guide].GivenName));
             }
-            if (wizard > 0 && Main.rand.NextBool(7))
+            if (wizard > 0)
             {
-                return "Ahh, " + Main.npc[NPC.FindFirstNPC(NPCID.Wizard)].GivenName + ". I've seen him try his best to understand the powers of this place, but I'm afraid it's something he could never truly understand.";
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.SpectralMirrorman.WizardDia", Main.npc[wizard].GivenName));
             }
-            if (Main.moonPhase == 5 && Main.rand.NextBool(4))
+            if (Main.moonPhase == 5)
             {
-                return "Some say that during a full moon, if you stare hard enough, you may see a great figure squirming about upon its surface. What do you think about that?";
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.SpectralMirrorman.MoonDia"));
             }
-            if (ChatsHad > 2 && Main.rand.NextBool(5))
-            {
-                return "My dream is nearly within my grasp.";
-            }
-            switch (Main.rand.Next(7))
-            {
-                case 0:
-                    return "I give you this warning; gaze too long and you might end up somewhere you don't want to be.";
-                case 1:
-                    return "";
-                case 2:
-                    return "Ahh, I can tell. You were the one that set us free, weren't you?";
-                case 3:
-                    return "Ahh, I can tell. You were the one that set us free, weren't you?";
-                case 4:
-                    return "Ahh, I can tell. You are the one who set us free, aren't you?";
-                // case 5:
-                //    return "Something of mine has been lost - something you might call a sundial.";
-                case 5:
-                   return "If only you knew how useful you are.";
-                case 6:
-                    return "Is my... appearance, unsettling to you? My apologies, I simply trieed to appear as something you might find... comforting.";
-                default:
-                    return "";
-            }
-            
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.SpectralMirrorman.StandardDialogue1")); // So glad ExampleMod has localization tutorials, would have never figured this out
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.SpectralMirrorman.StandardDialogue2"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.SpectralMirrorman.StandardDialogue3"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.SpectralMirrorman.StandardDialogue4"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.SpectralMirrorman.StandardDialogue5"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.SpectralMirrorman.StandardDialogue6"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.SpectralMirrorman.StandardDialogue7"));
+
+            string chosenChat = chat;
+
+            return chosenChat;
         }
 
        
@@ -262,7 +249,7 @@ namespace Creaturia.NPCs.Town
             {
                 Main.playerInventory = true;
                 // remove the chat window...
-                Main.npcChatText = "";
+                Main.npcChatText = "...";
                 // and start an instance of our UIState.
                 ModContent.GetInstance<Creaturia>().SpectralWatchmanUserInterface.SetState(new UI.SpectralWatchmanUI()); // idk if Spectral Watchman UI was supposed to be inside VanillaItemSlotWrapper
                                                                                                                                                 // But I don't really care
@@ -318,7 +305,7 @@ namespace Creaturia.NPCs.Town
             multiplier = 2f;
             randomOffset = 2f;
             gravityCorrection = -1f;
-        }
+        } 
         int CoolEffectTimer;
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -441,7 +428,7 @@ namespace Creaturia.NPCs.Town
                 //BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
                 
 				// Sets your NPC's flavor text in the bestiary.
-				new FlavorTextBestiaryInfoElement("The enigmatic Mirrorman, now freed from his containment within the world's guardian, traverses the Underground Hallow for a reason unknown..."),
+				new FlavorTextBestiaryInfoElement("The enigmatic Mirrorman, now freed from his containment within the world's guardian, traverses the Underground Hallow for a reason unknown... and also provides better services than the Goblin Tinkerer."),
 
             });
             

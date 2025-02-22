@@ -30,8 +30,8 @@ namespace Creaturia.Projectiles
 			Projectile.friendly = true;
 			Projectile.aiStyle = 1;
 			Projectile.damage = 0;
-			Projectile.width = 15;
-			Projectile.height = 15;
+			Projectile.width = 25;
+			Projectile.height = 25;
 			Projectile.hostile = true;
 			Projectile.tileCollide = false;
 			Projectile.knockBack = 0f;
@@ -48,9 +48,9 @@ namespace Creaturia.Projectiles
 				Player target = Main.player[i];
 
 
-				if (target.active && !target.dead && Vector2.Distance(Projectile.Center, target.Center) < 80f)
+				if (target.active && !target.dead && Vector2.Distance(Projectile.Center, target.Center) < 100f)
 				{
-					target.AddBuff(BuffID.Gravitation, 4000, quiet: false);
+					target.AddBuff(BuffID.Gravitation, 6500, quiet: false);
 				}
 
 			}

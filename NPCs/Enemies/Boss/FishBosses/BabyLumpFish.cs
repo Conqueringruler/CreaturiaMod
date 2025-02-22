@@ -27,7 +27,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 		{
 			// DisplayName.SetDefault("Baby Lumpsucker");
 
-		NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+		NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				Velocity = 1f, // Draws the NPC in the bestiary as if its walking +1 tiles in the x direction
 							   //Direction = 1, // -1 is left and 1 is right. NPCs are drawn facing the left by default
@@ -66,7 +66,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Rain,
 				//BestiaryDatabaseNPCsPopulator.CrownosIconIndexes.
-				new FlavorTextBestiaryInfoElement("The babies of the Lumpsucker are often so devoted to their mother that they're more than happy to blow themselves up for her.")
+				new FlavorTextBestiaryInfoElement("The babies of the Lumpling are often so devoted to their mother that they're more than happy to blow themselves up for her.")
 
 			});
 		}

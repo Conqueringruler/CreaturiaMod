@@ -29,8 +29,9 @@ namespace Creaturia.NPCs.Creatures
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Sluggy];
 			NPCID.Sets.CountsAsCritter[NPC.type] = true;
 			NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[NPC.type] = true;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
 
-			NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				Velocity = 1f,
 				//Direction = -1
@@ -98,7 +99,7 @@ namespace Creaturia.NPCs.Creatures
 			{
                 for (int i = 0; i < 8; i++)
                 {
-                   int dust = Dust.NewDust(NPC.position + new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.Sluggy, (NPC.velocity.X + Main.rand.Next(-2, 2)) * hit.HitDirection, NPC.velocity.Y + Main.rand.Next(-2, 2), 190, Color.Gray, Main.rand.NextFloat(0.6f, 0.9f));
+                   int dust = Dust.NewDust(NPC.position + new Vector2(Main.rand.Next(-5, 5), Main.rand.Next(-5, 5)), NPC.width, NPC.height, DustID.Sluggy, (NPC.velocity.X + Main.rand.Next(-2, 2)), NPC.velocity.Y + Main.rand.Next(-2, 2), 190, Color.Gray, Main.rand.NextFloat(0.6f, 0.9f));
                     Main.dust[dust].shader = GameShaders.Armor.GetSecondaryShader(55, Main.LocalPlayer);
                 }
                 //Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/"), 2f);
@@ -172,7 +173,7 @@ namespace Creaturia.NPCs.Creatures
 			Item.maxStack = 20;
 			
 			Item.height = 36;
-			Item.value = Item.buyPrice(0, 12, 50, 0);
+			Item.value = Item.buyPrice(0, 5, 50, 0);
 			Item.rare = ItemRarityID.Orange;
 			
 			//item.makeNPC = 360;

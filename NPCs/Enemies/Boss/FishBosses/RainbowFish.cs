@@ -46,7 +46,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 				}
 			};
 
-			NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+			NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
 				CustomTexturePath = "Creaturia/NPCs/Enemies/Boss/FishBosses/RainbowFish_Bestiary",
 				Position = new Vector2(0f, -8f),

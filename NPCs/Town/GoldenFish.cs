@@ -88,7 +88,7 @@ namespace Creaturia.NPCs.Town
             //     NPCID.Sets.AttackTime[NPC.type] = 15;
             //     NPCID.Sets.AttackAverageChance[NPC.type] = 2;
             //     NPCID.Sets.HatOffsetY[NPC.type] = 4;
-
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             //    NPCID.Sets.SpawnsWithCustomName[Type] = true; // So it chooses a name like a townnpc since it isnt actually one
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
             // DisplayName.SetDefault("Mysterious Golden Fish");
@@ -107,14 +107,14 @@ namespace Creaturia.NPCs.Town
 
             ContentSamples.NpcBestiaryRarityStars[ModContent.NPCType<GoldenFish>()] = 4;
         }
-        NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+        NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
         { // Influences NPC in Bestiary
             PortraitPositionXOverride = -10f, //15f
             PortraitPositionYOverride = 0, // 8f
             Velocity = 1f,
-            Scale = 0.95f,
-            SpriteDirection = -1,
-            Direction = -1
+            Scale = 0.95f
+           // SpriteDirection = -1,
+           // Direction = -1
 
         };
         public override void SetDefaults()
@@ -129,12 +129,12 @@ namespace Creaturia.NPCs.Town
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath1;
             NPC.knockBackResist = 0.5f;
-            NPC.stepSpeed = 12f;
+            NPC.stepSpeed = 2f;
             AnimationType = NPCID.FlyingFish;
             NPC.color = Color.Gold;
             NPC.noGravity = true;
             NPC.dontTakeDamageFromHostiles = true;
-
+            
             
 
 
@@ -288,15 +288,19 @@ namespace Creaturia.NPCs.Town
                     PunishmentChooser = Main.rand.Next(1, 5);
                     EvilCalculator = Main.rand.Next(8);
              //   }
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    SendPacketNowThatValuesAreSet();
-                   
-                }
+                
                 // PunishmentChooser
-
-                ChoosedWishes = true;
+                if (PunishmentChooser != 0) // int defaults to value of 0, so when this is not 0 is when values above happened. Might not even need this check but idc, sue me
+                {
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        SendPacketNowThatValuesAreSet();
+                    }
+                    ChoosedWishes = true;
+                }
+                
             }
+
 
             if (WishGranted == true)
             {
@@ -505,18 +509,14 @@ namespace Creaturia.NPCs.Town
         {
             int angler = NPC.FindFirstNPC(NPCID.Angler);
             int pirate = NPC.FindFirstNPC(NPCID.Pirate);
+            WeightedRandom<string> chat = new WeightedRandom<string>();
 
-            switch (Main.rand.Next(2))
-            {
-                case 0:
-                    return "If you let me free, I'll fulfill you a wish!";
-                case 1:
-                    return "If you let me free, I'll fulfill you a wish!";
-                case 2:
-                    return "If you let me free, I'll fulfill you a wish!";
-                default:
-                    return "If you let me free, I'll fulfill you a wish!";
-            }
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.GoldenWishingFish.WishDia"));
+
+           
+            string chosenChat = chat;
+
+            return chosenChat;
         }
         /*  public void Send(int toWho, int fromWho)
           {
@@ -745,8 +745,8 @@ namespace Creaturia.NPCs.Town
                     //  firstbuttonchosen = true;
 
 
-                    if (EvilCalculator != 1)
-                    {
+                    //if (EvilCalculator != 1)
+                    //{
                         //if (Main.netMode != NetmodeID.MultiplayerClient)
                        // {
                             DoWish(firstButton, secondButton);
@@ -774,7 +774,7 @@ namespace Creaturia.NPCs.Town
 
 
 
-                    }
+                    //}
 
                    // WishGranted = true;
                 }
@@ -815,23 +815,35 @@ namespace Creaturia.NPCs.Town
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
             {
-                ModPacket packet = Mod.GetPacket(); // use this instead of other
+                   ModPacket packet = Mod.GetPacket(); // use this instead of other
+                   packet.Write((byte)Creaturia.MessageType.WishMsg); // id
+                   packet.Write((Int32)NPC.whoAmI); // NPC identity
+                   packet.Write((bool)ChoosedWishes); // WishesChosen
+                   packet.Write((bool)WishGranted); // Wish Granted
+                   packet.Write((Int32)EvilCalculator); // Evil Calc
+                   packet.Write((Int32)PunishmentChooser); // Punshment Chosen
+                   packet.Write((bool)Button1IsRiches);
+                   packet.Write((bool)Button1IsWishes);
+                   packet.Write((bool)Button1IsFishes);
+                   packet.Write((bool)Button2IsOres);
+                   packet.Write((bool)Button2IsSouls);
+                   packet.Write((bool)Button2IsWar);
+                   packet.Write((bool)TryDoWish);
+                   packet.Write((bool)firstbutton);
+                   packet.Write((bool)secondbutton);
+                   packet.Send();
+
+             /*   ModPacket packet = Mod.GetPacket(); // use this instead of other
                 packet.Write((byte)Creaturia.MessageType.WishMsg); // id
                 packet.Write((Int32)NPC.whoAmI); // NPC identity
                 packet.Write((bool)ChoosedWishes); // WishesChosen
                 packet.Write((bool)WishGranted); // Wish Granted
-                packet.Write((Int32)EvilCalculator); // Evil Calc
-                packet.Write((Int32)PunishmentChooser); // Punshment Chosen
-                packet.Write((bool)Button1IsRiches);
-                packet.Write((bool)Button1IsWishes);
-                packet.Write((bool)Button1IsFishes);
-                packet.Write((bool)Button2IsOres);
-                packet.Write((bool)Button2IsSouls);
-                packet.Write((bool)Button2IsWar);
                 packet.Write((bool)TryDoWish);
                 packet.Write((bool)firstbutton);
                 packet.Write((bool)secondbutton);
-                packet.Send();
+                packet.Send();  */
+
+
             }
             if (WishGranted == false)
             {
@@ -848,7 +860,7 @@ namespace Creaturia.NPCs.Town
 
                             if (Button1IsWishes != true)
                             {
-                                Main.npcChatText = "Your wish is my command!";
+                                Main.npcChatText = Language.GetTextValue("Mods.Creaturia.Dialogue.GoldenWishingFish.WishGrantedDia");
                             }
 
                             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -935,7 +947,7 @@ namespace Creaturia.NPCs.Town
                             }
                             if (Button1IsDishes == true)
                         {
-                            Main.npcChatText = "Your wish is my command!";
+                            Main.npcChatText = Language.GetTextValue("Mods.Creaturia.Dialogue.GoldenWishingFish.WishGrantedDia");
                             Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.CookedFish, Main.rand.Next(1, 4));
                             Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.Escargot, Main.rand.Next(0, 3));
                             Item.NewItem(NPC.GetSource_Loot(), NPC.Center, ItemID.FroggleBunwich, Main.rand.Next(0, 3));
@@ -956,13 +968,18 @@ namespace Creaturia.NPCs.Town
                     }
                     if (Button1IsWishes == true || EvilCalculator == 1)
                     {
+                        //Main.NewText("Bad Option Chosen!");
                         if (EvilCalculator == 1)
                         {
-                            Main.npcChatText = "'You really thought I would grant you a wish? Muahahaha!'";
+                            //Main.NewText("Evil Calc = 1!");
+                            Main.npcChatText = Language.GetTextValue("Mods.Creaturia.Dialogue.GoldenWishingFish.EvilWish1");
+                          
+                            
                         }
                         if (Button1IsWishes == true)
                         {
-                            Main.npcChatText = "'How dare you try to cheat the system like that!'";
+                            //Main.NewText("Wishes Wish Wished!");
+                            Main.npcChatText = Language.GetTextValue("Mods.Creaturia.Dialogue.GoldenWishingFish.CheatWish");
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 EvilCalculator = 1;

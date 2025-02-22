@@ -29,9 +29,9 @@ namespace Creaturia.Items.Consumables.Fishing
 		Rectangle frame;
 		public override void SetDefaults()
 		{
-			Item.width = Item.height = 8;
+			Item.width = Item.height = 16;
 			Item.rare = ItemRarityID.Green;
-			Item.maxStack = 9;
+			Item.maxStack = 99;
 			Item.consumable = true;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
 			Item.bait = 1;
@@ -54,7 +54,7 @@ namespace Creaturia.Items.Consumables.Fishing
         {
 			Texture2D texture = TextureAssets.Item[ItemID.GoldWorm].Value;
 			frame = texture.Frame();
-			Vector2 frameOrigin = frame.Size() / 2f;
+			Vector2 frameOrigin = frame.Size(); // / 2f;
 			// I'll see if the Pumpking Golem Fist color goes good with this
 			spriteBatch.Draw(texture, position + new Vector2(9f, 8f), frame, new Color(252, 190, 30, 10) * (1.7f + 0.4f * ((0 - Item.alpha) / 255f)), default, frameOrigin, scale, SpriteEffects.None, 1);
 			spriteBatch.Draw(texture, position + new Vector2(9f, 8f), frame, Color.Gold * ((200 - Item.alpha) / 255f), default, frameOrigin, scale, SpriteEffects.None, 1);

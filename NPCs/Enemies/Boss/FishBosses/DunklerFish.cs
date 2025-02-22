@@ -76,12 +76,12 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 
 		bool SwitchFromCircleToAbove = false;
 
-		NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+		NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 		{
-			Position = new Vector2 ( 45f, 0f ),
+			Position = new Vector2 ( 90f, 0f ),
             PortraitPositionXOverride = 45f,
             PortraitScale = 0.90f,
-            Scale = 0.95f
+            Scale = 0.8f
         };
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -710,13 +710,13 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 					{
 						if (NPC.position.X < target.position.X)
 						{
-							int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.position + new Vector2(270, 50), new Vector2(Main.rand.NextFloat(-0.005f, 0.005f), 0), ProjectileID.CursedDartFlame, 40, 1f);
+							int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.position + new Vector2(270, 50), new Vector2(Main.rand.NextFloat(-0.005f, 0.005f), 0), ProjectileID.CursedDartFlame, 30, 1f);
 							
 
 						}
 						if (NPC.position.X > target.position.X)
 						{
-							int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.position + new Vector2(-20, 50), new Vector2(Main.rand.NextFloat(-0.005f, 0.005f), 0), ProjectileID.CursedDartFlame, 40, 1f);
+							int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.position + new Vector2(-20, 50), new Vector2(Main.rand.NextFloat(-0.005f, 0.005f), 0), ProjectileID.CursedDartFlame, 30, 1f);
 						}
 					}
 

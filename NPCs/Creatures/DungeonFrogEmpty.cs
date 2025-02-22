@@ -24,10 +24,10 @@ namespace Creaturia.NPCs.Creatures
 			Main.npcCatchable[NPC.type] = false;
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[NPCID.Frog];
 			NPCID.Sets.CountsAsCritter[Type] = true;
-			//NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[NPC.type] = false;
-			//Main.npcCatchable[Type] = false;
-			
-		}
+            //NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[NPC.type] = false;
+            //Main.npcCatchable[Type] = false;
+            NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Shimmerfly;
+        }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			database.Entries.Remove(bestiaryEntry);
@@ -39,7 +39,7 @@ namespace Creaturia.NPCs.Creatures
             AIType = NPCID.Frog;
             NPC.width = 8;
 			NPC.height = 8;
-			NPC.damage = 10;
+			NPC.damage = 0;
 			NPC.defense = 0;
 			NPC.lifeMax = 5;
 			NPC.HitSound = SoundID.NPCHit1;
@@ -48,7 +48,7 @@ namespace Creaturia.NPCs.Creatures
 			//NPC.catchItem = (short)ItemType<JackrabbitItem>();
 			NPC.lavaImmune = false;
 			NPC.aiStyle = 7;
-			NPC.dontTakeDamageFromHostiles = true;
+			//NPC.dontTakeDamageFromHostiles = true;
 			//NPC.dontTakeDamageFromHostiles = true;
 			AnimationType = NPCID.Frog;
 			NPC.ShowNameOnHover = true;

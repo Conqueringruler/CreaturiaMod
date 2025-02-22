@@ -1,0 +1,99 @@
+﻿[img]https://imgur.com/W2c5CX6.png[/img]
+[h1]Creaturia[/h1]
+
+Creaturia introduces an assortment of unique and interesting creatures, each and every one having some kind of function unlike anything else in the game. Unlike most other content mods, there isn’t a specific focus on weapons or bosses, but instead on making a variety of unique features all meant to make the world feel much alive and interesting!
+
+
+The content in this mod includes:
+
+32 Items
+Over 20 New Creatures!
+6 Weapons
+4 Minibosses!
+4 Buffs
+2 Unique… Talismans? 
+2 Accessories
+2 Incredible Music Tracks
+1 (Very Mobile) Plant
+1 Minion 
+1 Ammo 
+1 Hook
+1 Change to Golem (cool new feature(s) we promise!)
+Revamped all (non-strange) dye plants and a few other items to have new uses!
+
+That list only includes the implemented content by the way, so all of that you can experience in a playthrough yourself!
+
+[h3]Creatures[/h3]
+
+Want to see some of the creatures we’re talking about? Here’s some of our favorites (that we don’t mind spoiling)!
+
+
+[list][img]https://imgur.com/SRXlmgP.gif[/img][/list]
+
+The central character of version 1.0, to the point we nearly titled it “The Fishman Update”, quite a lot of the mod’s content has to do with him. Due to living within the ocean, he doesn’t have the opportunity to try fish from elsewhere, so he’s willing to trade outside fish for a variety of unique and important items. (What you see now is his Pre-hardmode lineup, don't want to spoil the best of his trades!)
+
+[list][img]https://imgur.com/6nl6zxc.gif[/img][/list]
+
+
+We couldn’t list creatures without talking about the icon of our mod, the Ectoad! A large frog residing in the dungeon, in exchange for certain bugs it might be willing to spit out the ectoplasm it’s swallowed. While not a major feature, it provides an alternative way to get ectoplasm than just grinding Dungeon Spirits. (Note: At the time that was recorded Ectoads were much rarer and gave a lot of ectoplasm, now they are more common but give a reduced amount. They are not as OP as that gif might make them seem haha).
+
+[list][img]https://imgur.com/GTa1ktW.png[/img][/list]
+
+And finally, the Spectral Mirrorman. A mysterious being traveling through the Underground Hallow, taking forms similar to NPCs you’ve known, in exchange for a certain amount of whatever material he wants, he will give your weapon or accessory a perfect (i.e. highest or second highest possible) reforge. What is his goal? I guess you’ll have to wait for the next major content update to find out...
+(prices reduced since gif was recorded).
+
+We don’t want to spoil too many, though! 
+
+[h3]Some Other Spoilers…[/h3]
+
+Want to see a bit of what we mean by “Unique Content”? Here’s some examples!
+
+[list][img]https://imgur.com/nJkrPif.png[/img][/list]
+
+A new pre-hardmode whip, the Electric Eel has a few different unique effects! From giving enemies the electric debuff (reverse-engineered to work on NPCs), even having built-in compatibility with the effect in Calamity (as in we just have ours turn off, they win this time...), it can also charge up to increase the length of the whip, length of the effect, and strength of the hit! The whip, however, can be pretty hard to get; you can almost think of it like a summoner equivalent to the Arkahalis with its rarity of being discovered, or like the Angler’s Fuzzy Carrot with its unique requirements to get from the Fishman. 
+
+[list][img]https://imgur.com/ScYgbuz.png[/img][/list]
+
+The Rainbow Focus, gotten through killing the Rainbow Fish within the Hallow, lets the player heal HP for Mana. Depending on how powerful of a Mage the player is, the rainbow focus scales accordingly - 40 Mana for healing 2 HP at its lowest, to 4 HP with 100 more maximum Mana, to 6 with the Mana Flower, 8 with Magic Cuffs, etc (the final gif uses heavily combined accessories that represent multiple). 
+
+Not only does this allow the item to scale in strength with Mage classes as they progress, it also prevents the item from becoming something any class can use to give purpose to their 200 mana (making it actually worse for Mage), something Mage-specific gear often suffers from in mods and other games. 
+
+[list][img]https://imgur.com/u5joQ4f.png[/img][/list]
+
+We would’ve liked for this to be a surprise, but given how many times modders (and even the amazing Relogic) have tried to fix Golem over the years, it’s important to explain what’s actually wrong with his place in progression and why this should (hopefully!) work. It’s not just because he’s too weak, it’s because there’s no incentive to do anything else but go straight to him! 
+
+Other bosses, once the one before them is beaten, have to be tracked down far away, or need some kind of requirement to get to, and maybe even an arena built. Golem? You’re already in the jungle and have found the temple, so why not just walk over and beat him?
+
+With what we’ve added, now there should be a great incentive. His Golem Fists now break off his body once defeated, slowly launching themselves towards the player, but with his left fist enchanted by the Pumpking, and the right by the Ice Queen, they become drastically stronger and each have unique abilities. So now, there’s more reason to explore everything Plantera did to the world other than just to get stronger; to hunt down one or both of the beings empowering Golem, to knock him down a peg before the fight. 
+
+[img]https://imgur.com/aPUhdlV.png[/img]
+
+In addition, weapons from the Frost Moon and Pumpkin Moon now have a significant damage boost to Golem, helping balance out the slight increase in his strength from the fists.
+
+If you're not a fan of them, or simply have too many mods that buff Golem, they can be disabled in the config.
+
+[h3]Known Issues In Multiplayer:[/h3]
+
+- The Golden Fish will occasionally give multiple wishes and not do curses
+- Particle effects on the Fallen Pixie’s transformation sometimes do not work
+- High latency may make the Dunkle have slight disconnect
+
+[h3]Roadmap for Future Updates:[/h3]
+
+- Expand upon the Mirrorman, and maybe even find out what his hidden goal is...
+- Cages for critters like hummingbirds and deflated Ectoads
+- Complete rewrite of the Golden Fish to fix multiplayer issues
+- Expansion on glasses gnomes
+- Change the Fishman to no longer accept tuna as payment (he lives in the Ocean after all), and with that give a new use to all those extra fish…
+- Build out a wiki for the mod
+- Increase performance for the Rainbow Fish, slightly change the fight
+
+
+-------------Credits -------------
+
+Conq_ - Developer and Creator
+
+Ripple - Spriter and Creative Designer
+
+Marlilo - Musician and Sfx Creator[quote=tModLoader Creaturia]
+Developed By Conq_[/quote]

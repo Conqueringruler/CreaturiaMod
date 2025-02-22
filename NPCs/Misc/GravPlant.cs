@@ -171,15 +171,12 @@ namespace Creaturia.NPCs.Misc
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{                                                      // Did I come up with these spawn parameters or did I have it there temporarily for reference? 
-			if (!Main.hardMode && spawnInfo.Water == false && (spawnInfo.SpawnTileY <= Main.maxTilesY - 200 && spawnInfo.SpawnTileY > (Main.rockLayer + Main.maxTilesY - 200) / 2))
+			if (!Main.hardMode && (spawnInfo.SpawnTileY <= Main.maxTilesY - 200 && spawnInfo.SpawnTileY > (Main.rockLayer + Main.maxTilesY - 200) / 2))
 			{
-				return SpawnCondition.Cavern.Chance * 0.015f;
+				return SpawnCondition.Cavern.Chance * (spawnInfo.Water ? 0 : 0.02f); // Can't believe I didn't know how to use the ternary conditional operator until now
 			}
-			else if (spawnInfo.Water == false)
-				{
-				return SpawnCondition.Cavern.Chance * 0.007f;
-			}
-			else return 0f;
+			else return SpawnCondition.Cavern.Chance * (spawnInfo.Water ? 0 : 0.012f);
+			
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{

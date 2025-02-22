@@ -35,7 +35,8 @@ namespace Creaturia.Items.Consumables
 			Item.maxStack = 99;
 			Item.consumable = true;
 			Item.width = 24;
-			Item.height = 24;
+            Item.value = Item.sellPrice(0, 0, 1, 50);
+            Item.height = 24;
 			Item.rare = ItemRarityID.Green;
 			
 		}

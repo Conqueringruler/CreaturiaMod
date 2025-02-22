@@ -44,7 +44,7 @@ namespace Creaturia.NPCs.Town
             NPCID.Sets.AttackTime[NPC.type] = 15;
             NPCID.Sets.AttackAverageChance[NPC.type] = 8;
             NPCID.Sets.HatOffsetY[NPC.type] = 4;
-
+            NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.SpawnsWithCustomName[Type] = true; // So it chooses a name like a townnpc since it isnt actually one
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
         }

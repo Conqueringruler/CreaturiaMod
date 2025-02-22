@@ -131,20 +131,23 @@ namespace Creaturia.Items.GlobalItems
                 tooltips.Add(new TooltipLine(Mod, "fdfdf", "1 minute duration"));
             }
 
-            if (item.type == ItemID.StrangePlant1)
-            {
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#1", "Restores 50 mana"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "Consumable with Right Click"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "'What will happen if you eat this?'"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#8", "??? Effect"));
-                tooltips.Add(new TooltipLine(Mod, "fdfdf", "Unkown duration"));
-            }
+            /*  if (item.type == ItemID.StrangePlant1)
+              {
+                  tooltips.Add(new TooltipLine(Mod, "Tooltip#1", "Restores 50 mana"));
+                  tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "Consumable with Right Click"));
+                  tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "'What will happen if you eat this?'"));
+                  tooltips.Add(new TooltipLine(Mod, "Tooltip#8", "??? Effect"));
+                  tooltips.Add(new TooltipLine(Mod, "fdfdf", "Unkown duration"));
+              } */
             if (item.type == ItemID.ChristmasTreeSword || item.type == ItemID.BatScepter || item.type == ItemID.TheHorsemansBlade || item.type == ItemID.RavenStaff || item.type == ItemID.CandyCornRifle ||
                 item.type == ItemID.JackOLanternLauncher || item.type == ItemID.ScytheWhip || item.type == ItemID.StakeLauncher || item.type == ItemID.Razorpine || item.type == ItemID.BlizzardStaff
                 || item.type == ItemID.NorthPole || item.type == ItemID.SnowmanCannon)
+
             {
                 tooltips.Add(new TooltipLine(Mod, "Tooltip#1", $"[i:{ModContent.ItemType<HellborneIcon>()}] [c/8b82e7:Golem is weak to this weapon.]"));
             }
+           
+
         }
 
         public override void SetDefaults(Item item)
@@ -155,15 +158,18 @@ namespace Creaturia.Items.GlobalItems
                 item.material = true;
             }
 
-            if (item.type == ItemID.FirstFractal)
+          /*  if (item.type == ItemID.FirstFractal)
             {
                 item.DamageType = DamageClass.Summon;
                 item.damage = 245;
 
-            }
-            if (item.type == ItemID.Prismite)
+            } */
+            if (item.type == ItemID.Trout)
             {
-
+                item.DamageType = DamageClass.Ranged;
+                item.consumable = true;
+                item.knockBack = 1f;
+                item.ammo = item.type;
             }
             if (item.type == ItemID.PinkPricklyPear)
             {
@@ -171,7 +177,7 @@ namespace Creaturia.Items.GlobalItems
                 {
                 new Color(255,182,193),
                 new Color(144,238,144),
-                new Color(173,255,47),
+                new Color(173,255,47), 
                 new Color(255,228,225),
                 };
                 item.DefaultToFood(22, 22, BuffID.WellFed, 7200);

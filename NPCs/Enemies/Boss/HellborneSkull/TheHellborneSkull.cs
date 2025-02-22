@@ -80,7 +80,11 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 												  "nearly killing Hellborne before the Lihzarhds built the Golem to channel his remaining energy. Until the world's guardian\n" +
 												   "was defeated, these spirits had been trapped, and have long ago forgotten their battle.\n")
 			});
-		}
+
+            
+            database.Entries.Remove(bestiaryEntry);
+        
+    }
 		public override void BossLoot(ref string name, ref int potionType)
 		{
 			potionType = ItemID.HealingPotion;
@@ -133,7 +137,7 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
             {
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
-					Main.NewText("As you can probably tell, this is an old boss from my 1.3 mod. It's only here as an unobtainable placeholder while the rework stays in stasis. ", Color.BlueViolet);
+					Main.NewText("As you can probably tell, this is an old boss from my 1.3 mod. It's only here as an UNOBTAINABLE placeholder while the rework stays in stasis. ", Color.BlueViolet);
 				}
 				ChatMessageSaidYet = true;
 

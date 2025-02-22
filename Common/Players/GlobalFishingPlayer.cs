@@ -49,7 +49,7 @@ namespace Creaturia.Common.Players
 				}
 			}
 
-			if (Main.hardMode && !attempt.inLava && !attempt.inHoney && Player.ZoneHallow && Main.rand.NextBool(3000))
+			if (Main.hardMode && !attempt.inLava && !attempt.inHoney && Player.ZoneHallow && Main.rand.NextBool(300))
 			{
 
 				int rainbowfishnpc = ModContent.NPCType<RainbowFishSpawner>();
@@ -113,8 +113,32 @@ namespace Creaturia.Common.Players
 
 				}
 			}
+            if (Player.ZoneCorrupt && Main.hardMode && !attempt.inLava && Main.rand.NextBool(300) && !NPC.AnyNPCs(ModContent.NPCType<DunklerFish>()))
+            {
 
-			if (Main.hardMode && !attempt.inLava && !attempt.inHoney && Player.ZoneCrimson && Main.rand.NextBool(3000) && !NPC.AnyNPCs(ModContent.NPCType<CrimsonFishMiniBoss>()))
+
+                int corruptfishnpc = ModContent.NPCType<DunklerFish>();
+
+                {
+                    if (Main.hardMode)
+                    {
+                        //itemDrop = -1 so terraria won't spawn the item
+                        npcSpawn = corruptfishnpc;
+                        //	Main.NewText("The creature that lies below hides until the next content update to Creaturia...", Color.DarkViolet);
+                        itemDrop = -1;
+
+                        sonar.Text = "Rot and plates pulsate below...";
+                        sonar.Color = Color.DarkViolet;
+                        sonar.Velocity = Vector2.UnitY;
+                        sonar.DurationInFrames = 300;
+                        sonarPosition = new Vector2(Player.position.X, Player.position.Y - 64);
+
+                    }
+
+                }
+            }
+
+            if (Main.hardMode && !attempt.inLava && !attempt.inHoney && Player.ZoneCrimson && Main.rand.NextBool(300) && !NPC.AnyNPCs(ModContent.NPCType<CrimsonFishMiniBoss>()))
 			{
 
 				int crimsonfishnpc = ModContent.NPCType<CrimsonFishMiniBoss>();
@@ -135,7 +159,7 @@ namespace Creaturia.Common.Players
 
 				}
 			}
-			if (!attempt.inLava && !attempt.inHoney && Player.ZoneBeach && Main.rand.NextBool(450) && !NPC.AnyNPCs(ModContent.NPCType<Fishman>()))
+			if (!attempt.inLava && !attempt.inHoney && Player.ZoneBeach && Main.rand.NextBool(60) && !NPC.AnyNPCs(ModContent.NPCType<Fishman>()))
 			{
 
 				int fishmannpc = ModContent.NPCType<Fishman>();
@@ -198,8 +222,8 @@ namespace Creaturia.Common.Players
 
 				}
 			}
-
-			if (Main.hardMode && !attempt.inLava && Player.ZoneBeach && Main.rand.NextBool(450) && !NPC.AnyNPCs(ModContent.NPCType<GoldenFish>()))
+           
+            if (Main.hardMode && !attempt.inLava && Player.ZoneBeach && Main.rand.NextBool(250) && !NPC.AnyNPCs(ModContent.NPCType<GoldenFish>()))
 			{
 
 
@@ -223,5 +247,7 @@ namespace Creaturia.Common.Players
 			}
 		}
 		
-	}
+
+
+    }
 }

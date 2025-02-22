@@ -225,7 +225,7 @@ namespace Creaturia.Projectiles
                         {
 
 
-                            shootTimer++;
+                            shootTimer += 2; // Doubling its speed of attack
                             if (shootTimer > 300)
                             {
                                 Vector2 directionshoot = (ownerMinionAttackTargetNPC2.Center - Projectile.Center + new Vector2(Main.rand.Next(-15, 15), Main.rand.Next(-95, 95))).SafeNormalize(Vector2.UnitX);
@@ -267,7 +267,7 @@ namespace Creaturia.Projectiles
                                 if (ownerMinionAttackTargetNPC2 == null)
                                 {
 
-                                    shootTimer++;
+                                    shootTimer += 2;
 
                                     if (shootTimer > 300)
                                     {

@@ -57,6 +57,7 @@ namespace Creaturia
         public static int HoneyFishId;
         public static int FrostMinnowId;
         public static int BassId;
+        public static int TunaId;
         public static int RainbowScaleId;
         internal UserInterface SpectralWatchmanUserInterface;
 
@@ -79,6 +80,7 @@ namespace Creaturia
             ChaosFishId = CustomCurrencyManager.RegisterCurrency(new Currencies.FishCurrencies.ChaosFishCurrency(ItemID.ChaosFish, 999L, "Chaos Fish"));
             GoldenCarpId = CustomCurrencyManager.RegisterCurrency(new Currencies.FishCurrencies.GoldenCarpCurrency(ItemID.GoldenCarp, 999L, "Golden Carp"));
             BassId = CustomCurrencyManager.RegisterCurrency(new Currencies.FishCurrencies.BassCurrency(ItemID.Bass, 999L, "Bass"));
+            TunaId = CustomCurrencyManager.RegisterCurrency(new Currencies.FishCurrencies.TunaCurrency(ItemID.Tuna, 999L, "Tuna"));
             RainbowScaleId = CustomCurrencyManager.RegisterCurrency(new Currencies.FishCurrencies.RainbowScaleCurrency(ModContent.ItemType<RainbowScale2>(), 999L, "Rainbow Scale"));
 
 
@@ -116,6 +118,7 @@ namespace Creaturia
         internal enum MessageType : byte // I wanted to just use numbers like 0, 1, 2, etc, but this is being a bitch so I guess not
         {
             GoldenFishMsg,
+            GoldenFishActivateMsg,
             FallenPixieMsg,
             IdkWhyMsg,
             DungeonFrogMsg,
@@ -190,6 +193,61 @@ namespace Creaturia
 
 
                             wishingfish.NPC.netUpdate = true;
+
+                        }
+
+                    }
+                    break;
+                case MessageType.GoldenFishActivateMsg: // GoldenFish Sync
+                    if (Main.npc[reader.ReadInt32()].ModNPC is GoldenFish wishingfish2)
+                    {
+                        wishingfish2.ChoosedWishes = reader.ReadBoolean();
+                        wishingfish2.WishGranted = reader.ReadBoolean();
+                        wishingfish2.TryDoWish = reader.ReadBoolean();
+                        bool firstbutton = reader.ReadBoolean();
+                        bool secondbutton = reader.ReadBoolean();
+                        Main.NewText("Packet Worked!", Color.BlueViolet);
+
+
+
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            ModPacket packet = GetPacket(); // use this instead of other
+                            packet.Write((byte)Creaturia.MessageType.GoldenFishMsg); // id
+                            packet.Write((Int32)wishingfish2.NPC.whoAmI); // NPC identity
+                            packet.Write((bool)wishingfish2.ChoosedWishes); // WishesChosen
+                            packet.Write((bool)wishingfish2.WishGranted); // Wish Granted
+                            packet.Write((Int32)wishingfish2.EvilCalculator); // Evil Calc
+                            packet.Write((Int32)wishingfish2.PunishmentChooser); // Punshment Chosen
+                            packet.Write((Int32)wishingfish2.RichesWish);
+                            packet.Write((Int32)wishingfish2.WishesWish);
+                            packet.Write((Int32)wishingfish2.FishesWish);                                                 // CHANGE ALL THIS TO MATCH PACKET!
+                            packet.Write((Int32)wishingfish2.OresWish);
+                            packet.Write((Int32)wishingfish2.SoulsWish);
+                            packet.Write((Int32)wishingfish2.WarWish); // this is the worst code I have ever written
+                            packet.Write((bool)wishingfish2.TryDoWish);
+                            packet.Send();
+
+                            /* 
+                               ModPacket packet = Mod.GetPacket(); // use this instead of other
+                    packet.Write((byte)Creaturia.MessageType.GoldenFishMsg); // id
+                    packet.Write((byte)NPC.whoAmI); // NPC identity
+                    packet.Write((bool)ChoosedWishes); // WishesChosen
+                    packet.Write((bool)WishGranted); // Wish Granted
+                    packet.Write((byte)EvilCalculator); // Evil Calc
+                    packet.Write((byte)PunishmentChooser); // Punshment Chosen
+                    packet.Write((byte)RichesWish);
+                    packet.Write((byte)WishesWish);
+                    packet.Write((byte)FishesWish);
+                    packet.Write((byte)OresWish);
+                    packet.Write((byte)SoulsWish);
+                    packet.Write((byte)WarWish);
+                    packet.Write((bool)TryDoWish);
+                    packet.Send();
+                             */
+
+
+                            wishingfish2.NPC.netUpdate = true;
 
                         }
 

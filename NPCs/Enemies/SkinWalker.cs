@@ -47,9 +47,9 @@ namespace Creaturia.NPCs.Enemies
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifiers);
 
 		}
-		NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+		NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
 		{
-			PortraitScale = 1f,
+            PortraitScale = 1f,
 			Scale = 1.10f,
 			Position = new Vector2(5f, 75f),
 			PortraitPositionXOverride = 0f,

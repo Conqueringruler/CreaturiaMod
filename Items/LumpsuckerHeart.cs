@@ -13,7 +13,7 @@ namespace Creaturia.Items
 		public override void SetStaticDefaults()
 		{
 			 // DisplayName.SetDefault("Ichorous Spines"); // By default, capitalization in classnames will add spaces to the display name. You can customize the display name here by uncommenting this line.
-			// Tooltip.SetDefault("'Even though the spine is razor clean the smell is still atrocious");
+			// Tooltip.SetDefault("'Even though the spine is razor clean, the smell is still atrocious'");
 		}
 
 		public override void SetDefaults()
@@ -21,8 +21,8 @@ namespace Creaturia.Items
 			
 			Item.width = 32;
 			Item.height = 38;
-			Item.value = 2000;
-			Item.rare = ItemRarityID.Pink;
+            Item.value = Item.sellPrice(0, 0, 80, 0);
+            Item.rare = ItemRarityID.Pink;
 			Item.material = true;
 			Item.maxStack = 99;
 			

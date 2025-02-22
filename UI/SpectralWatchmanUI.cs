@@ -167,7 +167,7 @@ public class SpectralWatchmanUI : UIState
 
 					
 
-					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 2800));
+					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 3800));
 					TotalOfPurchasingItem = (Main.LocalPlayer.CountItem(PurchasingItem));
 					awesomePrice = Item.buyPrice(0, 1, 0, 0);
 				}
@@ -175,7 +175,7 @@ public class SpectralWatchmanUI : UIState
 				{
 					PurchasingItem = ItemID.PixieDust;
 
-					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 2800));
+					PurchasingAmount = (10 + (int)(_vanillaItemSlot.Item.value / 3800));
 					 // Unless I change the buying system I can't do Pixie Dust because of stack limit
 				}
 
@@ -318,7 +318,8 @@ public class SpectralWatchmanUI : UIState
 						Item reforgeItem = new Item();
 						reforgeItem.netDefaults(_vanillaItemSlot.Item.netID);
 						//reforgeItem = reforgeItem.CloneWithModdedDataFrom(_vanillaItemSlot.Item)/* tModPorter Note: Removed. Use Clone, ResetPrefix or Refresh */;
-					reforgeItem = Main.item[_vanillaItemSlot.Item.whoAmI];
+					reforgeItem = reforgeItem.Clone();
+					reforgeItem.Refresh();
 					
 					
 
@@ -340,19 +341,28 @@ public class SpectralWatchmanUI : UIState
 					}
 					if (!_vanillaItemSlot.Item.accessory)
 					{
-						RandomPrefixValue = Main.rand.Next(1, 4); // remember that 4 is not one of the choosable options, since it excludes the last value
+                      
+                        reforgeItem.ResetPrefix();
+                       
+                        RandomPrefixValue = Main.rand.Next(1, 4); // remember that 4 is not one of the choosable options, since it excludes the last value
 						if (RandomPrefixValue == 1)
 						{
 							if (_vanillaItemSlot.Item.knockBack > 0)
 							{
 								reforgeItem.Prefix(PrefixID.Godly);
 							}
+                            else if (_vanillaItemSlot.Item.noMelee == true && _vanillaItemSlot.Item.noUseGraphic == true && _vanillaItemSlot.Item.DamageType == DamageClass.Melee)
+                            {
+                                reforgeItem.Prefix(PrefixID.Demonic);
+                            }
                             else
                             {
 								reforgeItem.Prefix(PrefixID.Demonic);
 							}
-							
-						}
+                            
+
+
+                        }
 						if (RandomPrefixValue == 2)
 						{
 							if (_vanillaItemSlot.Item.DamageType == DamageClass.Ranged)
@@ -387,15 +397,16 @@ public class SpectralWatchmanUI : UIState
 							{
 								reforgeItem.Prefix(PrefixID.Legendary);
 							}
-							if (_vanillaItemSlot.Item.DamageType == DamageClass.SummonMeleeSpeed)
-							{
-								reforgeItem.Prefix(PrefixID.Legendary);
-							}
-							if (_vanillaItemSlot.Item.DamageType == DamageClass.MeleeNoSpeed)
+						
+							 if (_vanillaItemSlot.Item.DamageType == DamageClass.MeleeNoSpeed)
                             {
 								reforgeItem.Prefix(PrefixID.Godly); // MeleeNoSpeed can't get melee prefixes, only universal ones
 							}
-						}
+                            if (_vanillaItemSlot.Item.noMelee == true && _vanillaItemSlot.Item.noUseGraphic == true && _vanillaItemSlot.Item.DamageType == DamageClass.Melee)
+                            {
+                                reforgeItem.Prefix(PrefixID.Demonic);
+                            }
+                        }
 
 						if (RandomPrefixValue == 3)
 						{
@@ -403,11 +414,11 @@ public class SpectralWatchmanUI : UIState
 							{
 								if (_vanillaItemSlot.Item.knockBack == 0f) // can't get modifiers that affect knockback
 								{
-									reforgeItem.Prefix(PrefixID.Deadly2);
+									reforgeItem.Prefix(PrefixID.Murderous); // Tried to do Deadly2, the common modifier with no knockback but it DOESNT WORK FJFFJDKJLFFJKDS THE WIKI LIES!!!!
 								}
 								else
 								{
-									reforgeItem.Prefix(PrefixID.Deadly);
+									reforgeItem.Prefix(PrefixID.Godly);
 								}
 
 							}
@@ -431,22 +442,29 @@ public class SpectralWatchmanUI : UIState
 							{
 								reforgeItem.Prefix(PrefixID.Savage);
 							}
-							if (_vanillaItemSlot.Item.DamageType == DamageClass.MeleeNoSpeed)
+							 if (_vanillaItemSlot.Item.DamageType == DamageClass.MeleeNoSpeed)
 							{
 								reforgeItem.Prefix(PrefixID.Superior); // MeleeNoSpeed can't get melee prefixes, only universal ones
 							}
-						}
+							 if (_vanillaItemSlot.Item.noMelee == true && _vanillaItemSlot.Item.noUseGraphic == true && _vanillaItemSlot.Item.DamageType == DamageClass.Melee)
+							{
+                                reforgeItem.Prefix(PrefixID.Superior);
+                            }
+                        }
 
 
 
 					}
 					
 						_vanillaItemSlot.Item = reforgeItem.Clone();
+					
 						_vanillaItemSlot.Item.position.X = Main.LocalPlayer.position.X + (float)(Main.LocalPlayer.width / 2) - (float)(_vanillaItemSlot.Item.width / 2);
 						_vanillaItemSlot.Item.position.Y = Main.LocalPlayer.position.Y + (float)(Main.LocalPlayer.height / 2) - (float)(_vanillaItemSlot.Item.height / 2);
 						_vanillaItemSlot.Item.favorited = favorited;
 						_vanillaItemSlot.Item.stack = stack;
 						ItemLoader.PostReforge(_vanillaItemSlot.Item);
+					
+
 						PopupText.NewText(PopupTextContext.ItemReforge, _vanillaItemSlot.Item, _vanillaItemSlot.Item.stack, true, false);
 						SoundEngine.PlaySound(SoundID.DD2_DarkMageHealImpact);
 					}

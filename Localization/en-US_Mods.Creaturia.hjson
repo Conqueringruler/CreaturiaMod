@@ -1,0 +1,199 @@
+Tiles: {
+}
+
+Buffs: {
+	BabyLumpsuckerBuff: {
+	}
+
+	DunkleBuff: {
+	}
+
+	FishmanBuff: {
+	}
+
+	SlipperyBuff: {
+	}
+}
+
+Items: {
+	RabbitsFoot: {
+	}
+
+	SpinyNecklace: {
+	}
+
+	FishBullet: {
+	}
+
+	AncientDartGunPieces.Tooltip: "'Strangely nostalgic'"
+	BlankItem.DisplayName: Blank Item
+	SinfulSoil.Tooltip: "'erm... for the Devs only!'"
+
+	BundleOfCoral: {
+	}
+
+	BundleOfFishBullets: {
+	}
+
+	CorruptBait: {
+	}
+
+	CrimsonBait: {
+	}
+
+	FishmanDevbait: {
+	}
+
+	GoldenFishDevBait: {
+	}
+
+	HallowBait: {
+	}
+
+	DunkleVertebrae: {
+	}
+
+	ExampleSword: {
+	}
+
+	HellborneIcon: {
+	}
+
+	LumpsuckerHeart: {
+	}
+
+	MoltenBone.Tooltip: ""
+
+	RainbowScale2: {
+	}
+
+	SummonFallen: {
+	}
+
+	SlipperyHook: {
+	}
+
+	AncientDartRifle: {
+	}
+
+	AncientStoneShortsword: {
+	}
+
+	ElectricEel: {
+	}
+
+	FlagrantEyeball: {
+	}
+
+	RainbowFocus: {
+	}
+
+	ScaledLamp: {
+	}
+
+	TridentoftheFishman: {
+	}
+
+	HoopSnakeItem: {
+	}
+
+	HummingBird1Item: {
+	}
+
+	JackrabbitItem.Tooltip: ""
+
+	SlipperySlugItem: {
+	}
+
+	ButterHummingbirdItem: {
+		DisplayName: Butter Hummingbird
+		Tooltip: "'Wait! It's not actually made of butter!'"
+	}
+
+	LeafyHummingbirdItem: {
+		DisplayName: Leafy Hummingbird
+		Tooltip: "'Blends in with the leaves'"
+	}
+
+	PurpleHeadedHummingbirdItem: {
+		DisplayName: Crowned Woodnymph Hummingbird
+		Tooltip: "'Violet... but is it also violent?'"
+	}
+
+	TorchwoodHummingbirdItem: {
+		DisplayName: Torchwood Hummingbird
+		Tooltip: "'Torchwood Hummingbird has a secret: He can't read.'"
+	}
+}
+
+NPCs: {
+	RainbowFishSpawner.DisplayName: Rainbow Fish Spawner
+
+	Ninja: {
+		TownNPCMood: {
+			Content: I appreciate everything you've done for me, I am content.
+			NoHome: If you could give me a home, I would very much appreciate it.
+			FarFromHome: I've spent enough time far from my home, now and before.
+			LoveSpace: The peace and silence of solitude is amazing for meditation - when there aren't clamoring beasts around.
+			DislikeCrowded: Being around this many people starts to become frustrating after a while.
+			HateCrowded: Too many people here, I feel like I'm being squished in gel!
+			LikeBiome: I like living in this kind of biome, reminds me of home.
+			DislikeBiome: I don't enjoy this biome very much.
+			HateBiome: This place is abominable, if you can, please move me somewhere else!
+			//LikeNPC: "I like {NPCName}."
+			DislikeNPC_Merchant: The greed of {NPCName} disgusts me.
+			HateNPC_Angler: "{NPCName} is a disappointment to his lineage. Where I come from kids like that would have been straightened out."
+			LikeNPC_Princess: I like {NPCName}, her poise truly reflects her royal heritage.
+			Princess_LovesNPC: "{NPCName} is so cool, I always wanted to meet a real-life ninja!"
+			LikeNPC: "{NPCName} is nice to be around."
+			DislikeNPC: "{NPCName} has a repulsive personality."
+			HateNPC: "{NPCName} is a disappointment to his lineage. Where I come from kids like that would have been straightened out."
+		}
+	}
+
+	ButterHummingbird.DisplayName: Butter Hummingbird
+	LeafyHummingbird.DisplayName: Leafy Hummingbird
+	PurpleHeadedHummingbird.DisplayName: Crowned Woodnymph Hummingbird
+	TorchwoodHummingbird.DisplayName: Torchwood Hummingbird
+	Butter1Hummingbird.DisplayName: Butter Hummingbird
+	MrFighter.DisplayName: Mr Fighter
+	GolemFists_Bestiary.DisplayName: Golem Fists
+}
+
+Dialogue: {
+	Fishman: {
+		AnglerDia: Havve you seen *snort* {0} around? Ivv so, give 'im no quarter.
+		PirateDia: Me hearty {0} and I go way back, although he've always been a bit 'loaded to the gunwales', ivv you knows what I mean.
+		FishmanDia2: Yous seems like the adventurin' type, so maybees you'll be interested in my *Snort* magicals bait. Theys only work in powerful places, so I hear.
+		StandardDialogue1: I'vve no interest *snort* in your moneys, many a chests o' gold have me.
+		StandardDialogue2: *Snort* whats havve ye pulled meself up for?
+		StandardDialogue3: Maybees you've interest in me booty? Mine treasure I mean, harharhar.
+		StandardDialogue4: I be a little squiffy, but me wares be fine!
+		StandardDialogue5: I's won't stick around for long, me sea legs havve no care for land.
+		StandardDialogue6: Fresh fish. Easy choose.
+		StandardDialogue7: Summs of those fish from the evil ain't the friendliest, so bees careful fishin' thurr.
+	}
+
+	GoldenWishingFish: {
+		WishDia: If you let me free, I'll fulfill you a wish!
+		WishGrantedDia: Your wish is my command!
+		EvilWish1: You really thought I would grant you a wish? Muahahaha!
+		CheatWish: How dare you try to cheat the system like that!
+	}
+
+	SpectralMirrorman: {
+		GuideDia: Judgyyng by myyy, for lack of a better word, 'freedom', I find it safe to assume you've learned the truth about your guide, '{0}', haven't you?
+		WizardDia: Yous seems like the adventurin' type, so maybees you'll be interested in my *Snort* magicals bait. Theys only work in powerful places, so I hear.
+		MoonDia: Some say that during a full moon, if you stare hard enough, you may see a great figure squirming about upon its surface. What do you think about that?
+		StandardDialogue1: I give you this warning; gaze too long and you might end up somewhere you don't want to be.
+		StandardDialogue2: ...
+		StandardDialogue3: Ahh, I can tell. You were the one that set us free, weren't you?
+		StandardDialogue4: Ahh, I can tell. You are the one that set us free, aren't you?
+		StandardDialogue5: If only you knew how useful you are.
+		StandardDialogue6: Is my... appearance, unsettling to you? My apologies, I simply tried to appear as something you might find... comforting.
+		StandardDialogue7: You may find my services... useful, to you. As long as you bring me what I need for... well, I think that's enough.
+	}
+}
+
+Projectiles: {
+}

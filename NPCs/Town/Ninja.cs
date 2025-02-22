@@ -22,6 +22,7 @@ using Creaturia.Projectiles;
 using Microsoft.Xna.Framework;
 using Creaturia.Items.Weapon;
 
+
 namespace Creaturia.NPCs.Town
 {
     [AutoloadHead]
@@ -42,10 +43,10 @@ namespace Creaturia.NPCs.Town
             Main.npcFrameCount[NPC.type] = 26;
             NPCID.Sets.ExtraFramesCount[NPC.type] = 9;
             NPCID.Sets.AttackFrameCount[NPC.type] = 5;
-            NPCID.Sets.DangerDetectRange[NPC.type] = 700;
+            NPCID.Sets.DangerDetectRange[NPC.type] = 450;
             NPCID.Sets.AttackType[NPC.type] = 0;
             NPCID.Sets.AttackTime[NPC.type] = 20;
-            NPCID.Sets.AttackAverageChance[NPC.type] = 8;
+            NPCID.Sets.AttackAverageChance[NPC.type] = 7;
             NPCID.Sets.HatOffsetY[NPC.type] = 4;
 
             NPC.Happiness
@@ -60,7 +61,7 @@ namespace Creaturia.NPCs.Town
                 .SetNPCAffection(NPCID.Angler, AffectionLevel.Hate);
 
 
-            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
+            NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 Velocity = 1f,
                 //Direction = -1
@@ -76,7 +77,7 @@ namespace Creaturia.NPCs.Town
             NPC.width = 18;
             NPC.height = 40;
             NPC.aiStyle = 7;
-            NPC.damage = 12;
+            //NPC.damage = 12;
             NPC.defense = 17;
             NPC.lifeMax = 350;
             NPC.HitSound = SoundID.NPCHit1;
@@ -120,7 +121,8 @@ namespace Creaturia.NPCs.Town
                 "Yamauchi",
                 "Kaneda",
                 "Yamauchi",
-                "Takuya Yamashiro"
+                "Takuya Yamashiro",
+                "Hideki"
             };
         }
 
@@ -128,16 +130,17 @@ namespace Creaturia.NPCs.Town
         {
             Player player = Main.LocalPlayer;
             int angler = NPC.FindFirstNPC(NPCID.Angler);
-            int merchant = NPC.FindFirstNPC(NPCID.Merchant);
-            if (angler >= 0 && Main.rand.NextBool(8))
-            {
-                return "" + Main.npc[angler].GivenName + " is a disappointment to his lineage. Where I come from kids like that would have been straightened out. ";
-            }
-            if (merchant >= 0 && Main.rand.NextBool(8))
-            {
-                return "The greed of " + Main.npc[merchant].GivenName + " disgusts me.";
-            }
-          
+            /*   int angler = NPC.FindFirstNPC(NPCID.Angler);
+               int merchant = NPC.FindFirstNPC(NPCID.Merchant);
+               if (angler > 0 && Main.rand.NextBool(8))
+               {
+                   return "" + Main.npc[angler].GivenName + " is a disappointment to his lineage. Where I come from kids like that would have been straightened out. ";
+               }
+               if (merchant > 0 && Main.rand.NextBool(8))
+               {
+                   return "The greed of " + Main.npc[merchant].GivenName + " disgusts me.";
+               } */
+
             if (Main.LocalPlayer.HasItem(ItemID.Tabi) && Main.rand.NextBool(3))
             {
                 return "I'd be happy to turn that Tabi into a Black Belt. What most people don't know is that they're actually the same thing, just folded differently. The technique to fold them is secret though.";
@@ -148,7 +151,7 @@ namespace Creaturia.NPCs.Town
             }
             if (BirthdayParty.PartyIsUp && Main.rand.NextBool(3))
             {
-                return "What? You expect me to take off my helmet for the party? That will not happen.";
+                return "What? You expect me to take off my helmet for the party? Not happening.";
             }
             if (player.ZoneHallow && Main.rand.NextBool(4))
             {
@@ -162,7 +165,7 @@ namespace Creaturia.NPCs.Town
                 }
 
             }
-            if (player.ZoneSnow && Main.rand.NextBool(6))
+            if (player.ZoneSnow && Main.rand.NextBool(8))
             {
                 return "The snow here reminds me of a prefecture I lived in for a while. It's very soothing. ";
             }
@@ -203,8 +206,11 @@ namespace Creaturia.NPCs.Town
 
             }
         }
-
-            switch (Main.rand.Next(9))
+            if (Main.rand.NextBool(7) && (angler >= 0))
+            {
+                return "That angler kid is a little brat, back in my day we'd be beaten with katanas for treating superiors like that.";
+            }
+            switch (Main.rand.Next(10))
             {
                 case 0:
                     return "Thank you from freeing me from that beast. I'll ignore that you stole some of my extra clothes.";
@@ -222,12 +228,15 @@ namespace Creaturia.NPCs.Town
                 case 6:
                     return "I hate slimes.";
                 case 7:
-                    return "You can see I don't sell all the products my homeland produces, so if there's something you need, it may often arrive from a merchant - perhaps a traveling merchant.";
+                    return "You can see I don't sell all the products my homeland produces, so if there's something you need, it may often arrive from a merchant - perhaps a traveling merchant!";
                 case 8:
-                    return "";
+                    return "Do you know a man named Kuai Liang? Just curious...";
+                case 9:
+                    return "I used to be big in the 90's... just saying...";
                 default:
                     return "I hate slimes.";
             }
+            
         }
 
         public override void SetChatButtons(ref string button, ref string button2)
@@ -297,42 +306,29 @@ namespace Creaturia.NPCs.Town
                     .Add(new Item(ItemID.Sake))
                     .Add(new Item(ItemID.Shuriken))
                     .Add(new Item(ItemID.Katana))
+
                         .Add(new Item(ItemID.NinjaHood)
                         {
-                            shopCustomPrice = 8000,
+                            shopCustomPrice = 80000,
                         })
              .Add(new Item(ItemID.NinjaShirt)
              {
-                 shopCustomPrice = 9200,
+                 shopCustomPrice = 92000,
+
              })
              .Add(new Item(ItemID.NinjaPants)
              {
-                 shopCustomPrice = 7800,
-             });
-            if (Main.slimeRain)
-            {
-                npcShop.Add(new Item(ItemID.Gel));
-            }
-            if (Main.hardMode)
-            {
-                npcShop.Add(new Item(ItemID.TigerClimbingGear)
-                {
-                    shopCustomPrice = 19000,
-                });
-                npcShop.Add(new Item(ItemID.GuideVoodooDoll));
-                if (NPC.downedMechBossAny)
-                {
-                    npcShop.Add(new Item(ItemID.MoonCharm));
-                }
+                 shopCustomPrice = 78000,
+             })
+           .Add(new Item(ItemID.TigerClimbingGear)
+           {
+               shopCustomPrice = 100000,
+           }, Condition.Hardmode)
 
-            }
-            if (Main.LocalPlayer.HasBuff(BuffID.Slimed))
-            {
-                npcShop.Add(new Item(ItemID.SlimeCrown)
-                {
-                    shopCustomPrice = 2000,
-                });
-            }
+           .Add(new Item(ItemID.MoonCharm), Condition.Hardmode, Condition.DownedMechBossAny, Condition.MoonPhaseFull);
+
+          
+            npcShop.Register();
         }
       
         public override void HitEffect(NPC.HitInfo hit)
@@ -362,7 +358,7 @@ namespace Creaturia.NPCs.Town
         {
             damage = 25;
             knockback = 4f;
-
+            
         }
 
         public override void TownNPCAttackCooldown(ref int cooldown, ref int randExtraCooldown)
