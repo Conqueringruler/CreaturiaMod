@@ -10,6 +10,7 @@ using Terraria.IO;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using Terraria.Audio;
+using Creaturia.Configs;
 
 
 namespace Creaturia.Items.GlobalItems
@@ -40,7 +41,7 @@ namespace Creaturia.Items.GlobalItems
                 player.npcTypeNoAggro[NPCID.ArmoredViking] = true;
             }
         }
-
+        
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
             //TooltipLine line;
@@ -58,14 +59,9 @@ namespace Creaturia.Items.GlobalItems
             {
                 tooltips.Add(new TooltipLine(Mod, "Tooltip#0", "When worn Undead Vikings and Armored Vikings no longer target you"));
             }
-
-            if (item.type == ItemID.GolemFist)
-
-            {
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#3", "20% chance to fire empowered by the Frost Queen or Pumpking"));
-                //tooltips.Add(new TooltipLine(Mod, "BuffTime", "Unknown Time"));
-            }
-
+            
+               
+            
             if (item.type == ItemID.YellowMarigold)
 
             {
@@ -139,16 +135,10 @@ namespace Creaturia.Items.GlobalItems
                   tooltips.Add(new TooltipLine(Mod, "Tooltip#8", "??? Effect"));
                   tooltips.Add(new TooltipLine(Mod, "fdfdf", "Unkown duration"));
               } */
-            if (item.type == ItemID.ChristmasTreeSword || item.type == ItemID.BatScepter || item.type == ItemID.TheHorsemansBlade || item.type == ItemID.RavenStaff || item.type == ItemID.CandyCornRifle ||
-                item.type == ItemID.JackOLanternLauncher || item.type == ItemID.ScytheWhip || item.type == ItemID.StakeLauncher || item.type == ItemID.Razorpine || item.type == ItemID.BlizzardStaff
-                || item.type == ItemID.NorthPole || item.type == ItemID.SnowmanCannon)
+            
+          
 
-            {
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#1", $"[i:{ModContent.ItemType<HellborneIcon>()}] [c/8b82e7:Golem is weak to this weapon.]"));
-            }
-           
-
-        }
+    }
 
         public override void SetDefaults(Item item)
         {

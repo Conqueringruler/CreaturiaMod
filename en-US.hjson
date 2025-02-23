@@ -347,11 +347,11 @@ Mods: {
 		Configs: {
 			CreaturiaSettings: {
 				DisplayName: Creaturia Settings
-				Headers.Settings: Settings Header
+				Headers.Settings: Settings
 
 				GolemFists: {
-					Label: Golem Fists
-					Tooltip: ""
+					Label: "[i:1297]Golem Changes"
+					Tooltip: Disable to remove all added Golem content or changes
 				}
 			}
 		}

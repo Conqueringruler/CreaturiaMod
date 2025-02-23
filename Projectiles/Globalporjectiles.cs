@@ -18,6 +18,7 @@ using Creaturia.NPCs.Enemies.Boss.HellborneSkull;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Creaturia.NPCs.Creatures;
+using Creaturia.Configs;
 
 namespace Creaturia.Projectiles
 {
@@ -85,6 +86,7 @@ namespace Creaturia.Projectiles
             }
             return base.OnTileCollide(projectile, oldVelocity);
         }
+        public bool GolemFists = ModContent.GetInstance<CreaturiaSettings>().GolemFists.Contains("Enabled");
         public override void AI(Projectile projectile)
         {
             if (projectile.type == ProjectileID.CursedDartFlame)
@@ -127,41 +129,44 @@ namespace Creaturia.Projectiles
                     }
                 }
             }
-            
-            if (projectile.type == ProjectileID.GolemFist)
+            if (GolemFists)
             {
-
-
-                if (OnStart == true)
+                if (projectile.type == ProjectileID.GolemFist)
                 {
-                    OnStart = false;
 
-                    if (Main.rand.NextBool(5))
+
+                    if (OnStart == true)
                     {
-                        if (Main.rand.NextBool(2))
+                        OnStart = false;
+
+                        if (Main.rand.NextBool(5))
                         {
-                            EmpoweredByPumpking = true;
+                            if (Main.rand.NextBool(2))
+                            {
+                                EmpoweredByPumpking = true;
+                            }
+                            else
+                            {
+                                EmpoweredByFrostQueen = true;
+                            }
                         }
-                        else
-                        {
-                            EmpoweredByFrostQueen = true;
-                        }
+
                     }
 
-                }
-                if (EmpoweredByPumpking)
-                {
-                    Lighting.AddLight(projectile.Center, Color.DarkOrange.ToVector3() * 0.4f);
-                    Dust dust = Dust.NewDustDirect(projectile.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), projectile.width, projectile.height, DustID.Firefly, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.Orange, 1.5f);
-                }
-                if (EmpoweredByFrostQueen)
-                {
-                    Lighting.AddLight(projectile.Center, Color.PowderBlue.ToVector3() * 0.4f);
-                    Dust dust = Dust.NewDustDirect(projectile.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), projectile.width, projectile.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1f);
+                    if (EmpoweredByPumpking)
+                    {
+                        Lighting.AddLight(projectile.Center, Color.DarkOrange.ToVector3() * 0.4f);
+                        Dust dust = Dust.NewDustDirect(projectile.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), projectile.width, projectile.height, DustID.Firefly, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.Orange, 1.5f);
+                    }
+                    if (EmpoweredByFrostQueen)
+                    {
+                        Lighting.AddLight(projectile.Center, Color.PowderBlue.ToVector3() * 0.4f);
+                        Dust dust = Dust.NewDustDirect(projectile.position + new Vector2(Main.rand.Next(-20, 20), Main.rand.Next(-20, 20)), projectile.width, projectile.height, DustID.Ice, Main.rand.Next(-0, 0), Main.rand.Next(-0, 0), default, Color.LightBlue, 1f);
+                    }
                 }
             }
         }
-
+        
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
         {
             if (projectile.type == ProjectileID.HolyWater)
@@ -182,41 +187,47 @@ namespace Creaturia.Projectiles
                 }
                 
             }
-            if (projectile.type is ProjectileID.CandyCorn or ProjectileID.JackOLantern or ProjectileID.FlamingJack or ProjectileID.Stake
+            if (GolemFists)
+            {
+                if (projectile.type is ProjectileID.CandyCorn or ProjectileID.JackOLantern or ProjectileID.FlamingJack or ProjectileID.Stake
                or ProjectileID.Bat or ProjectileID.PineNeedleFriendly or ProjectileID.PineNeedleHostile
             or ProjectileID.Raven or ProjectileID.OrnamentFriendly or ProjectileID.OrnamentStar
              or ProjectileID.ClusterSnowmanRocketI or ProjectileID.RocketSnowmanI or ProjectileID.RocketSnowmanIII
              or ProjectileID.MiniNukeSnowmanRocketI or ProjectileID.ScytheWhip or ProjectileID.ScytheWhipProj or ProjectileID.Blizzard)
-            {
-                if (target.type == ModContent.NPCType<TheHellborneSkull>() || target.type == ModContent.NPCType<HellborneSkullMinion>() || target.type == ModContent.NPCType<HellborneGuardian>()
-                    || target.type == NPCID.Golem || target.type == NPCID.GolemFistLeft || target.type == NPCID.GolemFistRight || target.type == NPCID.GolemHead || target.type == NPCID.GolemHeadFree)
                 {
-                    //projectile.damage *= 2;
-                    modifiers.FinalDamage *= 2;
-                    projectile.netUpdate = true;
-                    target.netUpdate = true;
+                    if (target.type == ModContent.NPCType<TheHellborneSkull>() || target.type == ModContent.NPCType<HellborneSkullMinion>() || target.type == ModContent.NPCType<HellborneGuardian>()
+                        || target.type == NPCID.Golem || target.type == NPCID.GolemFistLeft || target.type == NPCID.GolemFistRight || target.type == NPCID.GolemHead || target.type == NPCID.GolemHeadFree)
+                    {
+                        //projectile.damage *= 2;
+                        modifiers.FinalDamage *= 2;
+                        projectile.netUpdate = true;
+                        target.netUpdate = true;
+                    }
                 }
             }
-            if (projectile.type == ProjectileID.GolemFist)
+            if (GolemFists)
             {
-                if (EmpoweredByPumpking)
+                if (projectile.type == ProjectileID.GolemFist)
                 {
-                    modifiers.SetCrit();
-                    target.AddBuff(BuffID.Oiled, 320, false);
-                    target.AddBuff(BuffID.OnFire, 320, false);
-                    Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity, ProjectileID.SolarWhipSwordExplosion, 120, 1f, projectile.owner);
-                }
+                    if (EmpoweredByPumpking)
+                    {
+                        modifiers.SetCrit();
+                        target.AddBuff(BuffID.Oiled, 320, false);
+                        target.AddBuff(BuffID.OnFire, 320, false);
+                        Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity, ProjectileID.SolarWhipSwordExplosion, 120, 1f, projectile.owner);
+                    }
 
-                if (EmpoweredByFrostQueen)
-                {
-                    modifiers.SetCrit();
-                    target.AddBuff(BuffID.Frostburn2, 320, false);
+                    if (EmpoweredByFrostQueen)
+                    {
+                        modifiers.SetCrit();
+                        target.AddBuff(BuffID.Frostburn2, 320, false);
 
-                    Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity / 8 + new Vector2(Main.rand.Next(-3, 3), Main.rand.Next(0, 5)), ProjectileID.NorthPoleSnowflake, 40, 1f, projectile.owner);
-                    Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity / 8 + new Vector2(Main.rand.Next(-3, 3), Main.rand.Next(0, 5)), ProjectileID.NorthPoleSnowflake, 40, 1f, projectile.owner);
-                    Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity / 8 + new Vector2(Main.rand.Next(-3, 3), Main.rand.Next(0, 5)), ProjectileID.NorthPoleSnowflake, 40, 1f, projectile.owner);
-                    Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity / 8 + new Vector2(Main.rand.Next(-3, 3), Main.rand.Next(0, 5)), ProjectileID.NorthPoleSnowflake, 40, 1f, projectile.owner);
-                    // Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity / 5, ProjectileID., default, 1f, projectile.owner);
+                        Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity / 8 + new Vector2(Main.rand.Next(-3, 3), Main.rand.Next(0, 5)), ProjectileID.NorthPoleSnowflake, 40, 1f, projectile.owner);
+                        Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity / 8 + new Vector2(Main.rand.Next(-3, 3), Main.rand.Next(0, 5)), ProjectileID.NorthPoleSnowflake, 40, 1f, projectile.owner);
+                        Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity / 8 + new Vector2(Main.rand.Next(-3, 3), Main.rand.Next(0, 5)), ProjectileID.NorthPoleSnowflake, 40, 1f, projectile.owner);
+                        Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity / 8 + new Vector2(Main.rand.Next(-3, 3), Main.rand.Next(0, 5)), ProjectileID.NorthPoleSnowflake, 40, 1f, projectile.owner);
+                        // Projectile.NewProjectile(Projectile.GetSource_None(), projectile.position, projectile.velocity / 5, ProjectileID., default, 1f, projectile.owner);
+                    }
                 }
             }
         }
