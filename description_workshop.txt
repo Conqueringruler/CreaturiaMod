@@ -95,5 +95,10 @@ Conq_ - Developer and Creator
 
 Ripple - Spriter and Creative Designer
 
-Marlilo - Musician and Sfx Creator[quote=tModLoader Creaturia]
-Developed By Conq_[/quote]
+Marlilo - Musician and Sfx Creator
+
+Translators:
+
+Russian Translation done by Urna_ (on Discord as dev_urna)!
+
+Whip Chargeup based from Tmodloader's ExampleMod

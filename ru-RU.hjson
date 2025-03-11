@@ -1,0 +1,359 @@
+Mods: {
+	Creaturia: {
+		Buffs: {
+			BabyLumpsuckerBuff: {
+				DisplayName: Детеныш Пинагор
+				Description: Детеныш пинагора сражается за вас!
+			}
+
+			DunkleBuff: {
+				DisplayName: Темный дух
+				Description:
+					'''
+					Мощное увеличение физической силы, но предметы не могут быть использованы
+					Защита увеличивается на 50. Выносливость увеличивается на 5%, Скорость передвижения увеличивается на 10%
+					'''
+			}
+
+			FishmanBuff: {
+				DisplayName: Благославение рыбака
+				Description: Мощное увеличение скорости передвежения и атаки ближнего боя and melee speed, and amplifies your senses!
+			}
+
+			SlipperyBuff: {
+				DisplayName: Скользский
+				Description: Шанс 50% увернуться от атаки, когда ты скользкий!
+			}
+		}
+
+		Items: {
+			RabbitsFoot: {
+				DisplayName: Крольчья лапка
+				Tooltip:
+					'''
+					'Они сказали, что это удача... Я сказал, что это стремно.' 
+					Немного увеличивает удачу
+					Шанс 1% увернуться от атаки
+					'''
+			}
+
+			SpinyNecklace: {
+				DisplayName: Шипастое ожерелье
+				Tooltip:
+					'''
+					Увеличивает максимальное значение миньонов на 1
+					Детеныш Пинагора принял вас за свое мать
+					'''
+			}
+
+			FishBullet: {
+				DisplayName: Рыбопуля
+				Tooltip:
+					'''
+					Превращается в пулю, когда в находится в воде или под дождем!
+					Когда превращена, +5% к крит. урону 
+					Когда превращена, мощно усилена отдача
+					Когда превращена, самоноводится
+					'''
+			}
+
+			AncientDartGunPieces.DisplayName: Части древнего дротикомета
+			SinfulSoil.DisplayName: Грешная почва
+
+			BundleOfCoral: {
+				DisplayName: Мешок коралов
+				Tooltip:
+					'''
+					Много ракушек и вещиц лежит внутри!
+					{$CommonItemTooltip.RightClickToOpen}
+					'''
+			}
+
+			BundleOfFishBullets: {
+				DisplayName: Мешок рыбопуль
+				Tooltip:
+					'''
+					Содержит 10-20 рыбопуль
+					{$CommonItemTooltip.RightClickToOpen}
+					'''
+			}
+
+			CorruptBait: {
+				DisplayName: Гнилая наживка
+				Tooltip:
+					'''
+					'!'
+					Используйте в порче
+					'''
+			}
+
+			CrimsonBait: {
+				DisplayName: Гнойный стейк
+				Tooltip:
+					'''
+					'!'
+					Используйте в багрянце
+					'''
+			}
+
+			FishmanDevbait: {
+				DisplayName: Рыбный червь
+				Tooltip:
+					'''
+					'Только для разработчиков!' 
+					Используйте в океане
+					'''
+			}
+
+			GoldenFishDevBait: {
+				DisplayName: Магический червь
+				Tooltip:
+					'''
+					'От него исходит энергетическая аура, не устрашающая вас' 
+					Используйте в океане
+					'''
+			}
+
+			HallowBait: {
+				DisplayName: Сверкающий леденец
+				Tooltip:
+					'''
+					'!' 
+					Используете в освещении
+					'''
+			}
+
+			DunkleVertebrae: {
+				DisplayName: Позвонок дунклеостея
+				Tooltip: "'Ее плотность делает его практически неразрушимым'"
+			}
+
+			ExampleSword: {
+				DisplayName: Тестовый меч
+				Tooltip: Каждый мод нуждается в старте с тестовым мечем.
+			}
+
+			HellborneIcon: {
+				DisplayName: Адский череп и голем слабы для этого оружия слабы для этого оружия!
+				Tooltip: "эмм... тебе нельзя видеть эту подсказку! "
+			}
+
+			LumpsuckerHeart: {
+				DisplayName: Гнойные шипы
+				Tooltip: "'Несмотря на то, что шипы чистые, как бритва, они все воняют'"
+			}
+
+			MoltenBone.DisplayName: Расплавленная кость
+
+			RainbowScale2: {
+				DisplayName: Радужная чешуя
+				Tooltip: Призматические цвета завораживают!
+			}
+
+			SummonFallen: {
+				DisplayName: Призыв упавшей феи
+				Tooltip: "'Эй, это только для разработчиков!' НЕДОСТУПЕН"
+			}
+
+			SlipperyHook: {
+				DisplayName: Склизкий крюк
+				Tooltip:
+					'''
+					Шанс 50% отразить атаку, пока цепляешься крюком'
+					'Повсюду слизь!'
+					'''
+			}
+
+			AncientDartRifle: {
+				DisplayName: Древний дротикомет
+				Tooltip:
+					'''
+					'Древний' 
+					Очень точный, медленный
+					'''
+			}
+
+			AncientStoneShortsword: {
+				DisplayName: Древний каменный короткий меч
+				Tooltip: "'Похоже, он рассыпится от одного удара'"
+			}
+
+			ElectricEel: {
+				DisplayName: Электрический угорь
+				Tooltip:
+					'''
+					Ваши призванные существа будут стараться атаковать врагов
+					Шанс 100% электреризировать врагов на 2,5 без зарядки и на 5 секунд с зарядкой
+					Зарядка увеличивает длину кнута в 2 раза
+					'''
+			}
+
+			FlagrantEyeball: {
+				DisplayName: Ужасающий глаз
+				Tooltip:
+					'''
+					"'Это глаз пииинагора'"
+					'Прототип вырезанного оружия.'
+					'''
+			}
+
+			RainbowFocus: {
+				DisplayName: Радужное благославление
+				Tooltip:
+					'''
+					'Благославить только тех, у кого большая сила' 
+					Прверащает ману в здоровье в зависимости от одетых магических вещей
+					Нажмите ПКМ, для мощно востановить здоровье за 400 ед.маны ,востанавливается после 6 обыкновенным исцелений
+					'''
+			}
+
+			ScaledLamp: {
+				DisplayName: Позвоночная лампа
+				Tooltip:
+					'''
+					'Кости делают лампу почти неразрушимой' 
+					Зажми, чтобы призвать призрака и силу дунклеостея
+					Предметы и призывы не могут быть использованы во время использования лампы
+					'''
+			}
+
+			TridentoftheFishman: {
+				DisplayName: Трезубец рыбака
+				Tooltip:
+					'''
+					Шанс призвать призрачный трезубец, атакующий врагов
+					 Нажмите ПКМ, чтобы вызвать его благословление. 
+					Усиляется, когда мокрый
+					'с божественным трезубцем'
+					'''
+			}
+
+			HoopSnakeItem: {
+				DisplayName: Кольцезмей
+				Tooltip: "'Террарианы долго жили в страхе перед кольцезмеем.'"
+			}
+
+			HummingBird1Item: {
+				DisplayName: Рубиногорловая колибри
+				Tooltip: "'Хорошенькая!'"
+			}
+
+			JackrabbitItem.DisplayName: Заяц
+
+			SlipperySlugItem: {
+				DisplayName: Склизкий слизень
+				Tooltip: "'Будь аккуратен, не урони его!'"
+			}
+
+			BlankItem.Tooltip: Информация предмета: в основном я просто нужен предметам с пустым спрайтом для отображения некоторых вещей в этом моде
+
+			HummingBird2Item: {
+				DisplayName: Лесная колибри
+				Tooltip: "'Сливается с лесом'"
+			}
+
+			VioletSapphireHummingbirdItem: {
+				DisplayName: Сумеречная колибри
+				Tooltip: "'Может быть потеряна в сверкающих узорах...'"
+			}
+
+			HummingBirdFeederItem: {
+				// DisplayName: Hummingbird Feeder
+				// Tooltip: "'Attracts hummingbirds!'"
+			}
+
+			TroutCannon: {
+				// DisplayName: Trout Cannon
+				// Tooltip: ""
+			}
+		}
+
+		Projectiles: {
+			FishBulletProj.DisplayName: Рыбопуля
+			SlipperyHookProj.DisplayName: Склизкий крюк
+			EelWhipProjectile.DisplayName: Электрический угорь
+			LumpEye.DisplayName: Ужасающий глаз
+			TridentProjectile.DisplayName: Трезубец рыбака
+			TridentGhostProjectile.DisplayName: Трезубец рыбака
+			HellborneFireball.DisplayName: Огненный шар адского черепа
+			HellborneSkullProj.DisplayName: Пылающий череп
+			BabyLumpsucker.DisplayName: Детеныш пинагора
+			DunkleGhost.DisplayName: Призрак дунклеостея
+			BrainofCthulhuHit.DisplayName: Мозг Ктулху
+			EaterofWorldsHit.DisplayName: Пожиратель миров
+			EmpressofLightHit.DisplayName: Императрица света
+			PlanteraHit.DisplayName: Плантера
+			QueenSlimeHit.DisplayName: Королева слизней
+			VileSpitHit.DisplayName: Мерзкий плевок
+			GravityGloop.DisplayName: Гравитационная слизь
+			HoopSnakePoison.DisplayName: Яд кольцезмея
+			NinjasShuriken.DisplayName: Сюрикэн ниндзя
+			RainbowBall.DisplayName: Радужная пыль
+			RainbowDust.DisplayName: Радужная пыль
+			SmallRainbowDust.DisplayName: Радужная пыль
+			TestingProj.DisplayName: Тестирование
+			TunaProj.DisplayName: Тунец
+			TroutProj.DisplayName: Форель
+		}
+
+		NPCs: {
+			DungeonFrog.DisplayName: Экто-тод
+			DungeonFrogEmpty.DisplayName: Экто-тод
+			FallenPixie.DisplayName: Упавшая фея
+			HoopSnake.DisplayName: Кольцезмей
+			HummingBird1.DisplayName: Рубиногорловая колибри
+			Jackrabbit.DisplayName: Заяц
+			MantisShrimp.DisplayName: Креветковый богомол
+			Plubee.DisplayName: Плуби
+			SlipperySlug.DisplayName: Склизкий слизень
+			testing.DisplayName: Тест
+			BabyLumpFish.DisplayName: Детеныш пинагора
+			CrimsonFishMiniBoss.DisplayName: Пинагор
+			DunklerFish.DisplayName: Дунклеостей
+			RainbowFish.DisplayName: Радужная рыба
+			GolemFistL.DisplayName: Кулак страха
+			GolemFistR.DisplayName: Кулак мороза
+			HellborneGuardian.DisplayName: Адский страж
+			HellborneSkullMinion.DisplayName: Прислужник адского черепа
+			TheHellborneSkull.DisplayName: Адский череп
+			ExampleFlutterSlime.DisplayName: Тестовый слизень
+			glassesgnome.DisplayName: Гном
+			strongerglassesgnome.DisplayName: Сильный гном
+			sunglasses.DisplayName: Солнечные очки
+			GreatPixie.DisplayName: Великая фея
+			HyperrealisticEyeball.DisplayName: Глаз
+			SkinWalker.DisplayName: Скинуокер
+			GravPlant.DisplayName: Гравитационный цветок
+			DuckMaiden.DisplayName: Утка богомол
+			Fishman.DisplayName: Рыбак
+			GoldenFish.DisplayName: Загадачная золотая рыбка
+
+			Ninja: {
+				DisplayName: Ниндзя
+				Census.SpawnCondition: Условия неизвестны
+			}
+
+			SpectralWatchman.DisplayName: Человек-зеркало
+			HummingBird2.DisplayName: Лесная колибри
+			HummingbirdBestiary.DisplayName: Колибри
+			VioletSapphireHummingbird.DisplayName: Сумеречная колибри
+		}
+
+		Tiles: {
+			AshwoodSapling.MapEntry: Саженец ясени
+			SinfulDirt.MapEntry: Грешная земля
+		}
+
+		Configs: {
+			CreaturiaSettings: {
+				DisplayName: Creaturia параметры
+				Headers.Settings: параметры
+
+				GolemFists: {
+					Label: "[i:1297]Изменения в Голем"
+					Tooltip: ""
+				}
+			}
+		}
+	}
+}

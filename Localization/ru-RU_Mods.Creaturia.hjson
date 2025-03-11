@@ -25,9 +25,9 @@ Items: {
 	FishBullet: {
 	}
 
-	AncientDartGunPieces.Tooltip: "'Strangely nostalgic'"
-	BlankItem.DisplayName: Blank Item
-	SinfulSoil.Tooltip: "'erm... for the Devs only!'"
+	AncientDartGunPieces.Tooltip: "'Странно-Ностальгический'"
+	BlankItem.DisplayName: Пустой предмет
+	SinfulSoil.Tooltip: "'эм... Это только для разработчиков!'"
 
 	BundleOfCoral: {
 	}
@@ -106,58 +106,58 @@ Items: {
 	}
 
 	ButterHummingbirdItem: {
-		DisplayName: Butter Hummingbird
-		Tooltip: "'Wait! It's not actually made of butter!'"
+		DisplayName: Колибри из Сливочного Масла
+		Tooltip: "'Подожди! Она еще не из масла.'"
 	}
 
 	LeafyHummingbirdItem: {
-		DisplayName: Leafy Hummingbird
-		Tooltip: "'Blends in with the leaves'"
+		DisplayName: Лиственная Колибри
+		Tooltip: "'Сливается с листвой.'"
 	}
 
 	PurpleHeadedHummingbirdItem: {
-		DisplayName: Crowned Woodnymph Hummingbird
-		Tooltip: "'Violet... but is it also violent?'"
+		DisplayName: Пурпурноголовая Колибри
+		Tooltip: "'Пурпурный... может еще и бурный?'"
 	}
 
 	TorchwoodHummingbirdItem: {
-		DisplayName: Torchwood Hummingbird
-		Tooltip: "'Torchwood Hummingbird has a secret: He can't read.'"
+		DisplayName: Древофакельная Колибри
+		Tooltip: "'У древофакельной калибри есть секрет: она не умеет читать'"
 	}
 }
 
 NPCs: {
-	RainbowFishSpawner.DisplayName: Rainbow Fish Spawner
+	RainbowFishSpawner.DisplayName: Спавнер Радужных Рыб
 
 	Ninja: {
 		TownNPCMood: {
-			Content: I appreciate everything you've done for me, I am content.
-			NoHome: If you could give me a home, I would very much appreciate it.
-			FarFromHome: I've spent enough time far from my home, now and before.
-			LoveSpace: The peace and silence of solitude is amazing for meditation - when there aren't clamoring beasts around.
-			DislikeCrowded: Being around this many people starts to become frustrating after a while.
-			HateCrowded: Too many people here, I feel like I'm being squished in gel!
-			LikeBiome: I like living in this kind of biome, reminds me of home.
-			DislikeBiome: I don't enjoy this biome very much.
-			HateBiome: This place is abominable, if you can, please move me somewhere else!
+			Content: Я ценю все, что ты для меня сделал! Я доволен.
+			NoHome: Если бы ты меня приютил, я бы был доволен.
+			FarFromHome: Я провел достаточно времени дома, до и сейчас.
+			LoveSpace: Мир и тишина одиночества чудесны для медитации — когда вокруг нет шумящих тварей.
+			DislikeCrowded: Нахождение среди такого количества людей начинает раздражать.
+			HateCrowded: Слишком много людей, я чуствую будто меня раздавливают в геле.
+			LikeBiome: Мне нравится жить в этом биоме, напоминает мне о доме.
+			DislikeBiome: Меня раздражает этот биом.
+			HateBiome: Это место отвратительное, если можешь, пожалуйста, перемести меня в какой-нибудь другой биом!
 			//LikeNPC: "I like {NPCName}."
-			DislikeNPC_Merchant: The greed of {NPCName} disgusts me.
-			HateNPC_Angler: "{NPCName} is a disappointment to his lineage. Where I come from kids like that would have been straightened out."
-			LikeNPC_Princess: I like {NPCName}, her poise truly reflects her royal heritage.
-			Princess_LovesNPC: "{NPCName} is so cool, I always wanted to meet a real-life ninja!"
-			LikeNPC: "{NPCName} is nice to be around."
-			DislikeNPC: "{NPCName} has a repulsive personality."
-			HateNPC: "{NPCName} is a disappointment to his lineage. Where I come from kids like that would have been straightened out."
+			DislikeNPC_Merchant: От жадность {NPCName} меня тошнит.
+			HateNPC_Angler: "{NPCName} разачарован в его предках. Там откуда я родом с детьми вроде его было все в порядке."
+			LikeNPC_Princess: Мне нравится {NPCName}, ее элегантность истинно отражает ее королевское наследствие.
+			Princess_LovesNPC: "{NPCName} он такой прекрасный, я всегда хотела встретить настоящего ниндзю!"
+			LikeNPC: "{NPCName} здесь хорошо."
+			DislikeNPC: "{NPCName} отталкивающая личность."
+			HateNPC: '''{NPCName} разачарован в его предках. Там откуда я родом с детьми вроде его было все в порядке.	'''
 		}
 	}
 
-	ButterHummingbird.DisplayName: Butter Hummingbird
-	LeafyHummingbird.DisplayName: Leafy Hummingbird
-	PurpleHeadedHummingbird.DisplayName: Crowned Woodnymph Hummingbird
-	TorchwoodHummingbird.DisplayName: Torchwood Hummingbird
-	Butter1Hummingbird.DisplayName: Butter Hummingbird
-	MrFighter.DisplayName: Mr Fighter
-	GolemFists_Bestiary.DisplayName: Golem Fists
+	ButterHummingbird.DisplayName: Колибри из Сливочного Масла
+	LeafyHummingbird.DisplayName: Лиственная Колибри
+	PurpleHeadedHummingbird.DisplayName: Пурпурноголовая Колибри
+	TorchwoodHummingbird.DisplayName: Древофакельная Колибри
+	Butter1Hummingbird.DisplayName: Колибри из Сливочного Масла
+	MrFighter.DisplayName: М-р Боец
+	GolemFists_Bestiary.DisplayName: Кулаки Голема
 }
 
 Dialogue: {

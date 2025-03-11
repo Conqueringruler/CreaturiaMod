@@ -21,6 +21,7 @@ using Creaturia.NPCs.Creatures;
 using Creaturia.Projectiles;
 using Microsoft.Xna.Framework;
 using Creaturia.Items.Weapon;
+using Newtonsoft.Json.Linq;
 
 
 namespace Creaturia.NPCs.Town
@@ -141,6 +142,87 @@ namespace Creaturia.NPCs.Town
                    return "The greed of " + Main.npc[merchant].GivenName + " disgusts me.";
                } */
 
+            WeightedRandom<string> chat = new WeightedRandom<string>();
+
+            if (Main.LocalPlayer.HasItem(ItemID.Tabi) && Main.rand.NextBool(3))
+            {
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.TabiDia"));
+            }
+            if (Main.LocalPlayer.HasItem(ItemID.BlackBelt) && Main.rand.NextBool(3))
+            {
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.BlackBeltDia"));
+            }
+            if (BirthdayParty.PartyIsUp && Main.rand.NextBool(3))
+            {
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.PartyDia"));
+            }
+            if (Main.rand.NextBool(7) && (angler >= 0))
+            {
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.AnglerDia"));
+            }
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.StandardDialogue1")); // So glad ExampleMod has localization tutorials, would have never figured this out
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.StandardDialogue2"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.StandardDialogue3"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.StandardDialogue4"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.StandardDialogue5"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.StandardDialogue6"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.StandardDialogue7"));
+            chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.StandardDialogue8"));
+            if (player.ZoneHallow && Main.rand.NextBool(4))
+            {
+                if (Main.rand.NextBool(2))
+                {
+                    chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.HallowDia1"));
+                }
+                else
+                {
+                    chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.HallowDia2"));
+                }
+
+            }
+            if (player.ZoneSnow)
+            {
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.SnowDia"));
+            }
+            if (player.active)
+            {
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Fishman.QueenSlimeDia", player.name));
+            }
+            Point point = NPC.Center.ToTileCoordinates();
+            Rectangle value = new Rectangle(point.X, point.Y, 1, 1);
+            value.Inflate(25, 25);
+            int num = 40;
+            Rectangle value2 = new Rectangle(0, 0, Main.maxTilesX, Main.maxTilesY);
+            value2.Inflate(-num, -num);
+            value = Rectangle.Intersect(value, value2);
+            int num2 = -1;
+            float num3 = -1f;
+            for (int i = value.Left; i <= value.Right; i++)
+            {
+                for (int j = value.Top; j <= value.Bottom; j++)
+                {
+
+                    Tile tile = Main.tile[i, j];
+                    //if (tile == null || !tile.HasTile || TileID.BlueDynastyShingles != tile.TileType || TileID.RedDynastyShingles != tile.TileType)
+                    // {
+
+                    // }
+
+                    if (tile.TileType == TileID.BlueDynastyShingles || tile.TileType == TileID.RedDynastyShingles)
+                    {
+
+                        chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.ShinglesDia"));
+
+                    }
+                    // return "The shingles here are truly beautiful. Reminds me of my home. ";
+                }
+
+            }
+
+            string chosenChat = chat;
+
+            return chosenChat;
+
             if (Main.LocalPlayer.HasItem(ItemID.Tabi) && Main.rand.NextBool(3))
             {
                 return "I'd be happy to turn that Tabi into a Black Belt. What most people don't know is that they're actually the same thing, just folded differently. The technique to fold them is secret though.";
@@ -175,7 +257,7 @@ namespace Creaturia.NPCs.Town
 
 
             
-            Point point = NPC.Center.ToTileCoordinates();
+        /*    Point point = NPC.Center.ToTileCoordinates();
             Rectangle value = new Rectangle(point.X, point.Y, 1, 1);
             value.Inflate(25, 25);
             int num = 40;
@@ -184,7 +266,7 @@ namespace Creaturia.NPCs.Town
             value = Rectangle.Intersect(value, value2);
             int num2 = -1;
             float num3 = -1f;
-            for (int i = value.Left; i <= value.Right; i++)
+            for (int i = value.Left; i <= value.Right; i++) 
             {
                 for (int j = value.Top; j <= value.Bottom; j++)
                 {
@@ -204,7 +286,7 @@ namespace Creaturia.NPCs.Town
                     // return "The shingles here are truly beautiful. Reminds me of my home. ";
                 }
 
-            }
+            } */
         }
             if (Main.rand.NextBool(7) && (angler >= 0))
             {
@@ -217,10 +299,10 @@ namespace Creaturia.NPCs.Town
                 case 1:
                     return "I have all the shurikens and- well now all the gel you'll ever need.";
                 case 2:
-                    return "That angler kid is a little brat, back in my day we'd be beaten with katanas for treating superiors like that.";
+                    return "That angler kid is a little brat, back in my day we'd be beaten with katanas for treating superiors like that."; // NOT INCLUDING THIS ONE
                 case 3:
                    //  return "一部のねえ、私はねえ、私はあなたが私たちが金属のたわごとを鉱山20サドルに金属化するのが好きではありません。 You didn't understand a word I said, did you?.";
-                 return "正表示, 願部私, 金属鉱山。You didn't understand a word I said, did you?.";
+                 return "正表示, 願部私, 金属鉱山。You didn't understand a word I said, did you?";
                 case 4:
                     return "It's nice to see another determined warrior out here, even though I've fallen far. Sigh.";
                 case 5:
