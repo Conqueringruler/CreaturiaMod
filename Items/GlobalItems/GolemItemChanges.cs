@@ -35,6 +35,7 @@ namespace Creaturia.Items.GlobalItems
         //  }
 
         public bool GolemFists = ModContent.GetInstance<CreaturiaSettings>().GolemFists.Contains("Enabled");
+        
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
 
@@ -43,8 +44,8 @@ namespace Creaturia.Items.GlobalItems
                 if (item.type == ItemID.GolemFist)
 
                 {
-
-                    tooltips.Add(new TooltipLine(Mod, "Tooltip#3", "20% chance to fire empowered by the Frost Queen or Pumpking"));
+                   // tooltips.Add(new TooltipLine(Mod, "Tooltip#3", "20% chance to fire empowered by the Frost Queen or Pumpking"));
+                    tooltips.Add(new TooltipLine(Mod, "Tooltip#3", "" + Language.GetOrRegister("Mods.Creaturia.Common.GolemFistTooltip"))); // Slightly scuffed but idc
                     //tooltips.Add(new TooltipLine(Mod, "BuffTime", "Unknown Time"));
                 }
 
@@ -64,8 +65,9 @@ namespace Creaturia.Items.GlobalItems
                     || item.type == ItemID.NorthPole || item.type == ItemID.SnowmanCannon)
 
                 {
-
-                    tooltips.Add(new TooltipLine(Mod, "Tooltip#1", $"[i:{ModContent.ItemType<HellborneIcon>()}] [c/8b82e7:Golem is weak to this weapon.]"));
+                    
+                    tooltips.Add(new TooltipLine(Mod, "GolemTooltip", $"[i:{ModContent.ItemType<HellborneIcon>()}]" + Language.GetOrRegister("Mods.Creaturia.Common.GolemItemTooltip")));
+                    //   tooltips.Add(new TooltipLine(Mod, "Tooltip#1", $"[i:{ModContent.ItemType<HellborneIcon>()}] [c/8b82e7: Golem is weak to this weapon.]"));
 
                 }
             }

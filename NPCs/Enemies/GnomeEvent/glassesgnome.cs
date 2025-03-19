@@ -855,8 +855,11 @@ namespace Creaturia.NPCs.Enemies.GnomeEvent
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Sun,
+
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.GnomeLine1" + "\n" +  "Mods.Creaturia.Bestiary.GnomeLine2")
+                /*
                 new FlavorTextBestiaryInfoElement("The gnomes have finally become smart enough to start wearing glasses. \n" +
-                                                  "Too bad they aren't smart enough to invade when the sun isn't out!")
+                                                  "Too bad they aren't smart enough to invade when the sun isn't out!") */
             });
         }
     }

@@ -141,8 +141,11 @@ namespace Creaturia.NPCs.Creatures
 
 
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns,
-				new FlavorTextBestiaryInfoElement("A rare, valuable, and (for fishies) delicious slug of the caverns. \n" +
-												  "Luckily for the slug, its so hard to grab that nothing can get it for long!")
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.SlipperySlug1" + "\n" + "Mods.Creaturia.Bestiary.SlipperySlug2")
+
+
+               /* new FlavorTextBestiaryInfoElement("A rare, valuable, and (for fishies) delicious slug of the caverns. \n" +
+												  "Luckily for the slug, its so hard to grab that nothing can get it for long!") */
 			});
 		}
         

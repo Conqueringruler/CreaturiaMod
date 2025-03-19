@@ -576,8 +576,8 @@ namespace Creaturia.NPCs.Creatures
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Moon,
-				new FlavorTextBestiaryInfoElement("A mischevious being known for taking the form of rabbits, awarding those lucky enough to hit it with treasures!")
-			});
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.Plubee")
+            });
 		}
 	}
 

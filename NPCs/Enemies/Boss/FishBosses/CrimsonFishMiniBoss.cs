@@ -159,9 +159,9 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Rain,
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.Lumpsucker")
 				//BestiaryDatabaseNPCsPopulator.CrownosIconIndexes.
-				new FlavorTextBestiaryInfoElement("The great ichorous beast of the Crimson waters," +
-												  " vicious and unforgiving.")
+				
 				
 			});
 		}

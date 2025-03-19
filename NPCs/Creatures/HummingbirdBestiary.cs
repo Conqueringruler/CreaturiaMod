@@ -221,8 +221,8 @@ namespace Creaturia.NPCs.Creatures
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Sun,
-				new FlavorTextBestiaryInfoElement("Pretty little birds on the search for nectar and forest friends!")
-			});
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.Hummingbirds")
+            });
 		}
 	}
 

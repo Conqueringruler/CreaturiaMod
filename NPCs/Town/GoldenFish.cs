@@ -102,7 +102,7 @@ namespace Creaturia.NPCs.Town
             // Use AddRange instead of calling Add multiple times
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
-                new FlavorTextBestiaryInfoElement("The legend says this talking fish was once a prince, cursed long ago into the body of a golden fish. At least he gives out free wishes!")
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.WishingFish")
 
             });
 
@@ -557,8 +557,9 @@ namespace Creaturia.NPCs.Town
         {
 
 
-            // F I wish I had real C# coding knowledge to know how to make this clean, I guess I could just use the notes
-            // Edit from the future: holy shit I can't believe I made this, I mean I guess it works LOL
+            // This will all be rewritten from the ground up in an upcoming update. Please don't read ahead, this is the worst thing I've made, and is clearly a product of younger, inexperienced me. 
+
+
             if (FourthButton1 != true)
             {
                // if (ButtonsChosenDontChangePleasePlease == false)
@@ -1016,8 +1017,8 @@ namespace Creaturia.NPCs.Town
                     {
                         if (EvilCalculator == 1)
                         {
-                            Main.npcChatText = "'You really thought I would grant you a wish? Muahahaha!'";
-                            NPC.color = Color.Red;
+                            Main.npcChatText = Language.GetTextValue("Mods.Creaturia.Dialogue.GoldenWishingFish.EvilWish1");
+                        NPC.color = Color.Red;
                             TurnRed = true;
                         }
 
@@ -1027,7 +1028,7 @@ namespace Creaturia.NPCs.Town
 
                 if (EvilCalculator != 1)
                 {
-                    Main.npcChatText = "Your wish is my command, sire!";
+                    Main.npcChatText = Language.GetTextValue("Mods.Creaturia.Dialogue.GoldenWishingFish.WishGrantedDia");
                     Button1IsWishes = false;
 
                     if (Button2IsSouls == true)

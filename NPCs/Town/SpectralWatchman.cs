@@ -428,7 +428,9 @@ namespace Creaturia.NPCs.Town
                 //BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
                 
 				// Sets your NPC's flavor text in the bestiary.
-				new FlavorTextBestiaryInfoElement("The enigmatic Mirrorman, now freed from his containment within the world's guardian, traverses the Underground Hallow for a reason unknown... and also provides better services than the Goblin Tinkerer."),
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.Mirrorman")
+
+              //  new FlavorTextBestiaryInfoElement("The enigmatic Mirrorman, now freed from his containment within the world's guardian, traverses the Underground Hallow for a reason unknown... and also provides better services than the Goblin Tinkerer."),
 
             });
             

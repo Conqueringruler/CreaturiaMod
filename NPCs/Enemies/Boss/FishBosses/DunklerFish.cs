@@ -1067,8 +1067,9 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption,
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Rain,
 				//BestiaryDatabaseNPCsPopulator.CrownosIconIndexes.
-				new FlavorTextBestiaryInfoElement("The great scaled beast of the Corruption waters," +
-                                                  " brutal and destructive. Its physical build gives it incredible strength. ")
+				 new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.Dunkle")
+
+       
 
             });
         }

@@ -128,7 +128,8 @@ namespace Creaturia.NPCs.Enemies.Boss
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheTemple,
 				
 				// Sets the description of this NPC that is listed in the bestiary.
-				new FlavorTextBestiaryInfoElement("Once only parts of Golem, these fists have been possessed and empowered, one by the King of Fright and one by the Queen of Frost. Defeating either of those two will surely break the fist's spell and return said fist to normal...")
+				new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.GolemFists")
+			//	new FlavorTextBestiaryInfoElement("Once only parts of Golem, these fists have been possessed and empowered, one by the King of Fright and one by the Queen of Frost. Defeating either of those two will surely break the fist's spell and return said fist to normal...")
             });
         }
     }

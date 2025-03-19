@@ -176,8 +176,8 @@ namespace Creaturia.NPCs.Enemies
 			// Use AddRange instead of calling Add multiple times
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Underground,
-				new FlavorTextBestiaryInfoElement("An abomination of nature. It burrows itself into the bodies of creatures, waiting for a chance to reveal its true form.")
-			});
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.SkinWalker")
+            });
 		}
 
 

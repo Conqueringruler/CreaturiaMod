@@ -213,7 +213,9 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheHallow,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Rain,
-				new FlavorTextBestiaryInfoElement("The Rainbow Fish survives the chaos of the Hallow by staying in groups, releasing fragments of its sharp scales to cut into any potential threats - or prey.")
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.RainbowFish")
+
+               
 			});
 		}
 

@@ -184,48 +184,50 @@ namespace Creaturia.Common.Players
         }
         
 
-        string npcLifeText = "Spectral Watchman: 0/0";
+        string npcLifeText = "Spectral Mirrorman: 0/0";
         int genRandomNumber;
         
         public override void PostUpdate()
         {
+            /*
             genRandomNumber = Main.rand.Next(1, 10);
             if (genRandomNumber == 1)
             {
-                npcLifeText = "Spectral Watchman: 0/0";
+                npcLifeText = "Spectral Mirrorman: 0/0";
             }
             if (genRandomNumber == 2)
             {
-                npcLifeText = "Spectral Watchman: 99999/99999";
+                npcLifeText = "Spectral Mirrorman: 99999/99999";
             }
             if (genRandomNumber == 3)
             {
-                npcLifeText = "Spectral Watchman: ???";
+                npcLifeText = "Spectral Mirrorman: ???";
             }
             if (genRandomNumber == 4)
             {
-                npcLifeText = "Spectral Watchman: " + $"[i:{ItemID.FirstFractal}" + "] ";
+                npcLifeText = "Spectral Mirrorman: " + $"[i:{ItemID.FirstFractal}" + "] ";
             }
             if (genRandomNumber == 5)
             {
-                npcLifeText = "Spectral Watchman: " + $"[i:{ModContent.NPCType<SpectralWatchman>()}" + "] "; // if this doesn't work or is giant then I'll change to an item
+                npcLifeText = "Spectral Mirrorman: " + $"[i:{ModContent.NPCType<SpectralWatchman>()}" + "] "; // if this doesn't work or is giant then I'll change to an item
             }
             if (genRandomNumber == 6)
             {
-                npcLifeText = "Spectral Watchman: -1/-1";
+                npcLifeText = "Spectral Mirrorman: -1/-1";
             }
             if (genRandomNumber == 7)
             {
-                npcLifeText = "Spectral Watchman: ∞";
+                npcLifeText = "Spectral Mirrorman: ∞";
             }
             if (genRandomNumber == 8)
             {
-                npcLifeText = "Spectral Watchman: X/X";
+                npcLifeText = "Spectral Mirrorman: X/X";
             }
             if (genRandomNumber == 9)
             {
-                npcLifeText = "Spectral Watchman: 8008135/8008135";
+                npcLifeText = "Spectral Mirrorman: 8008135/8008135";
             }
+            */ // None of this is used
             // Dungeon frog
             for (int i = 0; i < Main.npc.Length; i++)
             {
@@ -297,7 +299,7 @@ namespace Creaturia.Common.Players
                     Player.cursorItemIconEnabled = true;
                     Player.cursorItemIconID = ItemID.HolyWater;
                     
-                   Player.cursorItemIconText = "  Fallen Pixie: 5/5";
+                   Player.cursorItemIconText = "{$Mods.Creaturia.NPCs.Creatures.FallenPixie.DisplayName}: 5/5";
                     
                    
                 }

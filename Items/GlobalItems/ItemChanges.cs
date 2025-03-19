@@ -41,23 +41,25 @@ namespace Creaturia.Items.GlobalItems
                 player.npcTypeNoAggro[NPCID.ArmoredViking] = true;
             }
         }
-        
+        public static LocalizedText RestoreLifeText { get; private set; }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
+            RestoreLifeText = Mod.GetLocalization(nameof(RestoreLifeText));
             //TooltipLine line;
             base.ModifyTooltips(item, tooltips);
             //  if (item.type == ItemID.Seaweed || item.type == ItemID.SiltBlock || item.type == ItemID.SiltBlock)
             //  {
             //       tooltips.Add(new TooltipLine(Mod, "fdfdf", "Can be extractinated"));
             //    }
+
             if (item.type == ItemID.ThornHook)
             {
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#0", "Enemies hit while the player is hooked will be poisoned for 5 seconds"));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#0", "" + Language.GetOrRegister("Mods.Creaturia.Common.ThornHookTooltip")));
             }
 
             if (item.type == ItemID.VikingHelmet)
             {
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#0", "When worn Undead Vikings and Armored Vikings no longer target you"));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#0", "" + Language.GetOrRegister("Mods.Creaturia.Common.VikingHelmetTt")));
             }
             
                
@@ -65,18 +67,20 @@ namespace Creaturia.Items.GlobalItems
             if (item.type == ItemID.YellowMarigold)
 
             {
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#1", "Restores 10 life")); // I'm gonna be honest, I have no idea what I should put in the first section or what ramifications it may have. it'll prob be fine though
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "Consumable with Right Click"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "'Its either the really healthy kind of marigold or the poisonious kind. Pretty hard to tell.'"));
-                tooltips.Add(new TooltipLine(Mod, "fdfdf", "50% chance of recieving either rapid healing or poison for a varied amount of time"));
+                // Yellow Marigold is 10 life
+               // tooltips.Add(new TooltipLine(Mod, "Tooltip#1", "{$CommonItemTooltip.RestoresLife}", 10)); // I'm gonna be honest, I have no idea what I should put in the first section or what ramifications it may have. it'll prob be fine though
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "" + Language.GetOrRegister("Mods.Creaturia.Common.RightClickConsumeTooltip")));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "" + Language.GetOrRegister("Mods.Creaturia.Common.YellowMarigoldTt")));
+
+               // tooltips.Add(new TooltipLine(Mod, "fdfdf", "50% chance of recieving either rapid healing or poison for a varied amount of time"));
                 //tooltips.Add(new TooltipLine(Mod, "BuffTime", "Unknown Time"));
             }
             if (item.type == ItemID.BlueBerries)
 
             {
                 tooltips.Add(new TooltipLine(Mod, "Tooltip#1", "Restores 30 life"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "Consumable with Right Click"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "'Sweet!'"));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "" + Language.GetOrRegister("Mods.Creaturia.Common.RightClickConsumeTooltip")));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "" + Language.GetOrRegister("Mods.Creaturia.Common.BlueberriesTt")));
                 tooltips.Add(new TooltipLine(Mod, "Tooltip#8", "Gives Sugar Rush"));
                 tooltips.Add(new TooltipLine(Mod, "fdfdf", "30 second duration"));
             }
@@ -84,8 +88,8 @@ namespace Creaturia.Items.GlobalItems
 
             {
                 tooltips.Add(new TooltipLine(Mod, "Tooltip#1", "Restores 25 life"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "Consumable with Right Click"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "'Looks juicy'"));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "" + Language.GetOrRegister("Mods.Creaturia.Common.RightClickConsumeTooltip")));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "" + Language.GetOrRegister("Mods.Creaturia.Common.TealMushroomTt")));
                 tooltips.Add(new TooltipLine(Mod, "Tooltip#8", "Gives Calm"));
                 tooltips.Add(new TooltipLine(Mod, "fdfdf", "1 minute duration"));
             }
@@ -103,8 +107,8 @@ namespace Creaturia.Items.GlobalItems
             if (item.type == ItemID.OrangeBloodroot)
             {
                 tooltips.Add(new TooltipLine(Mod, "Tooltip#1", "Restores 10 life"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "Consumable with Right Click"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "'Dissuades predators with its liquid cortisol. That clearly didn't stop you though.'"));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "" + Language.GetOrRegister("Mods.Creaturia.Common.RightClickConsumeTooltip")));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "" + Language.GetOrRegister("Mods.Creaturia.Common.OrangeBloodrootTt")));
                 tooltips.Add(new TooltipLine(Mod, "Tooltip#8", "Consuming makes you panic"));
                 tooltips.Add(new TooltipLine(Mod, "fdfdf", "15 second duration"));
             }
@@ -112,18 +116,19 @@ namespace Creaturia.Items.GlobalItems
             if (item.type == ItemID.SkyBlueFlower)
             {
                 tooltips.Add(new TooltipLine(Mod, "Tooltip#1", "Restores 25 mana"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "Consumable with Right Click"));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "" + Language.GetOrRegister("Mods.Creaturia.Common.RightClickConsumeTooltip")));
                 //tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "''"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#8", "50% chance of recieving either Mana Power or Mana Regeneration"));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#8", "" + Language.GetOrRegister("Mods.Creaturia.Common.SkyBlueManaTt")));
                 tooltips.Add(new TooltipLine(Mod, "fdfdf", "45 second duration"));
             }
 
             if (item.type == ItemID.GreenMushroom)
             {
                 tooltips.Add(new TooltipLine(Mod, "Tooltip#1", "Restores 175 life"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "Consumable with Right Click"));
+                //tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "Consumable with Right Click"));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#6", "" + Language.GetOrRegister("Mods.Creaturia.Common.RightClickConsumeTooltip")));
                 //tooltips.Add(new TooltipLine(Mod, "Tooltip#7", "''"));
-                tooltips.Add(new TooltipLine(Mod, "Tooltip#8", "Intense healing short-term, but gives poison and potion sickness"));
+                tooltips.Add(new TooltipLine(Mod, "Tooltip#8", "" + Language.GetOrRegister("Mods.Creaturia.Common.GreenMushroomTt")));
                 tooltips.Add(new TooltipLine(Mod, "fdfdf", "1 minute duration"));
             }
 

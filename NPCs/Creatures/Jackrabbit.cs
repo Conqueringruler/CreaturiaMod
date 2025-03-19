@@ -250,8 +250,9 @@ namespace Creaturia.NPCs.Creatures
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Sun,
-				new FlavorTextBestiaryInfoElement("This wiry rabbit thrives in the desert dunes, " +
-												  "always on the search for snacks.")
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.Jackrabbit")
+
+               
 			});
 		}
 	}

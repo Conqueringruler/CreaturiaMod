@@ -492,7 +492,9 @@ namespace Creaturia.NPCs.Town
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
 
 				// Sets your NPC's flavor text in the bestiary.
-				new FlavorTextBestiaryInfoElement("The Ninja, now freed from captivity, has chosen to stay in the land of Terraria."),
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.Ninja")
+
+               
 
             });
         }

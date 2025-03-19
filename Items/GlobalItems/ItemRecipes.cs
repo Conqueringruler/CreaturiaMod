@@ -116,6 +116,7 @@ namespace Creaturia.Items.GlobalItems
             recipe.AddRecipeGroup("Hummingbirds", 1);
             recipe.AddTile(TileID.CookingPots);
             recipe.Register();
+			
 
             /*	recipe = Recipe.Create(ItemID.CorruptionKey);
 

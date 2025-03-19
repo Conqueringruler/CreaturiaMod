@@ -320,6 +320,12 @@ namespace Creaturia
                         }
                     }
                     break;
+
+
+
+                   // This will all be rewritten from the ground up in an upcoming update. Trust me, I know this is bad.
+
+
                 case MessageType.WishMsg: // GoldenFish Sync
                     if (Main.npc[reader.ReadInt32()].ModNPC is GoldenFish wisherfish)
                     {
@@ -360,7 +366,7 @@ namespace Creaturia
 
                                     if (wisherfish.Button1IsWishes != true)
                                     {
-                                        Main.npcChatText = "Your wish is my command!";
+                                        Main.npcChatText = Language.GetTextValue("Mods.Creaturia.Dialogue.GoldenWishingFish.WishGrantedDia");
                                     }
 
 
@@ -446,7 +452,7 @@ namespace Creaturia
                                     }
                                     if (wisherfish.Button1IsDishes == true)
                                     {
-                                        Main.npcChatText = "Your wish is my command!";
+                                        Main.npcChatText = Language.GetTextValue("Mods.Creaturia.Dialogue.GoldenWishingFish.WishGrantedDia");
                                         Item.NewItem(wisherfish.NPC.GetSource_Loot(), wisherfish.NPC.Center, ItemID.CookedFish, Main.rand.Next(1, 4));
                                         Item.NewItem(wisherfish.NPC.GetSource_Loot(), wisherfish.NPC.Center, ItemID.Escargot, Main.rand.Next(0, 3));
                                         Item.NewItem(wisherfish.NPC.GetSource_Loot(), wisherfish.NPC.Center, ItemID.FroggleBunwich, Main.rand.Next(0, 3));
@@ -469,11 +475,11 @@ namespace Creaturia
                                 {
                                     if (wisherfish.EvilCalculator == 1)
                                     {
-                                        Main.npcChatText = "'You really thought I would grant you a wish? Muahahaha!'";
+                                        Main.npcChatText = Language.GetTextValue("Mods.Creaturia.Dialogue.GoldenWishingFish.EvilWish1");
                                     }
                                     if (wisherfish.Button1IsWishes == true)
                                     {
-                                        Main.npcChatText = "'How dare you try to cheat the system like that!'";
+                                        Main.npcChatText = Language.GetTextValue("Mods.Creaturia.Dialogue.GoldenWishingFish.CheatWish");
                                         if (Main.netMode != NetmodeID.MultiplayerClient)
                                         {
                                             wisherfish.EvilCalculator = 1;

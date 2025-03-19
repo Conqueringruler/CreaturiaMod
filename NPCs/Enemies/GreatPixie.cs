@@ -867,8 +867,9 @@ namespace Creaturia.NPCs.Enemies
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundHallow,
 				
 				//BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.,
-				new FlavorTextBestiaryInfoElement("An ancient, devious pixie that in older times would disguise itself as being weaker than it really is.\n" +
-												  "While its danger is great, the power it may release is just as so.")
+				new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.GreatPixieLine1" + "\n" + "Mods.Creaturia.Bestiary.GreatPixieLine2")
+
+              
 			});
 		}
 	}

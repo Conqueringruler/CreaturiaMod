@@ -17,6 +17,7 @@ using static Terraria.ModLoader.ModContent;
 using static Terraria.ModLoader.PlayerDrawLayer;
 using Creaturia.Items.Consumables.Fishing;
 using Creaturia.NPCs.Enemies.Boss.FishBosses;
+using Terraria.Localization;
 
 namespace Creaturia.Common.Players
 {
@@ -103,7 +104,7 @@ namespace Creaturia.Common.Players
 					//	Main.NewText("The creature that lies below hides until the next content update to Creaturia...", Color.DarkViolet);
 						itemDrop = -1;
 
-						sonar.Text = "Rot and plates pulsate below...";
+						sonar.Text = "" + Language.GetOrRegister("Mods.Creaturia.Common.DunklePoleTxt");
 						sonar.Color = Color.DarkViolet;
 						sonar.Velocity = Vector2.UnitY;
 						sonar.DurationInFrames = 300;
@@ -127,7 +128,7 @@ namespace Creaturia.Common.Players
                         //	Main.NewText("The creature that lies below hides until the next content update to Creaturia...", Color.DarkViolet);
                         itemDrop = -1;
 
-                        sonar.Text = "Rot and plates pulsate below...";
+                        sonar.Text = "" + Language.GetOrRegister("Mods.Creaturia.Common.DunklePoleTxt");
                         sonar.Color = Color.DarkViolet;
                         sonar.Velocity = Vector2.UnitY;
                         sonar.DurationInFrames = 300;
@@ -149,7 +150,7 @@ namespace Creaturia.Common.Players
 						npcSpawn = crimsonfishnpc;
 						itemDrop = -1;
 
-						sonar.Text = "Spikes and flesh pulsate below...";
+						sonar.Text = "" + Language.GetOrRegister("Mods.Creaturia.Common.LumpPoleTxt");
 						sonar.Color = Color.DarkRed;
 						sonar.Velocity = Vector2.UnitY;
 						sonar.DurationInFrames = 300;
@@ -169,7 +170,7 @@ namespace Creaturia.Common.Players
 					npcSpawn = fishmannpc;
 					itemDrop = -1;
 
-					sonar.Text = "Bubbles rise from below the bobber...";
+					sonar.Text = "" + Language.GetOrRegister("Mods.Creaturia.Common.FishPoleTxt");
 					sonar.Color = Color.DarkSeaGreen;
 					sonar.Velocity = Vector2.Zero;
 					sonar.DurationInFrames = 300;
@@ -190,7 +191,7 @@ namespace Creaturia.Common.Players
                     npcSpawn = fishmannpc;
                     itemDrop = -1;
 
-                    sonar.Text = "Bubbles rise from below the bobber...";
+                    sonar.Text = "" + Language.GetOrRegister("Mods.Creaturia.Common.FishPoleTxt");
                     sonar.Color = Color.DarkSeaGreen;
                     sonar.Velocity = Vector2.UnitY;
                     sonar.DurationInFrames = 300;
@@ -212,8 +213,8 @@ namespace Creaturia.Common.Players
 					npcSpawn = goldenfishnpc;
 					itemDrop = -1;
 
-					sonar.Text = "Golden scales glisten below the water...";
-					sonar.Color = Color.DarkGoldenrod;
+					sonar.Text = "" + Language.GetOrRegister("Mods.Creaturia.Common.WishingFishPoleTxt");
+                    sonar.Color = Color.DarkGoldenrod;
 					sonar.Velocity = Vector2.UnitY;
 					sonar.DurationInFrames = 300;
 					sonarPosition = new Vector2(Player.position.X, Player.position.Y - 64);
@@ -235,8 +236,8 @@ namespace Creaturia.Common.Players
 					npcSpawn = goldenfishnpc;
 					itemDrop = -1;
 
-					sonar.Text = "Golden scales glisten below the water...";
-					sonar.Color = Color.DarkGoldenrod;
+					sonar.Text = "" + Language.GetOrRegister("Mods.Creaturia.Common.WishingFishPoleTxt");
+                    sonar.Color = Color.DarkGoldenrod;
 					sonar.Velocity = Vector2.UnitY;
 					sonar.DurationInFrames = 300;
 					sonarPosition = new Vector2(Player.position.X, Player.position.Y - 64);

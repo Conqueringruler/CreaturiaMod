@@ -185,9 +185,12 @@ namespace Creaturia.NPCs.Misc
 
 				
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Underground,
-				
-				new FlavorTextBestiaryInfoElement("This ancient plant grows anti-gravity juice. Awesome!")
-			});
+				// "Mods.Creaturia.Dialogue.GoldenWishingFish.EvilWish1"
+
+				//new FlavorTextBestiaryInfoElement("This ancient plant grows anti-gravity juice. Awesome!")
+
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.GravPlant")
+            });
 		}
 		public override void HitEffect(NPC.HitInfo hit)
 		{

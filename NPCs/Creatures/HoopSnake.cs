@@ -129,8 +129,10 @@ namespace Creaturia.NPCs.Creatures
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.DayTime,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Desert,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.WindyDay,
-				new FlavorTextBestiaryInfoElement("'Terrarians have long lived in fear of the dreaded Hoop Snake.' Despite its bad rep, " +
-				"the incredibly rare Hoop Snake just wants to enjoy your companionship as it rolls around.")
+                  new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.HoopSnake")
+
+           /*     new FlavorTextBestiaryInfoElement("'Terrarians have long lived in fear of the dreaded Hoop Snake.' Despite its bad rep, " +
+				"the incredibly rare Hoop Snake just wants to enjoy your companionship as it rolls around.") */
 			});
 			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPC.type], quickUnlock: true);
 		}

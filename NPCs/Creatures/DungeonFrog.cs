@@ -333,8 +333,10 @@ namespace Creaturia.NPCs.Creatures
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheDungeon,
 				
 				//BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.,
-				new FlavorTextBestiaryInfoElement("A mysterious inhabitant of the dungeon, subsisting off things that it really shouldn't.")
-			});
+				//new FlavorTextBestiaryInfoElement("A mysterious inhabitant of the dungeon, subsisting off things that it really shouldn't."),
+
+                new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.Ectoad")
+            });
 		}
 	}
 

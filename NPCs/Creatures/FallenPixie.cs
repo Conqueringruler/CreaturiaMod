@@ -382,8 +382,11 @@ namespace Creaturia.NPCs.Creatures
                     BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundHallow,
 
                     //BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.,
-                    new FlavorTextBestiaryInfoElement("A fairy that's lost it's power.\n" +
-                                                      "Maybe you should try rejuvenating it!")
+                  /*  new FlavorTextBestiaryInfoElement("A fairy that's lost it's power.\n" +
+                                                      "Maybe you should try rejuvenating it!"), */
+
+
+                    new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.FallenPixie")
                 });
             } 
     }

@@ -75,7 +75,8 @@ namespace Creaturia.NPCs.Town
             // Use AddRange instead of calling Add multiple times
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Ocean,
-                new FlavorTextBestiaryInfoElement("The Fishman of the ocean depths prefers solitude, but is happy to trade when the opportunity for non-ocean fish arises.")
+
+               new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.Fishman")
 
             });
         }
