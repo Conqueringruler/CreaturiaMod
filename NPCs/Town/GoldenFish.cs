@@ -283,7 +283,10 @@ namespace Creaturia.NPCs.Town
                     }
 
                     WarWish = Main.rand.Next(2);
+                if (Main.hardMode)
+                {
                     SoulsWish = Main.rand.Next(2);
+                }
                     OresWish = Main.rand.Next(2);
                     WishesWish = Main.rand.Next(2);
                     PunishmentChooser = Main.rand.Next(1, 5);

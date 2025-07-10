@@ -65,7 +65,7 @@ namespace Creaturia.NPCs.Enemies.Boss
 			
 			NPC.width = 48;
 			NPC.height = 40;
-			NPC.damage = 40;
+			NPC.damage = 20;
 			NPC.defense = 12;
 			NPC.lifeMax = 1;
 			NPC.HitSound = SoundID.NPCHit22;
@@ -407,15 +407,15 @@ new Vector2(TextureAssets.Npc[NPC.type].Value.Width * 0.5f, TextureAssets.Npc[NP
 
 			if (!Main.expertMode && !Main.masterMode)
             {
-				NPC.damage = 30;
+				NPC.damage = 20;
 			}
 			if (Main.expertMode)
             {
-				NPC.damage = 40;
+				NPC.damage = 35;
 			}
 			if (Main.masterMode)
             {
-				NPC.damage = 65;
+				NPC.damage = 40;
             }
 			if (NPC.AnyNPCs(NPCID.Golem) == false)
 			{

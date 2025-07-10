@@ -85,40 +85,7 @@ namespace Creaturia.NPCs.Creatures
             }
         }
 
-        /* public override void FindFrame(int frameHeight)
-		{
-
-
-			NPC.frameCounter++;
-
-			if (NPC.frameCounter < 1)
-			{
-				NPC.frame.Y = 0 * frameHeight;
-			}
-			else if (NPC.frameCounter < 3)
-			{
-				NPC.frame.Y = 1 * frameHeight;
-			}
-			else if (NPC.frameCounter < 4)
-			{
-				NPC.frame.Y = 2 * frameHeight;
-			}
-			else if (NPC.frameCounter < 5)
-			{
-				NPC.frame.Y = 3 * frameHeight;
-			}
-			else
-			{
-				NPC.frameCounter = 0;
-			}
-
-
-
-
-
-
-
-		} */
+       
         bool FlutterMode = true;
 
        /* public bool FindFlowersTop(int landX, int landY, out int flowerX, out int flowerY)
@@ -166,8 +133,15 @@ namespace Creaturia.NPCs.Creatures
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-			return SpawnCondition.OverworldDayBirdCritter.Chance * 0.001f;
-		}
+            if ((Main.time > 20000) && (Main.time < 35000) && Main.dayTime && Math.Abs(Main.windSpeedCurrent) < 3f)
+            {
+                return SpawnCondition.OverworldDayBirdCritter.Chance * 4.5f;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
 		public override void HitEffect(NPC.HitInfo hit)
 		{

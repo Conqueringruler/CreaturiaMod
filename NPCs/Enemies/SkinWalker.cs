@@ -16,6 +16,7 @@ using Terraria.GameContent;
 using Creaturia.Items;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.DataStructures;
+using Creaturia.NPCs.Creatures;
 
 namespace Creaturia.NPCs.Enemies
 {
@@ -92,6 +93,8 @@ namespace Creaturia.NPCs.Enemies
 		int breathtimer = 0;
 
 		int lifetimer = 0;
+
+		bool KillRegistered = false;
         public override bool PreKill()
         {
 			NPC.boss = false;
@@ -99,8 +102,13 @@ namespace Creaturia.NPCs.Enemies
         }
         public override void AI()
 		{
-			
-			lifetimer++;
+			if (!KillRegistered)
+			{
+				 Main.BestiaryTracker.Kills.RegisterKill(NPC);
+				KillRegistered = true;
+			}
+           
+            lifetimer++;
 			if (lifetimer >= 15000)
             {
 				NPC.active = false;
@@ -178,7 +186,9 @@ namespace Creaturia.NPCs.Enemies
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Underground,
                 new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.SkinWalker")
             });
-		}
+            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<SkinWalker>()], quickUnlock: true);
+
+        }
 
 
         public override void HitEffect(NPC.HitInfo hit)

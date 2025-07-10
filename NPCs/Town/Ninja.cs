@@ -22,6 +22,7 @@ using Creaturia.Projectiles;
 using Microsoft.Xna.Framework;
 using Creaturia.Items.Weapon;
 using Newtonsoft.Json.Linq;
+using Creaturia.Configs;
 
 
 namespace Creaturia.NPCs.Town
@@ -29,6 +30,8 @@ namespace Creaturia.NPCs.Town
     [AutoloadHead]
     public class Ninja : ModNPC
     {
+
+
         public override string Texture
         {
             get { return "Creaturia/NPCs/Town/Ninja"; }
@@ -36,9 +39,9 @@ namespace Creaturia.NPCs.Town
 
 
 
-        
 
 
+        public bool NinjaEnabled = ModContent.GetInstance<CreaturiaSettings>().Ninja.Contains("Enabled");
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 26;
@@ -186,7 +189,7 @@ namespace Creaturia.NPCs.Town
             }
             if (player.active)
             {
-                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Fishman.QueenSlimeDia", player.name));
+                chat.Add(Language.GetTextValue("Mods.Creaturia.Dialogue.Ninja.QueenSlimeDia", player.name));
             }
             Point point = NPC.Center.ToTileCoordinates();
             Rectangle value = new Rectangle(point.X, point.Y, 1, 1);
@@ -463,6 +466,7 @@ namespace Creaturia.NPCs.Town
             gravityCorrection = -10f;
         }
 
+
         
 
         //f you spawn conditions 
@@ -474,12 +478,14 @@ namespace Creaturia.NPCs.Town
             {
                 for (int y = top; y <= bottom; y++)
                 {
-
+                    if (NinjaEnabled)
+                    {
                     if (NPC.downedSlimeKing)
                     {
                         score++;
                     }
-                }
+                    }
+            }
             }
             return score >= 1;
         }

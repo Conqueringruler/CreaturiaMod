@@ -106,8 +106,8 @@ Items: {
 	}
 
 	ButterHummingbirdItem: {
-		DisplayName: Колибри из Сливочного Масла
-		Tooltip: "'Подожди! Она еще не из масла.'"
+		DisplayName: Колибри из сланца
+		Tooltip: ""
 	}
 
 	LeafyHummingbirdItem: {

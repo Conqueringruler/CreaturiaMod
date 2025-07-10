@@ -59,32 +59,29 @@ namespace Creaturia.NPCs.Creatures
             return true;
         }
 
-        /* public override void FindFrame(int frameHeight)
+         public override void FindFrame(int frameHeight)
 		{
 
 
-			NPC.frameCounter++;
+            NPC.frameCounter++;
 
-			if (NPC.frameCounter < 1)
-			{
-				NPC.frame.Y = 0 * frameHeight;
-			}
-			else if (NPC.frameCounter < 3)
-			{
-				NPC.frame.Y = 1 * frameHeight;
-			}
-			else if (NPC.frameCounter < 4)
-			{
-				NPC.frame.Y = 2 * frameHeight;
-			}
-			else if (NPC.frameCounter < 5)
-			{
-				NPC.frame.Y = 3 * frameHeight;
-			}
-			else
-			{
-				NPC.frameCounter = 0;
-			}
+            if (NPC.frameCounter < 3)
+            {
+                NPC.frame.Y = 0 * frameHeight;
+            }
+            else if (NPC.frameCounter < 6)
+            {
+                NPC.frame.Y = 1 * frameHeight;
+            }
+            else if (NPC.frameCounter < 9)
+            {
+                NPC.frame.Y = 2 * frameHeight;
+            }
+
+            else
+            {
+                NPC.frameCounter = 0;
+            }
 
 
 
@@ -92,7 +89,7 @@ namespace Creaturia.NPCs.Creatures
 
 
 
-		} */
+        } 
         bool FlutterMode = true;
 
        /* public bool FindFlowersTop(int landX, int landY, out int flowerX, out int flowerY)
@@ -139,9 +136,9 @@ namespace Creaturia.NPCs.Creatures
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-            if (Main.time > 20000 && Main.time < 35000 && Main.dayTime)
+            if (Main.time > 20000 && Main.time < 35000 && Main.dayTime && Math.Abs(Main.windSpeedCurrent) < 3f)
             {
-                return SpawnCondition.OverworldDayBirdCritter.Chance * 0.05f;
+                return SpawnCondition.OverworldDayBirdCritter.Chance * 5.75f;
             }
             else
             {

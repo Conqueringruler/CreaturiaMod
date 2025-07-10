@@ -40,7 +40,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 
 			NPC.width = 290;
 			NPC.height = 108; // Change ALL defaults 
-			NPC.damage = 85;
+			NPC.damage = 65;
 			NPC.defense = 80;
 			NPC.lifeMax = 7000;
 			NPC.HitSound = SoundID.NPCHit1;
@@ -155,14 +155,14 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 
 			if (Main.expertMode)
             {
-				if (NPC.life < NPC.lifeMax/3)
+				if (NPC.life < NPC.lifeMax/5)
                 {
 					RainCursedFlameTimer++;
                 }
             }
 			if (!Main.expertMode)
 			{
-				if (NPC.life < NPC.lifeMax / 2)
+				if (NPC.life < NPC.lifeMax / 4)
 				{
 					RainCursedFlameTimer++;
 				}
@@ -262,11 +262,11 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 							{
 								if (target.position.X < NPC.position.X)
 								{
-									int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), ShootSpot + new Vector2(-280, 0), directionshoot * (float)Main.rand.Next(7, 10), ProjectileID.CursedFlameHostile, 40, 0.3f);
+									int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), ShootSpot + new Vector2(-280, 0), directionshoot * (float)Main.rand.Next(7, 10), ProjectileID.CursedFlameHostile, 30, 0.3f);
 								}
 								if (target.position.X > NPC.position.X)
 								{
-									int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), ShootSpot + new Vector2(280, 0), directionshoot * (float)Main.rand.Next(7, 10), ProjectileID.CursedFlameHostile, 40, 0.3f);
+									int projectile = Projectile.NewProjectile(NPC.GetSource_FromAI(), ShootSpot + new Vector2(280, 0), directionshoot * (float)Main.rand.Next(7, 10), ProjectileID.CursedFlameHostile, 30, 0.3f);
 								}
 
 							}
@@ -944,7 +944,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 
             //npcLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 1, 0, 2));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RainbowScale2>(), 50 , 0, 7)); //\This new method is cock and balls, don't forget to use terraria.lootshit so stuff can drop and also 1 = 100% chance of dropping, 100 = 1% chance of dropping for some stupid reason
-            npcLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 1, 0, 3));
+            npcLoot.Add(ItemDropRule.Common(ItemID.SoulofNight, 1, 15, 20));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<DunkleVertebrae>(), 1, 10, 16));
 		}
 

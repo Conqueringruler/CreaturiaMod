@@ -14,6 +14,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.Events;
+using Creaturia.NPCs.Enemies;
 
 namespace Creaturia.NPCs.Creatures
 {
@@ -467,7 +468,7 @@ namespace Creaturia.NPCs.Creatures
 
         public override void OnKill()
         {
-			Main.BestiaryTracker.Kills.RegisterKill(NPC);
+			//Main.BestiaryTracker.Kills.RegisterKill(NPC);
 		}
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -578,7 +579,8 @@ namespace Creaturia.NPCs.Creatures
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Visuals.Moon,
                 new FlavorTextBestiaryInfoElement("Mods.Creaturia.Bestiary.Plubee")
             });
-		}
+            bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<Plubee>()], quickUnlock: true);
+        }
 	}
 
 	

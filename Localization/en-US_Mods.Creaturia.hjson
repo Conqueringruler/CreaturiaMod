@@ -106,8 +106,8 @@ Items: {
 	}
 
 	ButterHummingbirdItem: {
-		DisplayName: Butter Hummingbird
-		Tooltip: "'Wait! It's not actually made of butter!'"
+		DisplayName: Slate Hummingbird
+		Tooltip: ""
 	}
 
 	LeafyHummingbirdItem: {
@@ -142,7 +142,7 @@ NPCs: {
 			HateBiome: This place is abominable, if you can, please move me somewhere else!
 			//LikeNPC: "I like {NPCName}."
 			DislikeNPC_Merchant: The greed of {NPCName} disgusts me.
-			HateNPC_Angler: "{NPCName} is a disappointment to his lineage. Where I come from kids like that would have been straightened out."
+			HateNPC_Angler: "{NPCName} is a disappointment to his lineage! Where I come from kids like that would have been straightened out."
 			LikeNPC_Princess: I like {NPCName}, her poise truly reflects her royal heritage.
 			Princess_LovesNPC: "{NPCName} is so cool, I always wanted to meet a real-life ninja!"
 			LikeNPC: "{NPCName} is nice to be around."
@@ -151,11 +151,11 @@ NPCs: {
 		}
 	}
 
-	ButterHummingbird.DisplayName: Butter Hummingbird
+	ButterHummingbird.DisplayName: Slate Hummingbird
 	LeafyHummingbird.DisplayName: Leafy Hummingbird
 	PurpleHeadedHummingbird.DisplayName: Crowned Woodnymph Hummingbird
 	TorchwoodHummingbird.DisplayName: Torchwood Hummingbird
-	Butter1Hummingbird.DisplayName: Butter Hummingbird
+	Butter1Hummingbird.DisplayName: Slate Hummingbird
 	MrFighter.DisplayName: Mr Fighter
 	GolemFists_Bestiary.DisplayName: Golem Fists
 }

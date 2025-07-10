@@ -293,7 +293,9 @@ namespace Creaturia.NPCs
                     if (Main.rand.NextBool(35000) && npc.active)
                     {
                         npc.Transform(NPCType<SkinWalker>());
-                        npc.netUpdate = true;
+                        
+                            
+                            npc.netUpdate = true;
                     }
                     if (Main.bloodMoon && npc.active)
                     {
@@ -308,6 +310,8 @@ namespace Creaturia.NPCs
             }
         }
         public bool GolemFists = ModContent.GetInstance<CreaturiaSettings>().GolemFists.Contains("Enabled");
+
+        public bool NinjaEnabled = ModContent.GetInstance<CreaturiaSettings>().Ninja.Contains("Enabled");
         public override void OnKill(NPC npc)
         {
           
@@ -342,12 +346,15 @@ namespace Creaturia.NPCs
             }
             if (npc.type == NPCID.KingSlime && npc.AnyInteractions())
             {
+                if (NinjaEnabled)
+                {
                 if (!NPC.AnyNPCs(ModContent.NPCType<Ninja>()))
                 {
                     NPC.NewNPC(npc.GetSource_Death(), (int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Ninja>());
                 }
-                
-            }
+                }
+
+        }
             if (npc.type == NPCID.GolemFistLeft && npc.AnyInteractions())
             {
                 if (GolemFists)

@@ -133,20 +133,12 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 				//npcLoot.Add(ItemDropRule.Common(ItemID.CrimsonKey, 5, 1, 1));
 			//}
 
-			var parameters = new DropOneByOne.Parameters() // Where did I get this parameter shit from? I did this so long ago I can't remember. Not gonna use it though
-			{
-				ChanceNumerator = 1,
-				ChanceDenominator = 1,
-				MinimumStackPerChunkBase = 1,
-				MaximumStackPerChunkBase = 1,
-				MinimumItemDropsCount = 6,
-				MaximumItemDropsCount = 130,
-			};
+			
 
 			//new DropOneByOne(ItemID.SoulofNight, parameters);
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LumpsuckerHeart>(), 1, 10, 16));
-			npcLoot.Add(new DropOneByOne(ItemID.SoulofNight, parameters));
-			npcLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCID.PirateShip));
+            npcLoot.Add(ItemDropRule.Common(ItemID.SoulofNight, 1, 15, 20));
+            npcLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(NPCID.PirateShip));
 
 		}
 

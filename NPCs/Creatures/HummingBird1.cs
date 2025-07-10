@@ -502,9 +502,9 @@ namespace Creaturia.NPCs.Creatures
 
 		public override float SpawnChance(NPCSpawnInfo spawnInfo)
 		{
-            if (Main.time > 15000 && Main.time < 30000 && Main.dayTime && Math.Abs(Main.windSpeedCurrent) < 5f)
+            if (Main.time > 15000 && Main.time < 30000 && Main.dayTime && Math.Abs(Main.windSpeedCurrent) < 3f)
             {
-                return SpawnCondition.OverworldDayBirdCritter.Chance * 0.15f;
+                return SpawnCondition.OverworldDayBirdCritter.Chance * 7.85f;
             }
             else
             {

@@ -152,7 +152,8 @@ namespace Creaturia.Projectiles
             
                 if (owner.dead)
                 {
-                owner.DelBuff(BuffType<BabyLumpsuckerBuff>());
+               // owner.DelBuff(BuffType<BabyLumpsuckerBuff>());
+                owner.ClearBuff(BuffType<BabyLumpsuckerBuff>()); // Buff ID I'm pretty sure
                 }
                 if (Main.player[Projectile.owner].hornetMinion)
                 {

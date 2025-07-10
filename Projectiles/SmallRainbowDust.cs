@@ -59,19 +59,19 @@ namespace Creaturia.Projectiles
 
 					sparkletimer = Main.rand.Next(-10, 10); */
 				
-				if (Main.rand.NextBool(4))
+				if (Main.rand.NextBool(5))
 				{
 					dust = Dust.NewDustDirect(Projectile.position + new Vector2(Main.rand.Next(-7, 7)), Projectile.width, Projectile.height, dustType, 0, 0, 0, Main.DiscoColor, 0.5f);
 				}
-				if (Main.rand.NextBool(4))
+				if (Main.rand.NextBool(5))
 				{
 					dust = Dust.NewDustDirect(Projectile.position + new Vector2(Main.rand.Next(-7, 7)), Projectile.width, Projectile.height, dustType, 0, 0, 0, Main.DiscoColor, 0.5f);
 				}
-				if (Main.rand.NextBool(4))
+				if (Main.rand.NextBool(5))
 				{
 					dust = Dust.NewDustDirect(Projectile.position + new Vector2(Main.rand.Next(-7, 7)), Projectile.width, Projectile.height, dustType, 0, 0, 0, Main.DiscoColor, 0.5f);
 				}
-				if (Main.rand.NextBool(4))
+				if (Main.rand.NextBool(5))
 				{
 					dust = Dust.NewDustDirect(Projectile.position + new Vector2(Main.rand.Next(-7, 7)), Projectile.width, Projectile.height, dustType, 0, 0, 0, Main.DiscoColor, 0.5f);
 				}

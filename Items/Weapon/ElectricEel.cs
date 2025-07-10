@@ -55,8 +55,8 @@ namespace Creaturia.Items.Weapon
 		}
 		
 	}
-	public class EelWhipProjectile : ModProjectile // This was one of the first things I added to the mod that's still here. As you can probably tell this code is straight from ExampleMod's example whip.
-												   // That's something that, now that I'm actually planning on publishing the mod, I'm not too happy about. So keep in mind this will inevitably be rewritten.
+	public class EelWhipProjectile : ModProjectile 
+												   
 												   // Tbh I'll probably keep the charging mechanic and just buff it since it has a lot of potential to make whips more interesting
 
 	{

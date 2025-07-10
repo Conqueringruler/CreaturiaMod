@@ -1,8 +1,13 @@
 ﻿v1.1:
 
-- Added Hummingbird Feeders
-- Complete remake of hummingbirds, new sprites, changed AI, and new/replaced hummingbird types
-- Added Tuna Cannon
-- Fixed bugs, removed accidentally included feature
-- Doubled the Baby Lumpsucker minion dps
-- Nerfed (empowered) Left Golem Fist projectile
+- Added Hamsters! Be careful, don't let them go unwatched!
+
+- Added Hummingbird Feeders, use these to attract hummingbirds!
+
+- Golem Fists are now disabled by default! Their mention in the workshop description has been reduced accordingly.
+
+- Golem Fists also have damage slightly reduced.
+
+- Added toggle to disable the Ninja NPC
+
+- Fixed broken tooltip for item

@@ -160,7 +160,16 @@ namespace Creaturia.NPCs.Creatures
 
 			if (NPC.life <= 0)
 			{
-				int PoopSnakeGore1 = Mod.Find<ModGore>("PoopSnakeGore1").Type;
+                for (int i = 0; i < 8; i++)
+                {
+                    Dust bloodDust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Water_BloodMoon, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-3f, 3f), default, default, 1f);
+                    bloodDust.velocity *= 1.8f;
+                    bloodDust.velocity.Y *= 0.4f;
+
+                    Dust.NewDustPerfect(NPC.Center, DustID.FoodPiece, new Vector2(Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-3f, 3f)), default, Color.DarkRed, 1.5f);
+                }
+
+                int PoopSnakeGore1 = Mod.Find<ModGore>("PoopSnakeGore1").Type;
 				int PoopSnakeGore2 = Mod.Find<ModGore>("PoopSnakeGore2").Type;
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, PoopSnakeGore1);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, PoopSnakeGore2);

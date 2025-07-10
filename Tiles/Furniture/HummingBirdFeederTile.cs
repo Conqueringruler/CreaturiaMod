@@ -12,6 +12,7 @@ using Terraria.Localization;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.Audio;
 
 namespace Creaturia.Tiles.Furniture
 {
@@ -57,6 +58,20 @@ namespace Creaturia.Tiles.Furniture
                 b = 0.2f;
             
         }
-
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            if (closer)
+            {
+                return;
+            }
+                Main.SceneMetrics.HasHeartLantern = true;
+            
+        }
+        public override bool RightClick(int i, int j)
+        {
+            SoundEngine.PlaySound(SoundID.LiquidsHoneyWater);
+            Main.LocalPlayer.AddBuff(BuffID.Honey, 40);
+            return true;
+        }
     }
 }

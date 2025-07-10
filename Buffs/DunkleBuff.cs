@@ -37,7 +37,7 @@ namespace Creaturia.Buffs
                 //dust.velocity.Y /= 10;
                 //dust.color = new Color(180, 180, 180);
                 dust.noGravity = true;
-                
+               
             }
 
 

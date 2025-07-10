@@ -10,7 +10,8 @@ Mods: {
 			YellowMarigoldTt2: 50% chance of recieving either rapid healing or poison for a varied amount of time
 			BlueberriesTt: "'Sweet!'"
 			TealMushroomTt: "'Looks juicy'"
-			OrangeBloodrootTt: "'Dissuades predators with its liquid cortisol. That clearly didn't stop you though.'"
+			SkyBlueManaTt: "'Pretty!'"
+			OrangeBloodrootTt: "'Dissuades predators with its liquid cortisol. That clearly didn't stop you though!'"
 			GreenMushroomTt: Intense healing short-term, but gives poison and potion sickness
 			DunklePoleTxt: Rot and plates pulsate below...
 			LumpPoleTxt: Spikes and flesh pulsate below...
@@ -23,7 +24,7 @@ Mods: {
 			Ectoad: A mysterious inhabitant of the dungeon, subsisting off things that it really shouldn't.
 			FallenPixie: A fairy that's lost it's power. \n Maybe you should try rejuvenating it!
 			HoopSnake: "'Terrarians have long lived in fear of the dreaded Hoop Snake.' Despite its bad rep, the incredibly rare Hoop Snake just wants to enjoy your companionship as it rolls around."
-			Hummingbirds: Pretty little birds on the search for nectar and forest friends!
+			Hummingbirds: Pretty little birds on the search for nectar and forest friends! While too wild to be kept in cages, they can be attracted with hummingbird feeders!
 			Jackrabbit: This wiry rabbit thrives in the desert dunes, always on the search for snacks.
 			Plubee: A mischevious being known for taking the form of rabbits, awarding those lucky enough to hit it with treasures!
 			SlipperySlug1: A rare, valuable, and (for fishies) delicious slug of the caverns.
@@ -310,6 +311,11 @@ Mods: {
 				DisplayName: Trout Cannon
 				Tooltip: ""
 			}
+
+			OrangeHamsterItem: {
+				DisplayName: Hamster
+				Tooltip: "'Be careful with him!'"
+			}
 		}
 
 		Projectiles: {
@@ -357,10 +363,9 @@ Mods: {
 			RainbowFish.DisplayName: Rainbow Fish
 			GolemFistL.DisplayName: Fist of Fright
 			GolemFistR.DisplayName: Fist of Frost
-			HellborneGuardian.DisplayName: Hellborne Guardian
-			HellborneSkullMinion.DisplayName: Hellborne Skull Minion
-			TheHellborneSkull.DisplayName: The Hellborne Skull
-			ExampleFlutterSlime.DisplayName: ExampleSlimeTesting
+			HellborneGuardian.DisplayName: Hellborne Guardian (OLD)
+			HellborneSkullMinion.DisplayName: Hellborne Skull Minion (OLD)
+			TheHellborneSkull.DisplayName: The Hellborne Skull (OLD)
 			glassesgnome.DisplayName: Gnome
 			strongerglassesgnome.DisplayName: Stronger Gnome
 			sunglasses.DisplayName: sunglasses
@@ -381,6 +386,8 @@ Mods: {
 			HummingBird2.DisplayName: Foresty Hummingbird
 			HummingbirdBestiary.DisplayName: Hummingbirds
 			VioletSapphireHummingbird.DisplayName: Twilight Hummingbird
+			OrangeHamster.DisplayName: Hamster
+			CorruptHamster.DisplayName: Corrupt Hamster
 		}
 
 		Tiles: {
@@ -395,7 +402,12 @@ Mods: {
 
 				GolemFists: {
 					Label: "[i:1297]Golem Changes"
-					Tooltip: Disable to remove all added Golem content or changes
+					Tooltip: Enable to re-add Golem content or changes. Disabled by default.
+				}
+
+				Ninja: {
+					Label: Ninja
+					Tooltip: Disable to remove the Ninja NPC.
 				}
 			}
 		}

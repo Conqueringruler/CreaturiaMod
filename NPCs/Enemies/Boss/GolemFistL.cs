@@ -70,7 +70,7 @@ namespace Creaturia.NPCs.Enemies.Boss
 			
 			NPC.width = 48;
 			NPC.height = 40;
-			NPC.damage = 40;
+			NPC.damage = 20;
 			NPC.defense = 12;
 			NPC.lifeMax = 1;
 			NPC.HitSound = SoundID.NPCHit22;
@@ -412,15 +412,15 @@ namespace Creaturia.NPCs.Enemies.Boss
 			//Dust.NewDustPerfect(NPC.Center + PolarVector(30, NPC.rotation), DustID.HeatRay, NPC.velocity, 0, default, 1);
 			if (!Main.expertMode && !Main.masterMode)
             {
-				NPC.damage = 30;
+				NPC.damage = 20;
 			}
 			if (Main.expertMode)
             {
-				NPC.damage = 40;
+				NPC.damage = 35;
 			}
 			if (Main.masterMode)
             {
-				NPC.damage = 65;
+				NPC.damage = 40;
             }
 			if (NPC.AnyNPCs(NPCID.Golem) == false)
 			{

@@ -63,7 +63,7 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 			NPC.width = 46;
 			NPC.height = 26;
 			NPC.damage = 40;
-			NPC.defense = 33;
+			NPC.defense = 15;
 			NPC.lifeMax = difficultyhealth;
 			NPC.knockBackResist = 0.1f;
 			NPC.HitSound = SoundID.NPCHit44;
@@ -85,6 +85,10 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 		int aimandshootstream;
 		int shoot;
 		int shoottime;
+
+		int Dash;
+		int DashChargeup;
+		int DashTime;
 
 		public override bool PreKill()
 		{
@@ -190,6 +194,9 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 				shoot++;
 				NPC.netUpdate = true;
 			}
+
+			
+
 			if (shoot > shoottime)
             {
 				if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -229,9 +236,10 @@ namespace Creaturia.NPCs.Enemies.Boss.FishBosses
 
 			//npcLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 1, 0, 2));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RainbowScale2>(), 1, 2, 5));
-			//npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RainbowScale2>(), 50 , 0, 7)); //\This new method is cock and balls, don't forget to use terraria.lootshit so stuff can drop and also 1 = 100% chance of dropping, 100 = 1% chance of dropping for some stupid reason
-			//npcLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 50, 1, 2));
-		}
+            npcLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 1, 2, 4));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<RainbowScale2>(), 50 , 0, 7)); //\This new method is cock and balls, don't forget to use terraria.lootshit so stuff can drop and also 1 = 100% chance of dropping, 100 = 1% chance of dropping for some stupid reason
+            //npcLoot.Add(ItemDropRule.Common(ItemID.SoulofLight, 50, 1, 2));
+        }
         public override void OnKill()
         {
 				if (NPC.FindFirstNPC(ModContent.NPCType<RainbowFish>()) <= 1)

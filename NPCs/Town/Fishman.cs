@@ -28,9 +28,10 @@ using static Terraria.GameContent.Animations.IL_Actions.NPCs;
 
 namespace Creaturia.NPCs.Town
 {
-    [AutoloadHead]
+    // [AutoloadHead]
     public class Fishman : ModNPC
     {
+        private static Profiles.StackedNPCProfile NPCProfile;
         public override string Texture
         {
             get { return "Creaturia/NPCs/Town/Fishman"; }
@@ -38,7 +39,7 @@ namespace Creaturia.NPCs.Town
         private bool pulledup = true;
 
 
-       
+
         int CheapFish1;
         int MediumExpensiveFish1;
         int MediumExpensiveFish2;
@@ -60,15 +61,18 @@ namespace Creaturia.NPCs.Town
             NPCID.Sets.NoTownNPCHappiness[Type] = true;
             NPCID.Sets.SpawnsWithCustomName[Type] = true; // So it chooses a name like a townnpc since it isnt actually one
             NPCID.Sets.ActsLikeTownNPC[Type] = true;
+            NPCID.Sets.ShimmerTownTransform[NPC.type] = false;
 
             NPCID.Sets.NPCBestiaryDrawModifiers value = new NPCID.Sets.NPCBestiaryDrawModifiers()
-            { 
+            {
                 Velocity = 1f,
                 //Direction = -1
 
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, value);
 
+            NPCProfile = new Profiles.StackedNPCProfile(
+                new Profiles.DefaultNPCProfile(Texture, -1));
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
@@ -82,7 +86,7 @@ namespace Creaturia.NPCs.Town
         }
         public override bool CanGoToStatue(bool toKingStatue) => true;
 
-        
+
         public override void SetDefaults()
         {
             NPC.friendly = true;
@@ -106,31 +110,31 @@ namespace Creaturia.NPCs.Town
             //endanimation = true;
             //CreaturiaPlayer.playeatinganimation = false;
             if (endanimation == true)
-               {
-                  CreaturiaPlayer.playeatinganimation = false;
-                  endanimation = false;
-                }
+            {
+                CreaturiaPlayer.playeatinganimation = false;
+                endanimation = false;
+            }
             if (CreaturiaPlayer.playeatinganimation == true)
             {
-               
+
                 AnimationType = NPCID.None;
                 NPC.velocity.X = 0f;
                 //NPC.velocity.Y = 0f;
-                
+
                 if (NPC.frameCounter < 8 && NPC.frameCounter > 0)
                 {
-             //     ..  NPC.color = Color.Red;
+                    //     ..  NPC.color = Color.Red;
                     NPC.frame.Y = 0 * frameHeight;
-                    
+
                     // endanimation = true;
                 }
                 if (NPC.frameCounter < 16 && NPC.frameCounter > 8)
                 {
-               //     NPC.color = Color.Blue;
+                    //     NPC.color = Color.Blue;
                     NPC.frame.Y = 20 * frameHeight;
                     if (NPC.spriteDirection == 1)
                     {
-                       // NPC.color = Color.Green;
+                        // NPC.color = Color.Green;
                         if (Main.rand.NextBool(3))
                         {
                             Dust.NewDustPerfect(NPC.Center + new Vector2(-10f, -10f), DustID.FoodPiece, new Vector2(Main.rand.NextFloat(-0.8f, 0.8f), Main.rand.NextFloat(-0.6f, 0.6f)), default, Color.DarkRed, 1.5f);
@@ -138,7 +142,7 @@ namespace Creaturia.NPCs.Town
                     }
                     if (NPC.spriteDirection == -1)
                     {
-                     //   NPC.color = Color.Violet;
+                        //   NPC.color = Color.Violet;
                         if (Main.rand.NextBool(3))
                         {
                             Dust.NewDustPerfect(NPC.Center + new Vector2(-10f, -10f), DustID.FoodPiece, new Vector2(Main.rand.NextFloat(-0.8f, 0.8f), Main.rand.NextFloat(-0.6f, 0.6f)), default, Color.DarkRed, 1.5f);
@@ -147,12 +151,12 @@ namespace Creaturia.NPCs.Town
                 }
                 if (NPC.frameCounter < 24 && NPC.frameCounter > 16)
                 {
-            //        NPC.color = Color.Green;
+                    //        NPC.color = Color.Green;
                     NPC.frame.Y = 0 * frameHeight;                  // It's probably obvious but I spent way more time than I should have debugging here
                 }
                 if (NPC.frameCounter < 32 && NPC.frameCounter > 24)
                 {
-               //     NPC.color = Color.Yellow;
+                    //     NPC.color = Color.Yellow;
                     NPC.frame.Y = 20 * frameHeight;
                     //  endanimation = true;
                     if (NPC.spriteDirection == 1)
@@ -177,7 +181,7 @@ namespace Creaturia.NPCs.Town
                     NPC.frame.Y = 0 * frameHeight;
 
                     CreaturiaPlayer.playeatinganimation = false; // Doesn't work in pause but idc
-                     endanimation = true;
+                    endanimation = true;
                     AnimationType = NPCID.SkeletonMerchant;
                 }
                 if (NPC.frameCounter > 41)
@@ -193,12 +197,12 @@ namespace Creaturia.NPCs.Town
                 //        NPC.frameCounter = 0;
                 //       AnimationType = NPCID.SkeletonMerchant;
             }
-          //  if (NPC.frameCounter > 41)
-        //    {
-        //        CreaturiaPlayer.playeatinganimation = false;
-       //         AnimationType = NPCID.SkeletonMerchant;
-       //         NPC.frameCounter = 0;
-      //      }
+            //  if (NPC.frameCounter > 41)
+            //    {
+            //        CreaturiaPlayer.playeatinganimation = false;
+            //         AnimationType = NPCID.SkeletonMerchant;
+            //         NPC.frameCounter = 0;
+            //      }
             if (CreaturiaPlayer.playeatinganimation == false)
             {
                 //NPC.color = default;
@@ -221,7 +225,7 @@ namespace Creaturia.NPCs.Town
 
 
 
-        
+
         public override void AI()
         {
             NPC.breath += 2;
@@ -309,27 +313,27 @@ namespace Creaturia.NPCs.Town
         {
             return true;
         }
-      /*  public override bool CanTownNPCSpawn(int numTownNPCs, int money)
-        {
-            for (int k = 0; k < 255; k++)
-            {
-                Player player = Main.player[k];
-                if (!player.active)
-                {
-                    continue;
-                }
+        /*  public override bool CanTownNPCSpawn(int numTownNPCs, int money)
+          {
+              for (int k = 0; k < 255; k++)
+              {
+                  Player player = Main.player[k];
+                  if (!player.active)
+                  {
+                      continue;
+                  }
 
-                foreach (Item item in player.inventory)
-                {
-                    if (NPC.downedSlimeKing)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        } */
-       
+                  foreach (Item item in player.inventory)
+                  {
+                      if (NPC.downedSlimeKing)
+                      {
+                          return true;
+                      }
+                  }
+              }
+              return false;
+          } */
+
         public override List<string> SetNPCNameList()
         {
             return new List<string>() {
@@ -405,7 +409,7 @@ namespace Creaturia.NPCs.Town
         public override void SetChatButtons(ref string button, ref string button2)
         {
             button = Language.GetTextValue("LegacyInterface.28");
-         //   button2 = "Custom";
+            //   button2 = "Custom";
 
         }
 
@@ -417,7 +421,7 @@ namespace Creaturia.NPCs.Town
             }
             else
             {
-             //   Main.npcChatText = "oppa gangam style";    
+                //   Main.npcChatText = "oppa gangam style";    
             }
         }
         int checkwhichbait;
@@ -430,19 +434,19 @@ namespace Creaturia.NPCs.Town
                 shopSpecialCurrency = Creaturia.GoldenCarpId
 
             }, Condition.Hardmode)
-             
+
              .Add(new Item(ModContent.ItemType<ElectricEel>())
              {
                  shopCustomPrice = 1,
                  shopSpecialCurrency = Creaturia.GoldenCarpId
 
              })
-             .Add(new Item(ModContent.ItemType<TroutCannon>())
-             {
-                 shopCustomPrice = 1,
-                 shopSpecialCurrency = Creaturia.GoldenCarpId
+              /*    .Add(new Item(ModContent.ItemType<TroutCannon>())
+                  {
+                      shopCustomPrice = 1,
+                      shopSpecialCurrency = Creaturia.GoldenCarpId
 
-             })
+                  }) */ // UNLOCK WITH 1.1
 
 
               .Add(new Item(ModContent.ItemType<BundleOfFishBullets>())
@@ -604,11 +608,11 @@ namespace Creaturia.NPCs.Town
                         shopSpecialCurrency = Creaturia.FlarefinKoiId
 
                     }, Condition.Hardmode, Condition.MoonPhasesOddQuarters);
-               // }
-               // else if (checkwhichbait == 4)
-               // {
-                    
-              //  }
+            // }
+            // else if (checkwhichbait == 4)
+            // {
+
+            //  }
             //}
             npcShop.Register();
             /*
@@ -734,7 +738,7 @@ namespace Creaturia.NPCs.Town
                 } */
 
         }
-       
+
 
 
         public override void TownNPCAttackStrength(ref int damage, ref float knockback)
@@ -758,7 +762,7 @@ namespace Creaturia.NPCs.Town
                 attackDelay = 22;
             }
             else
-            projType = ProjectileID.Spear;
+                projType = ProjectileID.Spear;
             attackDelay = 20;
 
         }
@@ -767,26 +771,32 @@ namespace Creaturia.NPCs.Town
         {
             multiplier = 11f;
             randomOffset = 2f;
-           // gravityCorrection = -1f;
+            // gravityCorrection = -1f;
         }
-        public class ExamplePersonProfile : ITownNPCProfile
+        public override ITownNPCProfile TownNPCProfile()
         {
-            public int RollVariation() => 0;
-            public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
-
-            public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc)
-            {
-                if (npc.IsABestiaryIconDummy && !npc.ForcePartyHatOn)
-                    return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman");
-
-                if (npc.altTexture == 1)
-                    return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman_Party");
-
-                return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman");
-            }
-
-            public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Creaturia/NPCs/Town/Fishman_Head");
+            return NPCProfile;
         }
-    }
+        /*   public class ExamplePersonProfile : ITownNPCProfile 
+           {
+               public int RollVariation() => 0;
+               public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
 
+               public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc)
+               {
+                   if (npc.IsABestiaryIconDummy && !npc.ForcePartyHatOn)
+                       return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman");
+
+                   if (npc.altTexture == 1)
+                       return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman_Party");
+
+                   return ModContent.Request<Texture2D>("Creaturia/NPCs/Town/Fishman");
+               }
+
+              public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Creaturia/NPCs/Town/Fishman_Head");
+           }
+       } */
+
+    }
 }
+

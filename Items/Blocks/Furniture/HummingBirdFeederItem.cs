@@ -8,7 +8,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ModLoader;
 using Creaturia;
 using Creaturia.Tiles;
-using Creaturia.Tiles.Plants.Trees;
+
 using Creaturia.Tiles.Furniture;
 
 namespace Creaturia.Items.Blocks.Furniture
@@ -41,6 +41,14 @@ namespace Creaturia.Items.Blocks.Furniture
             Item.maxStack = 9999;
             Item.value = 75000;
             Item.rare = ItemRarityID.Green;
+        }
+        public override void AddRecipes()
+        {
+         /*   CreateRecipe()
+            .AddIngredient(ItemID.HeartLantern)
+            .AddIngredient(ModContent.ItemType<DunkleVertebrae>(), 15)
+            .AddTile(LiquidID.Honey)
+            .Register(); */ // UNLOCK WITH 1.1
         }
     }
 }

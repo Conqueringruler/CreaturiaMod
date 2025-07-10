@@ -97,7 +97,7 @@ namespace Creaturia.NPCs.Enemies.Boss.HellborneSkull
 			npcLoot.Add(ItemDropRule.Common(ItemID.AshBlock, 10, 16, 32));
 			npcLoot.Add(ItemDropRule.Common(ItemID.HealingPotion, 40, 8, 32));
 			npcLoot.Add(ItemDropRule.Common(ItemID.ManaPotion, 40, 8, 32));
-			Item.NewItem(NPC.GetSource_FromAI(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.ManaPotion, Main.rand.Next(8, 12));
+			//Item.NewItem(NPC.GetSource_FromAI(), (int)NPC.position.X, (int)NPC.position.Y, NPC.width, NPC.height, ItemID.ManaPotion, Main.rand.Next(8, 12));
 
 
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MoltenBone>(), 50, 0, 7));

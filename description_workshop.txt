@@ -60,11 +60,10 @@ Not only does this allow the item to scale in strength with Mage classes as they
 
 [list][img]https://imgur.com/u5joQ4f.png[/img][/list]
 
-We would’ve liked for this to be a surprise, but given how many times modders (and even the amazing Relogic) have tried to fix Golem over the years, it’s important to explain what’s actually wrong with his place in progression and why this should (hopefully!) work. It’s not just because he’s too weak, it’s because there’s no incentive to do anything else but go straight to him! 
+Note: This (and all other Golem-related content) is now disabled by default! Not because they're bad or anything, but simply because they don't fit the theme of the mod, and aren't enough to make their own mod. You can re-enable in the settings if you like.
 
-Other bosses, once the one before them is beaten, have to be tracked down far away, or need some kind of requirement to get to, and maybe even an arena built. Golem? You’re already in the jungle and have found the temple, so why not just walk over and beat him?
-
-With what we’ve added, now there should be a great incentive. His Golem Fists now break off his body once defeated, slowly launching themselves towards the player, but with his left fist enchanted by the Pumpking, and the right by the Ice Queen, they become drastically stronger and each have unique abilities. So now, there’s more reason to explore everything Plantera did to the world other than just to get stronger; to hunt down one or both of the beings empowering Golem, to knock him down a peg before the fight. 
+If enabled, Golem's Fists now break off his body once defeated, slowly launching themselves towards the player, but with his left fist enchanted by the Pumpking, and the right by the Ice Queen, they become drastically stronger and each have unique abilities. So now, there’s more reason to explore everything Plantera did to the world other than just to get stronger; to hunt down one or both of the beings empowering Golem, to knock him down a peg before the fight. 
+It also comes with a small variety of additions/upgrades to specific Post-Plantera gear, you'll know it if you see it.
 
 [img]https://imgur.com/aPUhdlV.png[/img]
 

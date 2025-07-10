@@ -18,7 +18,7 @@ public class ChestLoot : ModSystem
             
             if (chest != null)
             {
-                if (WorldGen.genRand.NextBool(6) &&
+                if (WorldGen.genRand.NextBool(4) &&
                 (Main.tile[chest.x, chest.y].TileType == TileID.Containers && // https: //terraria.wiki.gg/wiki/Tile_IDs
                 (Main.tile[chest.x, chest.y].TileFrameX == 17 * 36 ||          // Each chest is seperated by 36 pixels. Therefore, 0 would be Chest 0, aka Wooden, 13 would be Web, 17 would be Water, etc.
                 Main.tile[chest.x, chest.y].TileFrameX == 13 * 36)))

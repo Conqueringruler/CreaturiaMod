@@ -2,46 +2,47 @@ Mods: {
 	Creaturia: {
 		Common: {
 			GolemItemTooltip: "[c/8b82e7: {$NPCName.Golem} is weak to this weapon.]"
-			 GolemFistTooltip: 20% chance to fire empowered by the Frost Queen or Pumpking
-			 RightClickConsumeTooltip: Consumable with Right Click
-			 ThornHookTooltip: Enemies hit while the player is hooked will be poisoned for 5 seconds
-			 VikingHelmetTt: When worn Undead Vikings and Armored Vikings no longer target you
-			 YellowMarigoldTt: "'Its either the really healthy kind of marigold or the poisonious kind. Pretty hard to tell.'"
-			 YellowMarigoldTt2: 50% chance of recieving either rapid healing or poison for a varied amount of time
-			 BlueberriesTt: "'Sweet!'"
-			 TealMushroomTt: "'Looks juicy'"
-			 OrangeBloodrootTt: "'Dissuades predators with its liquid cortisol. That clearly didn't stop you though.'"
-			 GreenMushroomTt: Intense healing short-term, but gives poison and potion sickness
-			 DunklePoleTxt: Rot and plates pulsate below...
-			 LumpPoleTxt: Spikes and flesh pulsate below...
-			 FishPoleTxt: Bubbles rise from below the bobber...
-			 WishingFishPoleTxt: Golden scales glisten below the water...
+			GolemFistTooltip: 20% chance to fire empowered by the Frost Queen or Pumpking
+			RightClickConsumeTooltip: Consumable with Right Click
+			ThornHookTooltip: Enemies hit while the player is hooked will be poisoned for 5 seconds
+			VikingHelmetTt: When worn Undead Vikings and Armored Vikings no longer target you
+			YellowMarigoldTt: "'Its either the really healthy kind of marigold or the poisonious kind. Pretty hard to tell.'"
+			YellowMarigoldTt2: 50% chance of recieving either rapid healing or poison for a varied amount of time
+			BlueberriesTt: "'Sweet!'"
+			TealMushroomTt: "'Looks juicy'"
+			// SkyBlueManaTt: "'Pretty!'"
+			OrangeBloodrootTt: "'Dissuades predators with its liquid cortisol. That clearly didn't stop you though.'"
+			GreenMushroomTt: Intense healing short-term, but gives poison and potion sickness
+			DunklePoleTxt: Rot and plates pulsate below...
+			LumpPoleTxt: Spikes and flesh pulsate below...
+			FishPoleTxt: Bubbles rise from below the bobber...
+			WishingFishPoleTxt: Golden scales glisten below the water...
 		}
 
 		Bestiary: {
-			 GravPlant: This ancient plant grows anti-gravity juice. Awesome!
-			 Ectoad: A mysterious inhabitant of the dungeon, subsisting off things that it really shouldn't.
-			 FallenPixie: A fairy that's lost it's power. \n Maybe you should try rejuvenating it!
-			 HoopSnake: "'Terrarians have long lived in fear of the dreaded Hoop Snake.' Despite its bad rep, the incredibly rare Hoop Snake just wants to enjoy your companionship as it rolls around."
-			 Hummingbirds: Pretty little birds on the search for nectar and forest friends!
-			 Jackrabbit: This wiry rabbit thrives in the desert dunes, always on the search for snacks.
-			 Plubee: A mischevious being known for taking the form of rabbits, awarding those lucky enough to hit it with treasures!
-			 SlipperySlug1: A rare, valuable, and (for fishies) delicious slug of the caverns.
-			 SlipperySlug2: Luckily for the slug, its so hard to grab that nothing can get it for long!
-			 BabyLumpsucker: The babies of the Lumpling are often so devoted to their mother that they're more than happy to blow themselves up for her.
-			 Lumpsucker: The great ichorous beast of the Crimson waters, vicious and unforgiving.
-			 Dunkle: The great scaled beast of the Corruption waters, brutal and destructive. Its physical build gives it incredible strength.
-			 RainbowFish: The Rainbow Fish survives the chaos of the Hallow by staying in groups, releasing fragments of its sharp scales to cut into any potential threats - or prey.
-			 GolemFists: Once only parts of Golem, these fists have been possessed and empowered, one by the King of Fright and one by the Queen of Frost. Defeating either of those two will surely break the fist's spell and return said fist to normal...
-			 GnomeLine1: The gnomes have finally become smart enough to start wearing glasses.
-			 GnomeLine2: Too bad they aren't smart enough to invade when the sun isn't out!
-			 GreatPixieLine1: An ancient, devious pixie that in older times would disguise itself as being weaker than it really is.
-			 GreatPixieLine2: While its danger is great, the power it may release is just as so.
-			 SkinWalker: An abomination of nature. It burrows itself into the bodies of creatures, waiting for a chance to reveal its true form.
-			 Fishman: The Fishman of the ocean depths prefers solitude, but is happy to trade when the opportunity for non-ocean fish arises.
-			 WishingFish: The legend says this talking fish was once a prince, cursed long ago into the body of a golden fish. At least he gives out free wishes!
-			 Ninja: The Ninja, now freed from King Slime, has chosen to stay in the land of Terraria.
-			 Mirrorman: The enigmatic Mirrorman, now freed from his containment within the world's guardian, traverses the Underground Hallow for a reason unknown... and also provides better services than the Goblin Tinkerer.
+			GravPlant: This ancient plant grows anti-gravity juice. Awesome!
+			Ectoad: A mysterious inhabitant of the dungeon, subsisting off things that it really shouldn't.
+			FallenPixie: A fairy that's lost it's power. \n Maybe you should try rejuvenating it!
+			HoopSnake: "'Terrarians have long lived in fear of the dreaded Hoop Snake.' Despite its bad rep, the incredibly rare Hoop Snake just wants to enjoy your companionship as it rolls around."
+			Hummingbirds: Pretty little birds on the search for nectar and forest friends!
+			Jackrabbit: This wiry rabbit thrives in the desert dunes, always on the search for snacks.
+			Plubee: A mischevious being known for taking the form of rabbits, awarding those lucky enough to hit it with treasures!
+			SlipperySlug1: A rare, valuable, and (for fishies) delicious slug of the caverns.
+			SlipperySlug2: Luckily for the slug, its so hard to grab that nothing can get it for long!
+			BabyLumpsucker: The babies of the Lumpling are often so devoted to their mother that they're more than happy to blow themselves up for her.
+			Lumpsucker: The great ichorous beast of the Crimson waters, vicious and unforgiving.
+			Dunkle: The great scaled beast of the Corruption waters, brutal and destructive. Its physical build gives it incredible strength.
+			RainbowFish: The Rainbow Fish survives the chaos of the Hallow by staying in groups, releasing fragments of its sharp scales to cut into any potential threats - or prey.
+			GolemFists: Once only parts of Golem, these fists have been possessed and empowered, one by the King of Fright and one by the Queen of Frost. Defeating either of those two will surely break the fist's spell and return said fist to normal...
+			GnomeLine1: The gnomes have finally become smart enough to start wearing glasses.
+			GnomeLine2: Too bad they aren't smart enough to invade when the sun isn't out!
+			GreatPixieLine1: An ancient, devious pixie that in older times would disguise itself as being weaker than it really is.
+			GreatPixieLine2: While its danger is great, the power it may release is just as so.
+			SkinWalker: An abomination of nature. It burrows itself into the bodies of creatures, waiting for a chance to reveal its true form.
+			Fishman: The Fishman of the ocean depths prefers solitude, but is happy to trade when the opportunity for non-ocean fish arises.
+			WishingFish: The legend says this talking fish was once a prince, cursed long ago into the body of a golden fish. At least he gives out free wishes!
+			Ninja: The Ninja, now freed from King Slime, has chosen to stay in the land of Terraria.
+			Mirrorman: The enigmatic Mirrorman, now freed from his containment within the world's guardian, traverses the Underground Hallow for a reason unknown... and also provides better services than the Goblin Tinkerer.
 		}
 
 		Buffs: {
@@ -310,6 +311,11 @@ Mods: {
 				// DisplayName: Trout Cannon
 				// Tooltip: ""
 			}
+
+			OrangeHamsterItem: {
+				// DisplayName: Hamster
+				// Tooltip: "'Be careful with him!'"
+			}
 		}
 
 		Projectiles: {
@@ -360,7 +366,6 @@ Mods: {
 			HellborneGuardian.DisplayName: Адский страж
 			HellborneSkullMinion.DisplayName: Прислужник адского черепа
 			TheHellborneSkull.DisplayName: Адский череп
-			ExampleFlutterSlime.DisplayName: Тестовый слизень
 			glassesgnome.DisplayName: Гном
 			strongerglassesgnome.DisplayName: Сильный гном
 			sunglasses.DisplayName: Солнечные очки
@@ -381,6 +386,8 @@ Mods: {
 			HummingBird2.DisplayName: Лесная колибри
 			HummingbirdBestiary.DisplayName: Колибри
 			VioletSapphireHummingbird.DisplayName: Сумеречная колибри
+			// OrangeHamster.DisplayName: Hamster
+			// CorruptHamster.DisplayName: Corrupt Hamster
 		}
 
 		Tiles: {
@@ -396,6 +403,11 @@ Mods: {
 				GolemFists: {
 					Label: "[i:1297]Изменения в Голем"
 					Tooltip: ""
+				}
+
+				Ninja: {
+					// Label: Ninja
+					// Tooltip: Disable to remove the Ninja NPC.
 				}
 			}
 		}

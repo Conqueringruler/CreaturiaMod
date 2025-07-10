@@ -45,7 +45,7 @@ namespace Creaturia.Items.GlobalItems
 			recipe = Recipe.Create(ItemID.HallowedKey);
 
 			recipe.AddIngredient(ModContent.ItemType<RainbowScale2>(), 10);
-			recipe.AddIngredient(ItemID.SoulofLight, 5);
+			recipe.AddIngredient(ItemID.SoulofLight, 10);
 			recipe.AddIngredient(ItemID.TempleKey, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
@@ -69,7 +69,7 @@ namespace Creaturia.Items.GlobalItems
 			recipe = Recipe.Create(ItemID.CrimsonKey);
 
 			recipe.AddIngredient(ModContent.ItemType<LumpsuckerHeart>(), 10);
-			recipe.AddIngredient(ItemID.SoulofNight, 5);
+			recipe.AddIngredient(ItemID.SoulofNight, 10);
 			recipe.AddIngredient(ItemID.TempleKey, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
@@ -93,19 +93,19 @@ namespace Creaturia.Items.GlobalItems
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 
-			recipe = Recipe.Create(ItemID.CorruptionKey);
+            recipe = Recipe.Create(ItemID.CorruptionKey);
 
-			recipe.AddIngredient(ModContent.ItemType<DunkleVertebrae>(), 10);
-			recipe.AddIngredient(ItemID.SoulofNight, 5);
-			recipe.AddIngredient(ItemID.TempleKey, 1);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-
-
+            recipe.AddIngredient(ModContent.ItemType<DunkleVertebrae>(), 10);
+            recipe.AddIngredient(ItemID.SoulofNight, 10);
+            recipe.AddIngredient(ItemID.TempleKey, 1);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
 
 
 
-			recipe = Recipe.Create(ItemID.BunnyStew);
+
+
+            recipe = Recipe.Create(ItemID.BunnyStew);
 
             recipe.AddIngredient(ModContent.ItemType<JackrabbitItem>(), 10);
             recipe.AddTile(TileID.CookingPots);

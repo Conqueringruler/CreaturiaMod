@@ -160,7 +160,7 @@ namespace Creaturia.Common.Players
 
 				}
 			}
-			if (!attempt.inLava && !attempt.inHoney && Player.ZoneBeach && Main.rand.NextBool(60) && !NPC.AnyNPCs(ModContent.NPCType<Fishman>()))
+			if (!attempt.inLava && !attempt.inHoney && Player.ZoneBeach && Main.rand.NextBool(20) && !NPC.AnyNPCs(ModContent.NPCType<Fishman>()))
 			{
 
 				int fishmannpc = ModContent.NPCType<Fishman>();

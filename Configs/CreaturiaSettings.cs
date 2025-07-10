@@ -21,10 +21,15 @@ namespace Creaturia.Configs
         [OptionStrings(new string[] { "Disabled", "Enabled" })]
         [SliderColor(141, 56, 0)]
         [DrawTicks]
-        [DefaultValue("Enabled")]
+        [DefaultValue("Disabled")]
         public string GolemFists;
 
-
+        [ReloadRequired]
+        [OptionStrings(new string[] { "Disabled", "Enabled" })]
+        [SliderColor(141, 141, 141)]
+        [DrawTicks]
+        [DefaultValue("Enabled")]
+        public string Ninja;
 
 
     }

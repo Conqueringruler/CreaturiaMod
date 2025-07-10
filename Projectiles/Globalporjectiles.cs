@@ -19,6 +19,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
 using Creaturia.NPCs.Creatures;
 using Creaturia.Configs;
+using Terraria.DataStructures;
 
 namespace Creaturia.Projectiles
 {
@@ -43,6 +44,20 @@ namespace Creaturia.Projectiles
             {
                 ProjectileID.Sets.TrailCacheLength[projectile.type] = 8;
                 ProjectileID.Sets.TrailingMode[projectile.type] = 0;
+            }
+        }
+        public override void OnSpawn(Projectile projectile, IEntitySource source)
+        {
+            base.OnSpawn(projectile, source);
+            if (projectile.type == ProjectileID.CursedDartFlame)
+            {
+               // if (projectile.owner.GetType() == ModContent.NPCType<DunklerFish>().GetType()) //Doesn't work cause in singleplayer all projectiles are owned by the player
+               if (source is EntitySource_Parent parent && parent.Entity is NPC npc && npc.type == ModContent.NPCType<DunklerFish>())
+                {
+                    projectile.hostile = true;
+                    projectile.friendly = false;
+                    projectile.scale = 1.5f;
+                }
             }
         }
         public override bool OnTileCollide(Projectile projectile, Vector2 oldVelocity)
@@ -89,15 +104,7 @@ namespace Creaturia.Projectiles
         public bool GolemFists = ModContent.GetInstance<CreaturiaSettings>().GolemFists.Contains("Enabled");
         public override void AI(Projectile projectile)
         {
-            if (projectile.type == ProjectileID.CursedDartFlame)
-            {
-                if (projectile.owner.GetType() == ModContent.NPCType<DunklerFish>().GetType())
-                {
-                    projectile.hostile = true;
-                    projectile.friendly = false;
-                    projectile.scale = 1.5f;
-                }
-            }
+          
             if (projectile.type == ProjectileID.ThornHook)
             {
                 if (projectile.velocity == Vector2.Zero)

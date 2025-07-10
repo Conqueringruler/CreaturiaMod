@@ -210,7 +210,7 @@ namespace Creaturia.Items.Weapon
 			// Avoid spawning dusts on dedicated servers
 			if (!Main.dedServ)
 			{
-				// These dusts are added later, for the 'ExampleMod' effect
+				
 				if (Main.rand.NextBool(3))
 				{
 					Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.WaterCandle, Projectile.velocity.X * 2f, Projectile.velocity.Y * 2f, Alpha: 128, Scale: 1f);

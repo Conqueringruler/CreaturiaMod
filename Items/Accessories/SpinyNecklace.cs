@@ -53,8 +53,11 @@ namespace Creaturia.Items.Accessories
         public override void UpdateEquip(Player player)
         {
             player.GetModPlayer<CreaturiaPlayer>().LumpsuckerAcc = true;
-            // Dodge chance is done inside ModPlayer!!
-            player.slotsMinions += 1;
+			// Dodge chance is done inside ModPlayer!!
+
+			//player.slotsMinions += 1; // slots minions reduces the number of minion slots, not adds to it!
+
+			player.maxMinions += 1;
 
             if (player.ownedProjectileCounts[ModContent.ProjectileType<BabyLumpsucker>()] < 1)
             {
